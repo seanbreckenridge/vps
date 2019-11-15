@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Print logs for all processes running
+
+trap "killall tail" EXIT  # kill all tail processes on exit
+
+tail -f ~/.mal-id-cache/logs/jikan-requests.log | sed 's/^/jikan: /' &
+tail -f ~/.mal-id-cache/logs/cache.log | sed 's/^/id-cache: /' &
+tail -f ~/Dev/mal-notify-bot/logs/bot.log | sed 's/^/notify: /' &
+tail -f ~/Dev/discord-countdown-bot/bot.log | sed 's/^/countdown: /'

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Starts all the background processes using screen; kills any previous screen instances
+
+echo "\"screen -r 'name'\" to attach to screen"
+echo "<ctrl>a</ctrl>d to detach"
+echo "<ctrl>a</ctrl>K to kill"
+
+# kill all previous screens
+pkill screen  # SIGTERM, to allow async operations to finish
+
+DEV="${HOME}/Dev"
+VENVS="${HOME}"/.local/share/virtualenvs
+MID_CACHE="${HOME}/.mal-id-cache"
+NOTIFY_BOT="${DEV}/mal-notify-bot"
+COUNTDOWN_BOT="${DEV}/discord-countdown-bot"
+
+# start jikan-rest
+screen -dm -L -Logfile "${MID_CACHE}"/logs/jikan-requests.log -S jikan php -S localhost:8000 -t "${MID_CACHE}"/repo/jikan-rest/public
+
+# VirtualEnvs created with pipenv
+
+# start mal-id-cache
+# logs in python process to $MID_CACHE/logs/cache.log
+$(cd "${MID_CACHE}"/repo && screen -dm -S "id-cache" pipenv run mal_id_cache --loop --commit)
+
+# start mal-notify-bot
+# logs in python to $NOTIFY_BOT/logs/bot.log
+screen -dm -S "notify-bot" "${VENVS}"/mal-notify-bot*/bin/python "${NOTIFY_BOT}"/bot.py
+
+# start countdown-bot
+screen -dm -L -Logfile "${COUNTDOWN_BOT}"/bot.log -S "countdown-bot" "${VENVS}"/discord-countdown-bot*/bin/python "${COUNTDOWN_BOT}"/bot.py
+
