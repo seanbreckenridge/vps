@@ -5,6 +5,8 @@ echo "\"screen -r 'name'\" to attach to screen"
 echo "<ctrl>a</ctrl>d to detach"
 echo "<ctrl>a</ctrl>K to kill"
 
+screen -wipe
+
 # kill all previous screens
 pkill screen  # SIGTERM, to allow async operations to finish
 
@@ -36,9 +38,13 @@ cd "${MID_CACHE}"/repo && screen -dm -S "id-cache" pipenv run mal_id_cache --loo
 # start unapproved cache json loop
 screen -dm -L -Logfile "${UNAP_SERVER}/cache_loop.log" -S "unap-loop" "${UNAP_SERVER}/cache_loop.sh"
 
-sleep 5 # wait for sinatra to shut down so that port isnt in use
-
 cd "${UNAP_SERVER}"
+
+killall ruby
+while [[ $(lsof -i:5252) ]]; do
+	echo "Waiting for sinatra to end.."
+	sleep 1
+done
 
 # start unapproved http server
 screen -dm -L -Logfile "${UNAP_SERVER}/server.log" -S "unap-http" ruby "${UNAP_SERVER}/server.rb"
