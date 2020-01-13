@@ -26,7 +26,7 @@ screen -dm -L -Logfile "${MID_CACHE}"/logs/jikan-requests.log -S jikan php7.3 -S
 
 # start mal-notify-bot
 # logs in python to $NOTIFY_BOT/logs/bot.log
-screen -dm -S "notify-bot" "${VENVS}"/mal-notify-bot*/bin/python "${NOTIFY_BOT}"/bot.py
+screen -dm -L -Logfile "${NOTIFY_BOT}/screen.log" -S "notify-bot" "${VENVS}"/mal-notify-bot*/bin/python "${NOTIFY_BOT}"/bot.py
 
 # start countdown-bot
 screen -dm -L -Logfile "${COUNTDOWN_BOT}"/bot.log -S "countdown-bot" "${VENVS}"/discord-countdown-bot*/bin/python "${COUNTDOWN_BOT}"/bot.py
