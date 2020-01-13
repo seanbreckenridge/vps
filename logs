@@ -5,7 +5,7 @@ trap "killall tail" EXIT  # kill all tail processes on exit
 
 tail -f ~/.mal-id-cache/logs/jikan-requests.log | sed 's/^/jikan: /' &
 tail -f ~/.mal-id-cache/logs/cache.log | sed 's/^/id-cache: /' &
-tail -f ~/Dev/mal-notify-bot/logs/bot.log | sed 's/^/notify: /' &
+tail -f ~/Dev/mal-notify-bot/screen.log | sed 's/^/notify: /' &
 tail -f ~/Dev/mal-unapproved/cache_loop.log | sed 's/^/unap-loop: /' &
 tail -f ~/Dev/mal-unapproved/server.log | sed 's/^/unap-http: /' &
 tail -f ~/Dev/discord-countdown-bot/bot.log | sed 's/^/countdown: /'
