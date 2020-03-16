@@ -18,7 +18,7 @@ COUNTDOWN_BOT="${DEV}/discord-countdown-bot"
 UNAP_SERVER="${DEV}/mal-unapproved"
 
 # start jikan-rest
-screen -dm -L -Logfile "${MID_CACHE}"/logs/jikan-requests.log -S jikan php7.3 -S localhost:8000 -t "${MID_CACHE}"/repo/jikan-rest/public
+#screen -dm -L -Logfile "${MID_CACHE}"/logs/jikan-requests.log -S jikan php7.3 -S localhost:8000 -t "${MID_CACHE}"/repo/jikan-rest/public
 
 # VirtualEnvs created with pipenv
 # Have to match pipenv created directories like repo-name-J$3sJF/bin/python
