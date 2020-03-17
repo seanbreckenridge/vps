@@ -10,6 +10,14 @@ This is currently hosted on scaleway (Ubuntu), though it should be OS/provider a
 * [backup](./backup) copies cache/token files to a tar.gz so they can be backed up
 * [directories](./directories) is a helper script sourced at the top of other scripts that defines common application location environment variables
 
+## Applications:
+
+- https://github.com/seanbreckenridge/mal-id-cache
+- https://github.com/seanbreckenridge/mal-notify-bot
+- https://github.com/seanbreckenridge/discord-countdown-bot
+- https://github.com/seanbreckenridge/mal-unapproved
+- https://github.com/seanbreckenridge/docker-jikan
+
 Uses [screen](https://www.gnu.org/software/screen/) to run background processes. (Currently using screen version 4.08.02 23-Oct-17)
 
 Jikan is setup using [this](https://github.com/seanbreckenridge/docker-jikan) docker-compose config.
