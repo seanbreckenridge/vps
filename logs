@@ -11,4 +11,4 @@ tail -f "${NOTIFY_BOT}"/screen.log | sed 's/^/notify: /' &
 tail -f "${UNAP_SERVER}"/cache_loop.log | sed 's/^/unap-loop: /' &
 tail -f "${UNAP_SERVER}"/server.log | sed 's/^/unap-http: /' &
 tail -f "${COUNTDOWN_BOT}"/bot.log | sed 's/^/countdown: /' &
-cd "${HOME}/code/docker-jikan" && docker-compose logs -f --tail="25" 
+cd "${HOME}/code/docker-jikan" && docker-compose logs -f --tail="25" | grep -v "jikan-redis"
