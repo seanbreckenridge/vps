@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+
+# cd to a directory; exit if cd failed
+cd_or_exit() {
+  if [ ! -d "$1" ]; then
+    printf "Could not cd into directory: %s\n" "$1"
+    exit
+  else
+    cd "$1"
+  fi
+}
+
+# require that a executable be installed
+require() {
+  if [[ ! $(command -v "$1") ]]; then
+    printf "requires %s, Install that and re-run\n" "$1"
+    exit 1
+  fi
+}
+
+# clone $1 (URL) if $2 (directory) doesnt exist
+clone_if_not_exists() {
+  if [ ! -d "$2" ]; then
+    git clone "$1" "$2"
+  fi
+}
+
+# mkdir if first arg doesnt exist
+mkdir_if_not_exists() {
+  if [ ! -d "$1" ]; then
+    mkdir -p "$1"
+  fi
+}
+
+# make sure a file exists or exit
+expect_file() {
+  if [ ! -f "$1" ]; then
+    printf "Fatal error: Expected file at %s" "$1"
+    exit 1
+  fi
+}
+
+require elm
+require npm
+require python3.7
+require python3.6
+require ruby
+require bundle
+require docker
+require docker-compose
+require pipenv
+require screen
+require realpath
+require lsof
+
+CUR_DIR="$(dirname "${BASH_SOURCE[0]}")"
+source "${CUR_DIR}/directories"
+
+mkdir_if_not_exists "$CODE"
+mkdir_if_not_exists "$MID_CACHE"
+
+cd_or_exit "${CODE}"
+
+clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$MID_CACHE_REPO"
+clone_if_not_exists "https://github.com/seanbreckenridge/mal-notify-bot" "$NOTIFY_BOT"
+clone_if_not_exists "https://github.com/seanbreckenridge/discord-countdown-bot" "$COUNTDOWN_BOT"
+clone_if_not_exists "https://github.com/seanbreckenridge/mal-unapproved" "$UNAP_SERVER"
+clone_if_not_exists "https://github.com/seanbreckenridge/docker-jikan" "$DOCKER_JIKAN"
+
+# setup mal id cache
+cd_or_exit "$MID_CACHE_REPO"
+pipenv --python "$(command -v python3.7)"
+pipenv install -r "$MID_CACHE_REPO/requirements.txt"
+pipenv run python3 setup.py install
+pipenv run mal_id_cache --init-dir
+
+# setup notify bot
+cd_or_exit "$NOTIFY_BOT"
+pipenv --python "$(command -v python3.6)"
+pipenv install
+expect_file "$NOTIFY_BOT/token.yaml"
+expect_file "$NOTIFY_BOT/old"
+
+# setup countdown bot
+cd_or_exit "$COUNTDOWN_BOT"
+pipenv --python "$(command -v python3.6)"
+pipenv install
+expect_file "$COUNTDOWN_BOT/token.yaml"
+
+# setup unapproved server
+cd_or_exit "$UNAP_SERVER"
+bundle install
+python3 -m pip install --user --upgrade pip
+python3 -m pip install --user jikanpy requests
+
+cd "$DOCKER_JIKAN" && "$DOCKER_JIKAN"/run.sh # start jikan
+"$UNAP_SERVER"/cache_loop.sh once # initial call to build cache
+

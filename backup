@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# Backs up cache/credential/data files
+
+# require that a executable be installed
+require() {
+  if [[ ! $(command -v "$1") ]]; then
+    printf "requires %s, Install that and re-run\n" "$1"
+    exit 1
+  fi
+}
+
+# mkdir if first arg doesnt exist
+mkdir_if_not_exists() {
+  if [ ! -d "$1" ]; then
+    mkdir -p "$1"
+  fi
+}
+
+# make sure a file exists or exit
+expect_file_and_copy() {
+  if [ ! -f "$1" ]; then
+    printf "Fatal error: Expected file at %s\n" "$1"
+    exit 1
+  fi
+  cp "$1" "$2"
+}
+
+optional_copy() {
+  if [ -f "$1" ]; then
+    cp "$1" "$2"
+  else
+    printf "Warning: Expected file at %s\n" "$1"
+  fi
+}
+
+delete_dir_if_exists() {
+  [ -d "$1" ] && rm -rf "$1" && printf "Removed '%s'\n" "$1"
+}
+
+require tar
+require realpath
+require tree
+
+CUR_DIR="$(dirname "${BASH_SOURCE[0]}")"
+source "${CUR_DIR}/directories"
+
+BACKUP_DIR_NAME="backup_dir"
+BACKUP_DIR="${CUR_DIR}/${BACKUP_DIR_NAME}"
+BACKUP_COUNTDOWN="${BACKUP_DIR}"/countdown
+BACKUP_NOTIFY="${BACKUP_DIR}"/notify
+BACKUP_UNAPPROVED="${BACKUP_DIR}"/unapproved
+BACKUP_TAR_NAME="${BACKUP_DIR_NAME}.tar.gz"
+
+delete_dir_if_exists "$BACKUP_DIR"
+
+mkdir_if_not_exists "$BACKUP_COUNTDOWN"
+mkdir_if_not_exists "$BACKUP_NOTIFY"
+mkdir_if_not_exists "$BACKUP_UNAPPROVED"
+
+expect_file_and_copy "$NOTIFY_BOT/token.yaml" "$BACKUP_NOTIFY"
+expect_file_and_copy "$NOTIFY_BOT/old" "$BACKUP_NOTIFY"
+expect_file_and_copy "$COUNTDOWN_BOT/token.yaml" "$BACKUP_COUNTDOWN"
+optional_copy "$COUNTDOWN_BOT/server.db" "$BACKUP_COUNTDOWN"
+expect_file_and_copy "$UNAP_SERVER/unapproved_info.json" "$BACKUP_UNAPPROVED"
+
+tree "$BACKUP_DIR"
+
+cd "$CUR_DIR"
+
+tar -cvf "$BACKUP_TAR_NAME" "$BACKUP_DIR_NAME" && printf "Created '%s'\n" "$BACKUP_TAR_NAME"
+
+delete_dir_if_exists "$BACKUP_DIR"

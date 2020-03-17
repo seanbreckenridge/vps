@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# location of application directories
+CODE="${HOME}/code"
+VENVS="${HOME}"/.local/share/virtualenvs
+MID_CACHE="${HOME}/.mal-id-cache"
+MID_CACHE_REPO="${MID_CACHE}/repo"
+NOTIFY_BOT="${CODE}/mal-notify-bot"
+COUNTDOWN_BOT="${CODE}/discord-countdown-bot"
+UNAP_SERVER="${CODE}/mal-unapproved"
+DOCKER_JIKAN="${CODE}/docker-jikan"
+

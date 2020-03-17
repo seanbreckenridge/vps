@@ -10,15 +10,11 @@ screen -wipe
 # kill all previous screens
 pkill screen  # SIGTERM, to allow async operations to finish
 
-DEV="${HOME}/Dev"
-VENVS="${HOME}"/.local/share/virtualenvs
-MID_CACHE="${HOME}/.mal-id-cache"
-NOTIFY_BOT="${DEV}/mal-notify-bot"
-COUNTDOWN_BOT="${DEV}/discord-countdown-bot"
-UNAP_SERVER="${DEV}/mal-unapproved"
+CUR_DIR="$(dirname "${BASH_SOURCE[0]}")"
+source "${CUR_DIR}/directories"
 
-# start jikan-rest
-#screen -dm -L -Logfile "${MID_CACHE}"/logs/jikan-requests.log -S jikan php7.3 -S localhost:8000 -t "${MID_CACHE}"/repo/jikan-rest/public
+# restart/build docker
+cd "$DOCKER_JIKAN" && ./run.sh
 
 # VirtualEnvs created with pipenv
 # Have to match pipenv created directories like repo-name-J$3sJF/bin/python
@@ -37,8 +33,6 @@ cd "${MID_CACHE}"/repo && screen -dm -S "id-cache" pipenv run mal_id_cache --loo
 
 # start unapproved cache json loop
 screen -dm -L -Logfile "${UNAP_SERVER}/cache_loop.log" -S "unap-loop" "${UNAP_SERVER}/cache_loop.sh"
-
-cd "${UNAP_SERVER}"
 
 killall ruby
 while [[ $(lsof -i:5252) ]]; do
