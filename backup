@@ -41,7 +41,8 @@ require tar
 require realpath
 require tree
 
-CUR_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
 
 BACKUP_DIR_NAME="backup_dir"

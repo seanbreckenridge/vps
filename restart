@@ -10,7 +10,7 @@ screen -wipe
 # kill all previous screens
 pkill screen  # SIGTERM, to allow async operations to finish
 
-CUR_DIR="$(dirname "${BASH_SOURCE[0]}")"
+CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
 
 # restart jikan (docker)

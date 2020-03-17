@@ -53,7 +53,7 @@ require screen
 require realpath
 require lsof
 
-CUR_DIR="$(dirname "${BASH_SOURCE[0]}")"
+CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
 
 mkdir_if_not_exists "$CODE"
@@ -77,6 +77,7 @@ pipenv --python "$(command -v python3.7)"
 pipenv install -r "$MID_CACHE_REPO/requirements.txt"
 pipenv run python3 setup.py install
 pipenv run mal_id_cache --init-dir
+pipenv run mal_id_cache --force-state 0
 
 # setup notify bot
 cd_or_exit "$NOTIFY_BOT"
