@@ -1,6 +1,6 @@
 ## vps
 
-Scripts used for managing/restarting processes on my VPS.
+Scripts used for installing/managing/restarting/monitoring processes on my VPS.
 
 This is currently hosted on scaleway (Ubuntu), though it should be OS/provider agnostic.
 
