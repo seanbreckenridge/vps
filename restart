@@ -14,7 +14,7 @@ CUR_DIR="$(dirname "${BASH_SOURCE[0]}")"
 source "${CUR_DIR}/directories"
 
 # restart jikan (docker)
-cd "$DOCKER_JIKAN" && ./run.sh
+cd "$DOCKER_JIKAN" && docker-compose stop && docker-compose up -d
 
 # VirtualEnvs created with pipenv
 # Have to match pipenv created directories like repo-name-J$3sJF/bin/python
