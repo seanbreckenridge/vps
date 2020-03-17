@@ -1,4 +1,4 @@
-## vps
+# vps
 
 Scripts used for installing/managing/restarting/monitoring processes on my VPS.
 
@@ -10,7 +10,7 @@ This is currently hosted on scaleway (Ubuntu), though it should be OS/provider a
 * [backup](./backup) copies cache/token files to a tar.gz so they can be backed up
 * [directories](./directories) is a helper script sourced at the top of other scripts that defines common application location environment variables
 
-## Applications:
+### Applications:
 
 - https://github.com/seanbreckenridge/mal-id-cache
 - https://github.com/seanbreckenridge/mal-notify-bot
