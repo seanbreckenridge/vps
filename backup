@@ -33,8 +33,8 @@ optional_copy() {
   fi
 }
 
-delete_dir_if_exists() {
-  [ -d "$1" ] && rm -rf "$1" && printf "Removed '%s'\n" "$1"
+delete_if_exists() {
+  [[ -d "$1" || -f "$1" ]] && rm -rf "$1" && printf "Removed '%s'\n" "$1"
 }
 
 require tar
@@ -51,7 +51,8 @@ BACKUP_NOTIFY="${BACKUP_DIR}"/notify
 BACKUP_UNAPPROVED="${BACKUP_DIR}"/unapproved
 BACKUP_TAR_NAME="${BACKUP_DIR_NAME}.tar.gz"
 
-delete_dir_if_exists "$BACKUP_DIR"
+delete_if_exists "$BACKUP_DIR"
+delete_if_exists "$BACKUP_TAR_NAME"
 
 mkdir_if_not_exists "$BACKUP_COUNTDOWN"
 mkdir_if_not_exists "$BACKUP_NOTIFY"
@@ -69,4 +70,4 @@ cd "$CUR_DIR"
 
 tar -cvf "$BACKUP_TAR_NAME" "$BACKUP_DIR_NAME" && printf "Created '%s'\n" "$BACKUP_TAR_NAME"
 
-delete_dir_if_exists "$BACKUP_DIR"
+delete_if_exists "$BACKUP_DIR"
