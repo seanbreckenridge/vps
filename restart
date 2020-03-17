@@ -13,7 +13,7 @@ pkill screen  # SIGTERM, to allow async operations to finish
 CUR_DIR="$(dirname "${BASH_SOURCE[0]}")"
 source "${CUR_DIR}/directories"
 
-# restart/build docker
+# restart jikan (docker)
 cd "$DOCKER_JIKAN" && ./run.sh
 
 # VirtualEnvs created with pipenv
