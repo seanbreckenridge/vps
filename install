@@ -67,6 +67,10 @@ clone_if_not_exists "https://github.com/seanbreckenridge/discord-countdown-bot" 
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-unapproved" "$UNAP_SERVER"
 clone_if_not_exists "https://github.com/seanbreckenridge/docker-jikan" "$DOCKER_JIKAN"
 
+expect_file "$NOTIFY_BOT/token.yaml"
+expect_file "$NOTIFY_BOT/old"
+expect_file "$COUNTDOWN_BOT/token.yaml"
+
 # setup mal id cache
 cd_or_exit "$MID_CACHE_REPO"
 pipenv --python "$(command -v python3.7)"
@@ -78,14 +82,11 @@ pipenv run mal_id_cache --init-dir
 cd_or_exit "$NOTIFY_BOT"
 pipenv --python "$(command -v python3.6)"
 pipenv install
-expect_file "$NOTIFY_BOT/token.yaml"
-expect_file "$NOTIFY_BOT/old"
 
 # setup countdown bot
 cd_or_exit "$COUNTDOWN_BOT"
 pipenv --python "$(command -v python3.6)"
 pipenv install
-expect_file "$COUNTDOWN_BOT/token.yaml"
 
 # setup unapproved server
 cd_or_exit "$UNAP_SERVER"
