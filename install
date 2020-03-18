@@ -65,7 +65,7 @@ clone_if_not_exists "https://github.com/seanbreckenridge/mal-notify-bot" "$NOTIF
 clone_if_not_exists "https://github.com/seanbreckenridge/discord-countdown-bot" "$COUNTDOWN_BOT"
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-unapproved" "$UNAP_SERVER"
 clone_if_not_exists "https://github.com/seanbreckenridge/docker-jikan" "$DOCKER_JIKAN"
-clone_if_not_exists "https://github.com/FGRibreau/forever-webui" "$FOREVER_WEB"
+clone_if_not_exists "https://github.com/seanbreckenridge/forever-webui" "$FOREVER_WEB"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
