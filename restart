@@ -14,7 +14,7 @@ cd "$DOCKER_JIKAN" && docker-compose stop && docker-compose up -d
 screen -wipe
 
 # kill all previous screens
-pkill screen  # SIGTERM, to allow async operations to finish
+pkill -x screen  # SIGTERM, to allow async operations to finish
 
 # VirtualEnvs created with pipenv
 # Have to match pipenv created directories like repo-name-J$3sJF/bin/python
