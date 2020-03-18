@@ -22,5 +22,5 @@ This is currently hosted on scaleway (Ubuntu), though it should be OS/provider a
 - https://github.com/seanbreckenridge/discord-countdown-bot
 - https://github.com/seanbreckenridge/mal-unapproved
 - https://github.com/seanbreckenridge/docker-jikan
-- https://github.com/FGRibreau/forever-webui
+- https://github.com/seanbreckenridge/forever-webui
 
