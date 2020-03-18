@@ -7,7 +7,6 @@ source "${CUR_DIR}/directories"
 forever stopall
 
 # start jikan-rest instance
-cd "$DOCKER_JIKAN"
 forever start --uid "docker-jikan" \
   --logFile "${DOCKER_LOGS}/forever.log" \
   --append --spinSleepTime 10000 --minUptime 10000 \
@@ -15,7 +14,6 @@ forever start --uid "docker-jikan" \
   -c "bash" "run.sh"
 
 # start mal-notify-bot
-cd "$NOTIFY_BOT"
 forever start --uid "mal-notify-bot" \
   --logFile "${NOTIFY_LOGS}/forever.log" \
   --append --spinSleepTime 5000 --minUptime 5000 \
