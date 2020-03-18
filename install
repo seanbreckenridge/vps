@@ -49,6 +49,7 @@ require docker-compose
 require pipenv
 require realpath
 require npm
+require grunt
 require forever
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
@@ -64,6 +65,7 @@ clone_if_not_exists "https://github.com/seanbreckenridge/mal-notify-bot" "$NOTIF
 clone_if_not_exists "https://github.com/seanbreckenridge/discord-countdown-bot" "$COUNTDOWN_BOT"
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-unapproved" "$UNAP_SERVER"
 clone_if_not_exists "https://github.com/seanbreckenridge/docker-jikan" "$DOCKER_JIKAN"
+clone_if_not_exists "https://github.com/FGRibreau/forever-webui" "$FOREVER_WEB"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
@@ -75,6 +77,7 @@ mkdir_if_not_exists "$NOTIFY_LOGS"
 mkdir_if_not_exists "$COUNTDOWN_LOGS"
 mkdir_if_not_exists "$UNAP_LOGS"
 mkdir_if_not_exists "$DOCKER_LOGS"
+mkdir_if_not_exists "$FOREVER_LOGS"
 
 # setup mal id cache
 cd_or_exit "$MID_CACHE_REPO"
@@ -93,6 +96,14 @@ pipenv install
 cd_or_exit "$COUNTDOWN_BOT"
 pipenv --python "$(command -v python3.6)"
 pipenv install
+
+# setup forever web
+cd_or_exit "$FOREVER_WEB"
+npm install
+if [ ! -f "users.json" ]; then
+  node add_user
+fi
+grunt --force
 
 # setup unapproved server
 cd_or_exit "$UNAP_SERVER"

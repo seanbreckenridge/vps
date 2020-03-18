@@ -35,6 +35,13 @@ forever start --uid "mal-id-cache" \
   --sourceDir "$MID_CACHE_REPO" \
   -c "bash" "update_loop.sh"
 
+# start forever web ui
+forever start --uid "forever-web" \
+  --logFile "${FOREVER_LOGS}/forever.log" \
+  --append --spinSleepTime 30000 --minUptime 20000 \
+  --sourceDir "$FOREVER_WEB" \
+  "app.js"
+
 # start unapproved cache json loop
 forever start --uid "mal-unapproved-cache" \
   --logFile "${UNAP_LOGS}/forever_cache.log" \
