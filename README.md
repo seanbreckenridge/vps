@@ -4,6 +4,8 @@ Scripts used for installing/managing/restarting/monitoring processes on my VPS.
 
 Uses [forever](https://github.com/foreversd/forever) to run background processes.
 
+The [forever-webui](https://github.com/FGRibreau/forever-webui) allows you to restart those processes/view logs from a web console.
+
 * Puts application code into `~/code`
 * Centralizes logs in `~/logs`
 
