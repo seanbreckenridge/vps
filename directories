@@ -10,3 +10,9 @@ COUNTDOWN_BOT="${CODE}/discord-countdown-bot"
 UNAP_SERVER="${CODE}/mal-unapproved"
 DOCKER_JIKAN="${CODE}/docker-jikan"
 
+MID_LOGS="${HOME}/logs/mal-id-cache"
+NOTIFY_LOGS="${HOME}/logs/mal-notify-bot"
+COUNTDOWN_LOGS="${HOME}/logs/discord-countdown-bot"
+UNAP_LOGS="${HOME}/logs/mal-unapproved"
+DOCKER_LOGS="${HOME}/logs/docker-jikan"
+

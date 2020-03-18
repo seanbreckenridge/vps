@@ -40,8 +40,6 @@ expect_file() {
   fi
 }
 
-require elm
-require npm
 require python3.7
 require python3.6
 require ruby
@@ -49,9 +47,9 @@ require bundle
 require docker
 require docker-compose
 require pipenv
-require screen
 require realpath
-require lsof
+require npm
+require forever
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
@@ -70,6 +68,13 @@ clone_if_not_exists "https://github.com/seanbreckenridge/docker-jikan" "$DOCKER_
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
 expect_file "$COUNTDOWN_BOT/token.yaml"
+
+# create log directories if they dont exist
+mkdir_if_not_exists "$MID_LOGS"
+mkdir_if_not_exists "$NOTIFY_LOGS"
+mkdir_if_not_exists "$COUNTDOWN_LOGS"
+mkdir_if_not_exists "$UNAP_LOGS"
+mkdir_if_not_exists "$DOCKER_LOGS"
 
 # setup mal id cache
 cd_or_exit "$MID_CACHE_REPO"
@@ -95,6 +100,6 @@ bundle install
 python3 -m pip install --user --upgrade pip
 python3 -m pip install --user jikanpy requests
 
-cd "$DOCKER_JIKAN" && "$DOCKER_JIKAN"/run.sh # start jikan
+cd "$DOCKER_JIKAN" && docker-compose up -d # start jikan
 "$UNAP_SERVER"/cache_loop.sh once # initial call to build cache
 

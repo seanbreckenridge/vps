@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
 # Print logs for all processes running
 
-CUR_DIR="$(dirname "${BASH_SOURCE[0]}")"
-source "${CUR_DIR}/directories"
+cd "${HOME}/logs" || exit 1
+find -type f | xargs -r tail -f
 
-trap "killall tail" EXIT  # kill all tail processes on exit
-
-tail -f "${MID_CACHE}"/logs/cache.log | sed 's/^/id-cache: /' &
-tail -f "${NOTIFY_BOT}"/screen.log | sed 's/^/notify: /' &
-tail -f "${UNAP_SERVER}"/cache_loop.log | sed 's/^/unap-loop: /' &
-tail -f "${UNAP_SERVER}"/server.log | sed 's/^/unap-http: /' &
-tail -f "${COUNTDOWN_BOT}"/bot.log | sed 's/^/countdown: /' &
-cd "${HOME}/code/docker-jikan" && docker-compose logs -f --tail="25" | grep -v "jikan-redis"

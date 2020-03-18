@@ -1,44 +1,53 @@
 #!/usr/bin/env bash
-# Starts all the background processes using screen; kills any previous screen instances
-
-echo "\"screen -r 'name'\" to attach to screen"
-echo "<ctrl>a</ctrl>d to detach"
-echo "<ctrl>a</ctrl>K to kill"
+# Starts all the background processes using forever; kills any previous forever instances
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
 
-# restart jikan (docker)
-cd "$DOCKER_JIKAN" && docker-compose stop && docker-compose up -d
+forever stopall
 
-screen -wipe
-
-# kill all previous screens
-pkill -x screen  # SIGTERM, to allow async operations to finish
-
-# VirtualEnvs created with pipenv
-# Have to match pipenv created directories like repo-name-J$3sJF/bin/python
-# for virtualenvironments
+# start jikan-rest instance
+cd "$DOCKER_JIKAN"
+forever start --uid "docker-jikan" \
+  --logFile "${DOCKER_LOGS}/forever.log" \
+  --append --spinSleepTime 10000 --minUptime 10000 \
+  --sourceDir "$DOCKER_JIKAN" \
+  -c "bash" "run.sh"
 
 # start mal-notify-bot
-# logs in python to $NOTIFY_BOT/logs/bot.log
-screen -dm -L -Logfile "${NOTIFY_BOT}/screen.log" -S "notify-bot" "${VENVS}"/mal-notify-bot*/bin/python "${NOTIFY_BOT}"/bot.py
+cd "$NOTIFY_BOT"
+forever start --uid "mal-notify-bot" \
+  --logFile "${NOTIFY_LOGS}/forever.log" \
+  --append --spinSleepTime 5000 --minUptime 5000 \
+  --sourceDir "$NOTIFY_BOT" \
+  -c "pipenv run python" "bot.py"
 
-# start countdown-bot
-screen -dm -L -Logfile "${COUNTDOWN_BOT}"/bot.log -S "countdown-bot" "${VENVS}"/discord-countdown-bot*/bin/python "${COUNTDOWN_BOT}"/bot.py
+
+# start discord-countdown-bot
+forever start --uid "discord-countdown-bot" \
+  --logFile "${COUNTDOWN_LOGS}/forever.log" \
+  --append --spinSleepTime 5000 --minUptime 5000 \
+  --sourceDir "$COUNTDOWN_BOT" \
+  -c "pipenv run python" "bot.py"
 
 # start mal-id-cache
-# logs in python process to $MID_CACHE/logs/cache.log
-cd "${MID_CACHE}"/repo && screen -dm -S "id-cache" pipenv run mal_id_cache --loop --commit
+forever start --uid "mal-id-cache" \
+  --logFile "${MID_LOGS}/forever.log" \
+  --append --spinSleepTime 5000 --minUptime 5000 \
+  --sourceDir "$MID_CACHE_REPO" \
+  -c "bash" "update_loop.sh"
 
 # start unapproved cache json loop
-screen -dm -L -Logfile "${UNAP_SERVER}/cache_loop.log" -S "unap-loop" "${UNAP_SERVER}/cache_loop.sh"
-
-killall ruby
-while [[ $(lsof -i:5252) ]]; do
-	echo "Waiting for sinatra to end.."
-	sleep 1
-done
+forever start --uid "mal-unapproved-cache" \
+  --logFile "${UNAP_LOGS}/forever_cache.log" \
+  --append --spinSleepTime 5000 --minUptime 5000 \
+  --sourceDir "$UNAP_SERVER" \
+  -c "bash" "cache_loop.sh"
 
 # start unapproved http server
-screen -dm -L -Logfile "${UNAP_SERVER}/server.log" -S "unap-http" ruby "${UNAP_SERVER}/server.rb"
+forever start --uid "mal-unapproved-server" \
+  --logFile "${UNAP_LOGS}/forever_http.log" \
+  --append --spinSleepTime 15000 --minUptime 1000 \
+  --sourceDir "$UNAP_SERVER" \
+  -c "ruby" "server.rb"
+
