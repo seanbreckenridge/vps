@@ -35,7 +35,7 @@ mkdir_if_not_exists() {
 # make sure a file exists or exit
 expect_file() {
   if [ ! -f "$1" ]; then
-    printf "Fatal error: Expected file at %s" "$1"
+    printf "Fatal error: Expected file at %s\n" "$1"
     exit 1
   fi
 }
@@ -66,6 +66,7 @@ clone_if_not_exists "https://github.com/seanbreckenridge/discord-countdown-bot" 
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-unapproved" "$UNAP_SERVER"
 clone_if_not_exists "https://github.com/seanbreckenridge/docker-jikan" "$DOCKER_JIKAN"
 clone_if_not_exists "https://github.com/seanbreckenridge/forever-webui" "$FOREVER_WEB"
+clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_BOT/mal-id-cache"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
