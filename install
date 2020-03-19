@@ -114,3 +114,4 @@ python3 -m pip install --user jikanpy requests
 cd "$DOCKER_JIKAN" && docker-compose up -d # start jikan
 "$UNAP_SERVER"/cache_loop.sh once # initial call to build cache
 
+groups | grep -q "adm" || sudo usermod -a -G adm $(whoami)
