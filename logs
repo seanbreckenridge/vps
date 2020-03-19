@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Print logs for all processes running
+# in order to view nginx logs without sudo, add yourself to adm:
+# sudo usermod -a -G adm $(whoami)
 
 cd "${HOME}/logs" || exit 1
-find -type f | xargs -r tail -f
+find . /var/log/nginx -type f | xargs -r tail -f
 
