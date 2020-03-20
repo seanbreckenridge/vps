@@ -10,6 +10,7 @@ COUNTDOWN_BOT="${CODE}/discord-countdown-bot"
 UNAP_SERVER="${CODE}/mal-unapproved"
 DOCKER_JIKAN="${CODE}/docker-jikan"
 FOREVER_WEB="${CODE}/forever-webui"
+FOREVER_LIST="${CODE}/foreverjs-list"
 
 MID_LOGS="${HOME}/logs/mal-id-cache"
 NOTIFY_LOGS="${HOME}/logs/mal-notify-bot"
@@ -17,4 +18,5 @@ COUNTDOWN_LOGS="${HOME}/logs/discord-countdown-bot"
 UNAP_LOGS="${HOME}/logs/mal-unapproved"
 DOCKER_LOGS="${HOME}/logs/docker-jikan"
 FOREVER_LOGS="${HOME}/logs/forever-web"
+FOREVER_LIST_LOGS="${HOME}/logs/foreverjs-list"
 

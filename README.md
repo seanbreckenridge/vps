@@ -25,4 +25,5 @@ This is currently hosted on scaleway (Ubuntu), though it should be OS/provider a
 - https://github.com/seanbreckenridge/mal-unapproved
 - https://github.com/seanbreckenridge/docker-jikan
 - https://github.com/seanbreckenridge/forever-webui
+- https://github.com/seanbreckenridge/foreverjs-list
 

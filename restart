@@ -42,6 +42,14 @@ forever start --uid "forever-web" \
   --sourceDir "$FOREVER_WEB" \
   "app.js"
 
+
+# start forever list api
+forever start --uid "forever-list-api" \
+  --logFile "${FOREVER_LIST_LOGS}/forever.log" \
+  --append --spinSleepTime 5000 --minUptime 5000 \
+  --sourceDir "$FOREVER_LIST" \
+  "app.js"
+
 # start unapproved cache json loop
 forever start --uid "mal-unapproved-cache" \
   --logFile "${UNAP_LOGS}/forever_cache.log" \

@@ -67,6 +67,7 @@ clone_if_not_exists "https://github.com/seanbreckenridge/mal-unapproved" "$UNAP_
 clone_if_not_exists "https://github.com/seanbreckenridge/docker-jikan" "$DOCKER_JIKAN"
 clone_if_not_exists "https://github.com/seanbreckenridge/forever-webui" "$FOREVER_WEB"
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_BOT/mal-id-cache"
+clone_if_not_exists "https://github.com/seanbreckenridge/foreverjs-list" "$FOREVER_LIST"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
@@ -79,6 +80,12 @@ mkdir_if_not_exists "$COUNTDOWN_LOGS"
 mkdir_if_not_exists "$UNAP_LOGS"
 mkdir_if_not_exists "$DOCKER_LOGS"
 mkdir_if_not_exists "$FOREVER_LOGS"
+mkdir_if_not_exists "$FOREVER_LIST_LOGS"
+
+# setup foreverjs-list
+cd_or_exit "$FOREVER_LIST"
+[ -z "$FOREVER_LIST_TOKEN" ] && echo "Set the FOREVER_LIST_TOKEN environment variable" && exit 1
+npm install
 
 # setup mal id cache
 cd_or_exit "$MID_CACHE_REPO"
