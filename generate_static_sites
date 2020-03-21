@@ -1,9 +1,13 @@
 #!/bin/bash
 
+banner() {
+  boxes -d shell -p t1l2b1r2 <<< "$1"
+}
+
 # function to check if required commands exist prior to bootstrap
 require () {
   if [[ ! $(command -v "$1") ]]; then
-    printf "requires '%s', Install that and re-run" "$1"
+    printf "requires '%s', Install that and re-run\n" "$1"
     exit 1
   fi
 }
@@ -14,11 +18,19 @@ reclone_dir() {
   git clone "$1" "$2"
 }
 
-# $1: static site folder to move to doc root
+# $1: static site folder to move to document root root
 move_to_document_root() {
-  [ -d "$DOCUMENT_ROOT" ] && sudo mv -f "$1" "$DOCUMENT_ROOT" || echo "Error moving files to ${DOCUMENT_ROOT}"
+  TARGET="${DOCUMENT_ROOT}/$(basename "$1")"
+  printf "Moving %s to %s\n" "$1" "$TARGET"
+  if [ -d "$DOCUMENT_ROOT" ]; then
+    sudo rm -vrf "$TARGET"
+    sudo mv -v "$1" "$DOCUMENT_ROOT"
+  else
+    printf "Error moving files: '%s' does not exist.\n" "$DOCUMENT_ROOT"
+  fi
 }
 
+require boxes
 require git
 require elm
 require make
@@ -42,6 +54,8 @@ reclone_dir "https://github.com/seanbreckenridge/xkcd-favorites" "$XKCD_DIR"
 
 ## DVD DIR ################
 
+banner "DVD"
+
 cd "$DVD_DIR"
 make
 # remove non-essential files
@@ -54,9 +68,11 @@ move_to_document_root "$DVD_DIR"
 
 ## XKCD DIR ###############
 
+banner "XKCD"
+
 cd "$XKCD_DIR"
 python3 -m pip install --user -r requirements.txt
-LOGLEVEL=debug python3 generate.py
+python3 generate.py
 
 # remove non-essential files
 REMOVE_FILES=(".git" "favorites.yaml" "generate.py" "LICENSE" "README.md" "requirements.txt" ".nojekyll" ".gitignore")
@@ -65,3 +81,5 @@ for remove_file in "${REMOVE_FILES[@]}"; do
 done
 
 move_to_document_root "$XKCD_DIR"
+
+rm -rf "$BUILD_DIR"
