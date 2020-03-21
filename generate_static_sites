@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# function to check if required commands exist prior to bootstrap
+require () {
+  if [[ ! $(command -v "$1") ]]; then
+    printf "requires '%s', Install that and re-run" "$1"
+    exit 1
+  fi
+}
+
+# $1: url, $2: location
+reclone_dir() {
+  [ -d "$2" ] && rm -rf "$2"
+  git clone "$1" "$2"
+}
+
+# $1: static site folder to move to doc root
+move_to_document_root() {
+  [ -d "$DOCUMENT_ROOT" ] && sudo mv -f "$1" "$DOCUMENT_ROOT" || echo "Error moving files to ${DOCUMENT_ROOT}"
+}
+
+require git
+require elm
+require make
+require python3
+require realpath
+
+CUR_DIR="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
+BUILD_DIR="${CUR_DIR}/static_build"
+
+DOCUMENT_ROOT="/var/www/html"
+
+# specifies URI path
+DVD_DIR="${BUILD_DIR}/dvd"
+XKCD_DIR="${BUILD_DIR}/xkcd"
+
+# clone dirs
+reclone_dir "https://github.com/seanbreckenridge/xqc-dvd" "$DVD_DIR"
+reclone_dir "https://github.com/seanbreckenridge/xkcd-favorites" "$XKCD_DIR"
+
+## Build each Site
+
+## DVD DIR ################
+
+cd "$DVD_DIR"
+make
+# remove non-essential files
+REMOVE_FILES=(".git" ".gitignore" ".github" "elm-stuff" "elm.json" "LICENSE" "Makefile" "README.md" "src")
+for remove_file in "${REMOVE_FILES[@]}"; do
+  rm -rf "$remove_file"
+done
+
+move_to_document_root "$DVD_DIR"
+
+## XKCD DIR ###############
+
+cd "$XKCD_DIR"
+python3 -m pip install --user -r requirements.txt
+LOGLEVEL=debug python3 generate.py
+
+# remove non-essential files
+REMOVE_FILES=(".git" "favorites.yaml" "generate.py" "LICENSE" "README.md" "requirements.txt" ".nojekyll" ".gitignore")
+for remove_file in "${REMOVE_FILES[@]}"; do
+  rm -rf "$remove_file"
+done
+
+move_to_document_root "$XKCD_DIR"
