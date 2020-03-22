@@ -1,9 +1,5 @@
 #!/bin/bash
 
-banner() {
-  boxes -d shell -p t1l2b1r2 <<< "$1"
-}
-
 # function to check if required commands exist prior to bootstrap
 require () {
   if [[ ! $(command -v "$1") ]]; then
@@ -19,10 +15,16 @@ reclone_dir() {
   rm -rf "$2/.git"
 }
 
+# removes any files currently in the REMOVE_FILES array
+remove_files() {
+  for remove_file in "${REMOVE_FILES[@]}"; do
+    rm -vrf "$remove_file"
+  done
+}
+
 # $1: static site folder to move to document root root
 move_to_document_root() {
   TARGET="${DOCUMENT_ROOT}/$(basename "$1")"
-  printf "Moving %s to %s\n" "$1" "$TARGET"
   if [ -d "$DOCUMENT_ROOT" ]; then
     sudo rm -rf "$TARGET"
     sudo mv -v "$1" "$DOCUMENT_ROOT"
@@ -31,14 +33,13 @@ move_to_document_root() {
   fi
 }
 
-require boxes
 require git
 require elm
 require make
 require python3
 require realpath
 
-CUR_DIR="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
+CUR_DIR="$(realpath "$( dirname "${BASH_SOURCE[0]}" )")"
 BUILD_DIR="${CUR_DIR}/static_build"
 
 DOCUMENT_ROOT="/var/www/html"
@@ -55,31 +56,22 @@ reclone_dir "https://github.com/seanbreckenridge/xkcd-favorites" "$XKCD_DIR"
 
 ## DVD DIR ################
 
-banner "DVD"
-
 cd "$DVD_DIR"
 make
-# remove non-essential files
+
 REMOVE_FILES=(".gitignore" ".github" "elm-stuff" "elm.json" "LICENSE" "Makefile" "README.md" "src")
-for remove_file in "${REMOVE_FILES[@]}"; do
-  rm -vrf "$remove_file"
-done
+remove_files
 
 move_to_document_root "$DVD_DIR"
 
 ## XKCD DIR ###############
 
-banner "XKCD"
-
 cd "$XKCD_DIR"
 python3 -m pip install --user -r requirements.txt
 python3 generate.py
 
-# remove non-essential files
 REMOVE_FILES=("favorites.yaml" "generate.py" "LICENSE" "README.md" "requirements.txt" ".nojekyll" ".gitignore")
-for remove_file in "${REMOVE_FILES[@]}"; do
-  rm -vrf "$remove_file"
-done
+remove_files
 
 move_to_document_root "$XKCD_DIR"
 
