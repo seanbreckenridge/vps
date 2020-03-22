@@ -15,7 +15,7 @@ require () {
 # $1: url, $2: location
 reclone_dir() {
   [ -d "$2" ] && rm -rf "$2"
-  git clone "$1" "$2"
+  git clone --depth=1 --branch=master "$1" "$2"
 }
 
 # $1: static site folder to move to document root root
