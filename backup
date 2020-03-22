@@ -43,6 +43,7 @@ require tree
 
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+cd "$CUR_DIR"
 source "${CUR_DIR}/directories"
 
 BACKUP_DIR_NAME="backup_dir"
@@ -66,9 +67,5 @@ optional_copy "$COUNTDOWN_BOT/server.db" "$BACKUP_COUNTDOWN"
 expect_file_and_copy "$UNAP_SERVER/unapproved_info.json" "$BACKUP_UNAPPROVED"
 
 tree "$BACKUP_DIR"
-
-cd "$CUR_DIR"
-
 tar -cvf "$BACKUP_TAR_NAME" "$BACKUP_DIR_NAME" && printf "Created '%s'\n" "$BACKUP_TAR_NAME"
-
 delete_if_exists "$BACKUP_DIR"
