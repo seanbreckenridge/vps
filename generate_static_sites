@@ -16,6 +16,7 @@ require () {
 reclone_dir() {
   [ -d "$2" ] && rm -rf "$2"
   git clone --depth=1 --branch=master "$1" "$2"
+  rm -rf "$2/.git"
 }
 
 # $1: static site folder to move to document root root
@@ -23,7 +24,7 @@ move_to_document_root() {
   TARGET="${DOCUMENT_ROOT}/$(basename "$1")"
   printf "Moving %s to %s\n" "$1" "$TARGET"
   if [ -d "$DOCUMENT_ROOT" ]; then
-    sudo rm -vrf "$TARGET"
+    sudo rm -rf "$TARGET"
     sudo mv -v "$1" "$DOCUMENT_ROOT"
   else
     printf "Error moving files: '%s' does not exist.\n" "$DOCUMENT_ROOT"
@@ -59,9 +60,9 @@ banner "DVD"
 cd "$DVD_DIR"
 make
 # remove non-essential files
-REMOVE_FILES=(".git" ".gitignore" ".github" "elm-stuff" "elm.json" "LICENSE" "Makefile" "README.md" "src")
+REMOVE_FILES=(".gitignore" ".github" "elm-stuff" "elm.json" "LICENSE" "Makefile" "README.md" "src")
 for remove_file in "${REMOVE_FILES[@]}"; do
-  rm -rf "$remove_file"
+  rm -vrf "$remove_file"
 done
 
 move_to_document_root "$DVD_DIR"
@@ -75,9 +76,9 @@ python3 -m pip install --user -r requirements.txt
 python3 generate.py
 
 # remove non-essential files
-REMOVE_FILES=(".git" "favorites.yaml" "generate.py" "LICENSE" "README.md" "requirements.txt" ".nojekyll" ".gitignore")
+REMOVE_FILES=("favorites.yaml" "generate.py" "LICENSE" "README.md" "requirements.txt" ".nojekyll" ".gitignore")
 for remove_file in "${REMOVE_FILES[@]}"; do
-  rm -rf "$remove_file"
+  rm -vrf "$remove_file"
 done
 
 move_to_document_root "$XKCD_DIR"
