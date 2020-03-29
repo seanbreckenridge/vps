@@ -64,3 +64,9 @@ forever start --uid "mal-unapproved-server" \
   --sourceDir "$UNAP_SERVER" \
   -c "ruby" "server.rb"
 
+forever start --uid "wca-userinfo" \
+  --logFile "${WCA_LOGS}/forever.log" \
+  --append --spinSleepTime 5000 --minUptime 1000 \
+  --sourceDir "${WCA_USERINFO}" \
+  -c "bash" "run_server.sh"
+

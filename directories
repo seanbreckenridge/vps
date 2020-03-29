@@ -11,6 +11,7 @@ UNAP_SERVER="${CODE}/mal-unapproved"
 DOCKER_JIKAN="${CODE}/docker-jikan"
 FOREVER_WEB="${CODE}/forever-webui"
 FOREVER_LIST="${CODE}/foreverjs-list"
+WCA_USERINFO="${CODE}/wca_userinfo"
 
 MID_LOGS="${HOME}/logs/mal-id-cache"
 NOTIFY_LOGS="${HOME}/logs/mal-notify-bot"
@@ -19,4 +20,4 @@ UNAP_LOGS="${HOME}/logs/mal-unapproved"
 DOCKER_LOGS="${HOME}/logs/docker-jikan"
 FOREVER_LOGS="${HOME}/logs/forever-web"
 FOREVER_LIST_LOGS="${HOME}/logs/foreverjs-list"
-
+WCA_LOGS="${HOME}/logs/wca_userinfo"

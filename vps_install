@@ -52,6 +52,7 @@ require npm
 require grunt
 require forever
 require elixir  # sudo apt install erlang-inets erlang-dev elixir
+require cargo
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
@@ -69,6 +70,7 @@ clone_if_not_exists "https://github.com/seanbreckenridge/docker-jikan" "$DOCKER_
 clone_if_not_exists "https://github.com/seanbreckenridge/forever-webui" "$FOREVER_WEB"
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_BOT/mal-id-cache"
 clone_if_not_exists "https://github.com/seanbreckenridge/foreverjs-list" "$FOREVER_LIST"
+clone_if_not_exists "https://github.com/seanbreckenridge/wca_userinfo" "$WCA_USERINFO"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
@@ -82,10 +84,15 @@ mkdir_if_not_exists "$UNAP_LOGS"
 mkdir_if_not_exists "$DOCKER_LOGS"
 mkdir_if_not_exists "$FOREVER_LOGS"
 mkdir_if_not_exists "$FOREVER_LIST_LOGS"
+mkdir_if_not_exists "$WCA_LOGS"
 
 # elixir
 mix local.hex --force
 mix local.rebar --force
+
+# setup wca userinfo
+cd_or_exit "$WCA_USERINFO"
+cargo build --bins --release
 
 # setup foreverjs-list
 cd_or_exit "$FOREVER_LIST"
