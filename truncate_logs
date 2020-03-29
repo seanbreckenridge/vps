@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Keeps the last 10000 lines of logs for each logfile in ~/logs
+# Uses sponge to make sure logs being written when
+# the file is being modified aren't lost
+
+KEEP_LINES=10000
+
+while IFS= read -r -d '' file; do
+    tail -n $KEEP_LINES "$file" | sponge "$file"
+    wc -l "$file"
+done < <(find "${HOME}/logs" -type f -print0)
