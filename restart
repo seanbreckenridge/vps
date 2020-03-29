@@ -6,58 +6,48 @@ source "${CUR_DIR}/directories"
 
 forever stopall
 
-# start jikan-rest instance
 forever start --uid "docker-jikan" \
   --logFile "${DOCKER_LOGS}/forever.log" \
   --append --spinSleepTime 10000 --minUptime 10000 \
   --sourceDir "$DOCKER_JIKAN" \
   -c "bash" "run.sh"
 
-# start mal-notify-bot
 forever start --uid "mal-notify-bot" \
   --logFile "${NOTIFY_LOGS}/forever.log" \
   --append --spinSleepTime 5000 --minUptime 5000 \
   --sourceDir "$NOTIFY_BOT" \
   -c "pipenv run python" "bot.py"
 
-
-# start discord-countdown-bot
 forever start --uid "discord-countdown-bot" \
   --logFile "${COUNTDOWN_LOGS}/forever.log" \
   --append --spinSleepTime 5000 --minUptime 5000 \
   --sourceDir "$COUNTDOWN_BOT" \
   -c "pipenv run python" "bot.py"
 
-# start mal-id-cache
 forever start --uid "mal-id-cache" \
   --logFile "${MID_LOGS}/forever.log" \
   --append --spinSleepTime 5000 --minUptime 5000 \
   --sourceDir "$MID_CACHE_REPO" \
   -c "bash" "update_loop.sh"
 
-# start forever web ui
 forever start --uid "forever-web" \
   --logFile "${FOREVER_LOGS}/forever.log" \
   --append --spinSleepTime 30000 --minUptime 20000 \
   --sourceDir "$FOREVER_WEB" \
   "app.js"
 
-
-# start forever list api
 forever start --uid "forever-list-api" \
   --logFile "${FOREVER_LIST_LOGS}/forever.log" \
   --append --spinSleepTime 5000 --minUptime 5000 \
   --sourceDir "$FOREVER_LIST" \
   "app.js"
 
-# start unapproved cache json loop
 forever start --uid "mal-unapproved-cache" \
   --logFile "${UNAP_LOGS}/forever_cache.log" \
   --append --spinSleepTime 5000 --minUptime 5000 \
   --sourceDir "$UNAP_SERVER" \
   -c "bash" "cache_loop.sh"
 
-# start unapproved http server
 forever start --uid "mal-unapproved-server" \
   --logFile "${UNAP_LOGS}/forever_http.log" \
   --append --spinSleepTime 15000 --minUptime 1000 \
