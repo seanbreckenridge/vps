@@ -60,6 +60,7 @@ source "${CUR_DIR}/directories"
 
 mkdir_if_not_exists "$CODE"
 mkdir_if_not_exists "$MID_CACHE"
+mkdir_if_not_exists "$HOME/remsync"
 
 cd_or_exit "${CODE}"
 
