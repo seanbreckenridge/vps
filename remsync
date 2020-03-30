@@ -49,12 +49,13 @@ FROM_DIR="${HOME}/.local/share/remsync/"
 # make sure credential file exists
 if [ ! -f "$SYNC_KEYFILE" ]; then
 	printf "Could not find keyfile '%s'\n" "$SYNC_KEYFILE" 1>&2
+	exit 1
 fi
 
 # make local dir if it doesnt exist
 [ ! -d "$FROM_DIR" ] && mkdir -p "$FROM_DIR"
 
-# copy files
+# if files were passed, copy files to local sync dir
 if [ "$#" -gt 0 ]; then
 	for path in "$@"; do
 		if [ -e "$path" ]; then
@@ -91,7 +92,7 @@ if [ "$#" -gt 0 ]; then
 				printf "%s/remsync/%s\n" "$BASE_URL" "$(sed -e "s#^$FROM_DIR##" <<<"$file")"
 			done < <(find "${FROM_DIR}${path}" -type f -print0)
 		else
-			# if file, just print filename
+			# if file, just use filename to get url
 			printf "%s/remsync/%s\n" "$BASE_URL" "$path"
 		fi
 	done
