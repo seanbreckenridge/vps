@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+# helper script for syncing files to my server using rsync
+# this syncs a copy of the directory, if you delete files
+# locally, it deletes it up on the remote
+#
+# remsync [FILE...] [DIR...]
+#
+# If files/directories are passed as arguments, they're copied to
+# $FROM_DIR and are then pushed to the server
+#
+# to "install", add aliases to $PATH:
+#
+# alias remsync="$HOME/code/vps/remsync"
+# alias remsync_ranger="ranger ${HOME}/.local/share/remsync"  # to quickly delete files
+#
+# files are served by nginx as static files:
+#
+# location /remsync {
+#   alias /home/sean/remsync;  # location
+#
+#   # dont serve directories
+#   try_files $uri =404;
+#   autoindex off;
+#
+#   # make sure files are downloaded instead of viewed
+#   types {}
+#   expires -1;
+#   default_type application/octet-stream;
+# }
+
+split() {
+	echo "#########################"
+}
+
+########## CONFIGURATION
+
+# server information
+SYNC_USER="sean"
+SYNC_KEYFILE="${HOME}/.ssh/vultr" # ssh keyfile
+TO_SERVER=45.63.84.181
+TO_DIR="/home/${SYNC_USER}/remsync/"
+BASE_URL="https://seanbr.com"
+
+# local information
+FROM_DIR="${HOME}/.local/share/remsync/"
+
+########## RUN
+
+# make sure credential file exists
+if [ ! -f "$SYNC_KEYFILE" ]; then
+	printf "Could not find keyfile '%s'\n" "$SYNC_KEYFILE" 1>&2
+fi
+
+# make local dir if it doesnt exist
+[ ! -d "$FROM_DIR" ] && mkdir -p "$FROM_DIR"
+
+# copy files
+if [ "$#" -gt 0 ]; then
+	for path in "$@"; do
+		if [ -e "$path" ]; then
+			cp -vR "$path" "$FROM_DIR"
+		else
+			printf "No such file: %s\n" "$path" 1>&2
+			exit 1
+		fi
+	done
+	split
+fi
+
+# sync directory
+rsync -Pavh --delete-before -e "ssh -i $SYNC_KEYFILE" "$FROM_DIR" "${SYNC_USER}@${TO_SERVER}:${TO_DIR}"
+
+split
+
+# print how much of the server is currently in use
+ssh -i "${SYNC_KEYFILE}" "${SYNC_USER}@${TO_SERVER}" \
+	"df -h ~ ;\
+printf \"remsync size: \" ;\
+du -h --max-depth 0 \"${TO_DIR}\" | cut -f1;\
+"
+
+# print urls of synced files
+if [ "$#" -gt 0 ]; then
+	split
+	# for each item
+	for path in "$@"; do
+		# if directory
+		if [ -d "$path" ]; then
+			# loop through directory and print urls
+			while IFS= read -r -d '' file; do
+				printf "%s/remsync/%s\n" "$BASE_URL" "$(sed -e "s#^$FROM_DIR##" <<<"$file")"
+			done < <(find "${FROM_DIR}${path}" -type f -print0)
+		else
+			# if file, just print filename
+			printf "%s/remsync/%s\n" "$BASE_URL" "$path"
+		fi
+	done
+fi
