@@ -1,36 +1,36 @@
 #!/bin/bash
 
 # function to check if required commands exist prior to bootstrap
-require () {
-  if [[ ! $(command -v "$1") ]]; then
-    printf "requires '%s', Install that and re-run\n" "$1"
-    exit 1
-  fi
+require() {
+	if [[ ! $(command -v "$1") ]]; then
+		printf "requires '%s', Install that and re-run\n" "$1"
+		exit 1
+	fi
 }
 
 # $1: url, $2: location
 reclone_dir() {
-  [ -d "$2" ] && rm -rf "$2"
-  git clone --depth=1 --branch=master "$1" "$2"
-  rm -rf "$2/.git"
+	[ -d "$2" ] && rm -rf "$2"
+	git clone --depth=1 --branch=master "$1" "$2"
+	rm -rf "$2/.git"
 }
 
 # removes any files currently in the REMOVE_FILES array
 remove_files() {
-  for remove_file in "${REMOVE_FILES[@]}"; do
-    rm -vrf "$remove_file"
-  done
+	for remove_file in "${REMOVE_FILES[@]}"; do
+		rm -vrf "$remove_file"
+	done
 }
 
 # $1: static site folder to move to document root root
 move_to_document_root() {
-  TARGET="${DOCUMENT_ROOT}/$(basename "$1")"
-  if [ -d "$DOCUMENT_ROOT" ]; then
-    sudo rm -rf "$TARGET"
-    sudo mv -v "$1" "$DOCUMENT_ROOT"
-  else
-    printf "Error moving files: '%s' does not exist.\n" "$DOCUMENT_ROOT"
-  fi
+	TARGET="${DOCUMENT_ROOT}/$(basename "$1")"
+	if [ -d "$DOCUMENT_ROOT" ]; then
+		sudo rm -rf "$TARGET"
+		sudo mv -v "$1" "$DOCUMENT_ROOT"
+	else
+		printf "Error moving files: '%s' does not exist.\n" "$DOCUMENT_ROOT"
+	fi
 }
 
 require git
@@ -39,7 +39,7 @@ require make
 require python3
 require realpath
 
-CUR_DIR="$(realpath "$( dirname "${BASH_SOURCE[0]}" )")"
+CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 BUILD_DIR="${CUR_DIR}/static_build"
 
 DOCUMENT_ROOT="/var/www/html"

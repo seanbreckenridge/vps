@@ -2,42 +2,42 @@
 
 # cd to a directory; exit if cd failed
 cd_or_exit() {
-  if [ ! -d "$1" ]; then
-    printf "Could not cd into directory: %s\n" "$1"
-    exit
-  else
-    cd "$1"
-  fi
+	if [ ! -d "$1" ]; then
+		printf "Could not cd into directory: %s\n" "$1"
+		exit
+	else
+		cd "$1"
+	fi
 }
 
 # require that a executable be installed
 require() {
-  if [[ ! $(command -v "$1") ]]; then
-    printf "requires %s, Install that and re-run\n" "$1"
-    exit 1
-  fi
+	if [[ ! $(command -v "$1") ]]; then
+		printf "requires %s, Install that and re-run\n" "$1"
+		exit 1
+	fi
 }
 
 # clone $1 (URL) if $2 (directory) doesnt exist
 clone_if_not_exists() {
-  if [ ! -d "$2" ]; then
-    git clone "$1" "$2"
-  fi
+	if [ ! -d "$2" ]; then
+		git clone "$1" "$2"
+	fi
 }
 
 # mkdir if first arg doesnt exist
 mkdir_if_not_exists() {
-  if [ ! -d "$1" ]; then
-    mkdir -p "$1"
-  fi
+	if [ ! -d "$1" ]; then
+		mkdir -p "$1"
+	fi
 }
 
 # make sure a file exists or exit
 expect_file() {
-  if [ ! -f "$1" ]; then
-    printf "Fatal error: Expected file at %s\n" "$1"
-    exit 1
-  fi
+	if [ ! -f "$1" ]; then
+		printf "Fatal error: Expected file at %s\n" "$1"
+		exit 1
+	fi
 }
 
 require python3.7
@@ -51,7 +51,7 @@ require realpath
 require npm
 require grunt
 require forever
-require elixir  # sudo apt install erlang-inets erlang-dev elixir
+require elixir # sudo apt install erlang-inets erlang-dev elixir
 require cargo
 require sponge
 require rsync
@@ -124,7 +124,7 @@ pipenv install
 cd_or_exit "$FOREVER_WEB"
 npm install
 if [ ! -f "users.json" ]; then
-  node add_user
+	node add_user
 fi
 grunt --force
 
@@ -135,7 +135,7 @@ python3 -m pip install --user --upgrade pip
 python3 -m pip install --user jikanpy requests
 
 cd "$DOCKER_JIKAN" && docker-compose up -d # start jikan
-"$UNAP_SERVER"/cache_loop.sh once # initial call to build cache
+"$UNAP_SERVER"/cache_loop.sh once          # initial call to build cache
 
 # nginx logs
 groups | grep -q "adm" || sudo usermod -a -G adm $(whoami)
