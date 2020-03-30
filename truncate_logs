@@ -3,6 +3,12 @@
 # Keeps the last 10000 lines of logs for each logfile in ~/logs
 # Uses sponge to make sure logs being written when
 # the file is being modified aren't lost
+#
+# Note: seems to break something about how
+# forever is connected to the file
+# probably a good idea to run:
+# truncate_logs && restart
+# and only run this periodically
 
 KEEP_LINES=10000
 
