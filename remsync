@@ -77,7 +77,7 @@ split
 ssh -i "${SYNC_KEYFILE}" "${SYNC_USER}@${TO_SERVER}" \
 	"df -h ~ ;\
 printf \"remsync size: \" ;\
-du -h --max-depth 0 \"${TO_DIR}\" | cut -f1;\
+du -h --summarize \"${TO_DIR}\" | cut -f1;\
 "
 
 # print urls of synced files
