@@ -4,5 +4,5 @@
 # sudo usermod -a -G adm $(whoami)
 
 cd "${HOME}/logs" || exit 1
-find . /var/log/nginx -type f -name "*.log" | xargs -r tail -f
+find . /var/log/nginx -type f -name "*.log" | xargs -r tail -n 50 -f
 
