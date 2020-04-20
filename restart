@@ -10,52 +10,52 @@ forever start --uid "docker-jikan" \
 	--logFile "${DOCKER_LOGS}/forever.log" \
 	--append --spinSleepTime 10000 --minUptime 10000 \
 	--sourceDir "$DOCKER_JIKAN" \
-	-c "bash" "run.sh"
+	-c "bash" "run.sh" &
 
 forever start --uid "mal-notify-bot" \
 	--logFile "${NOTIFY_LOGS}/forever.log" \
 	--append --spinSleepTime 5000 --minUptime 5000 \
 	--sourceDir "$NOTIFY_BOT" \
-	-c "pipenv run python" "bot.py"
+	-c "pipenv run python" "bot.py" &
 
 forever start --uid "discord-countdown-bot" \
 	--logFile "${COUNTDOWN_LOGS}/forever.log" \
 	--append --spinSleepTime 5000 --minUptime 5000 \
 	--sourceDir "$COUNTDOWN_BOT" \
-	-c "pipenv run python" "bot.py"
+	-c "pipenv run python" "bot.py" &
 
 forever start --uid "mal-id-cache" \
 	--logFile "${MID_LOGS}/forever.log" \
 	--append --spinSleepTime 5000 --minUptime 5000 \
 	--sourceDir "$MID_CACHE_REPO" \
-	-c "bash" "update_loop.sh"
+	-c "bash" "update_loop.sh" &
 
 forever start --uid "forever-web" \
 	--logFile "${FOREVER_LOGS}/forever.log" \
 	--append --spinSleepTime 30000 --minUptime 20000 \
 	--sourceDir "$FOREVER_WEB" \
-	"app.js"
+	"app.js" &
 
 forever start --uid "forever-list-api" \
 	--logFile "${FOREVER_LIST_LOGS}/forever.log" \
 	--append --spinSleepTime 5000 --minUptime 5000 \
 	--sourceDir "$FOREVER_LIST" \
-	"app.js"
+	"app.js" &
 
 forever start --uid "mal-unapproved-cache" \
 	--logFile "${UNAP_LOGS}/forever_cache.log" \
 	--append --spinSleepTime 5000 --minUptime 5000 \
 	--sourceDir "$UNAP_SERVER" \
-	-c "bash" "cache_loop.sh"
+	-c "bash" "cache_loop.sh" &
 
 forever start --uid "mal-unapproved-server" \
 	--logFile "${UNAP_LOGS}/forever_http.log" \
 	--append --spinSleepTime 15000 --minUptime 1000 \
 	--sourceDir "$UNAP_SERVER" \
-	-c "ruby" "server.rb"
+	-c "ruby" "server.rb" &
 
 forever start --uid "wca-userinfo" \
 	--logFile "${WCA_LOGS}/forever.log" \
 	--append --spinSleepTime 5000 --minUptime 1000 \
 	--sourceDir "${WCA_USERINFO}" \
-	-c "bash" "run_server.sh"
+	-c "bash" "run_server.sh" &
