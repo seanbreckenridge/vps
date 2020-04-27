@@ -22,7 +22,7 @@ remove_files() {
 	done
 }
 
-# $1: static site folder to move to document root root
+# $1: static site folder to move to document root
 move_to_document_root() {
 	TARGET="${DOCUMENT_ROOT}/$(basename "$1")"
 	if [ -d "$DOCUMENT_ROOT" ]; then
@@ -37,6 +37,7 @@ require git
 require elm
 require make
 require python3
+require python3.7
 require realpath
 require pipenv
 
@@ -82,6 +83,7 @@ move_to_document_root "$XKCD_DIR"
 
 cd "$ANIMESHORTS_DIR"
 pipenv --rm
+pipenv --python "$(which python3.7)"
 pipenv install
 "$ANIMESHORTS_DIR"/generate.sh
 
