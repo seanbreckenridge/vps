@@ -40,6 +40,8 @@ require python3
 require python3.7
 require realpath
 require pipenv
+require html-minifier # npm install -g html-minifier
+require uglifycss
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 BUILD_DIR="${CUR_DIR}/static_build"
@@ -87,8 +89,11 @@ pipenv --python "$(which python3.7)"
 pipenv install
 "$ANIMESHORTS_DIR"/generate.sh
 
-# fix basename
-mv "${ANIMESHORTS_DIR}/output" "${ANIMESHORTS_DIR}/animeshorts"
+# minify HTML
+html-minifier --collapse-whitespace --minify-css --minify-js --remove-attribute-quotes --remove-comments --remove-empty-attributes --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-style-link-type-attributes --remove-tag-whitespace --input-dir "${ANIMESHORTS_DIR}/output" --output-dir "${ANIMESHORTS_DIR}/animeshorts" --file-ext html
+mv "${ANIMESHORTS_DIR}/output/images" "${ANIMESHORTS_DIR}/animeshorts"
+mv "${ANIMESHORTS_DIR}/output/css" "${ANIMESHORTS_DIR}/animeshorts"
+find -name "*.css" -exec uglifycss {} --output {} \;
 
 move_to_document_root "$ANIMESHORTS_DIR/animeshorts"
 
