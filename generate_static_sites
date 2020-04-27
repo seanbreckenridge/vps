@@ -38,6 +38,7 @@ require elm
 require make
 require python3
 require realpath
+require pipenv
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 BUILD_DIR="${CUR_DIR}/static_build"
@@ -47,14 +48,16 @@ DOCUMENT_ROOT="/var/www/html"
 # specifies URI path
 DVD_DIR="${BUILD_DIR}/dvd"
 XKCD_DIR="${BUILD_DIR}/xkcd"
+ANIMESHORTS_DIR="${BUILD_DIR}/animeshorts"
 
 # clone dirs
 reclone_dir "https://github.com/seanbreckenridge/xqc-dvd" "$DVD_DIR"
 reclone_dir "https://github.com/seanbreckenridge/xkcd-favorites" "$XKCD_DIR"
+reclone_dir "https://github.com/seanbreckenridge/animeshorts" "$ANIMESHORTS_DIR"
 
 ## Build each Site
 
-## DVD DIR ################
+## DVD ####################
 
 cd "$DVD_DIR"
 make
@@ -64,7 +67,7 @@ remove_files
 
 move_to_document_root "$DVD_DIR"
 
-## XKCD DIR ###############
+## XKCD ###################
 
 cd "$XKCD_DIR"
 python3 -m pip install --user -r requirements.txt
@@ -74,5 +77,19 @@ REMOVE_FILES=("favorites.yaml" "generate.py" "LICENSE" "README.md" "requirements
 remove_files
 
 move_to_document_root "$XKCD_DIR"
+
+## ANIMESHORTS ############
+
+cd "$ANIMESHORTS_DIR"
+pipenv --rm
+pipenv install
+"$ANIMESHORTS_DIR"/generate.sh
+
+# fix basename
+mv "${ANIMESHORTS_DIR}/output" "${ANIMESHORTS_DIR}/animeshorts"
+
+move_to_document_root "$ANIMESHORTS_DIR/animeshorts"
+
+### FINISH
 
 rm -rf "$BUILD_DIR"
