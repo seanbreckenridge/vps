@@ -15,15 +15,13 @@
 #
 # files are served by nginx as static files:
 #
-# location /remsync {
-#   alias /home/sean/remsync;  # location
+# location /f {
+#   alias /home/sean/f;  # location
 #
 #   # dont serve directories
 #   try_files $uri =404;
 #   autoindex off;
 #
-#   # make sure files are downloaded instead of viewed
-#   types {}
 #   expires -1;
 #   default_type application/octet-stream;
 # }
@@ -38,7 +36,7 @@ split() {
 SYNC_USER="sean"
 SYNC_KEYFILE="${HOME}/.ssh/vultr" # ssh keyfile
 TO_SERVER=45.63.84.181
-TO_DIR="/home/${SYNC_USER}/remsync/"
+TO_DIR="/home/${SYNC_USER}/f/"
 BASE_URL="https://seanbr.com"
 
 # local information
@@ -89,11 +87,11 @@ if [ "$#" -gt 0 ]; then
 		if [ -d "$path" ]; then
 			# loop through directory and print urls
 			while IFS= read -r -d '' file; do
-				printf "%s/remsync/%s\n" "$BASE_URL" "$(sed -e "s#^$FROM_DIR##" <<<"$file")"
+				printf "%s/f/%s\n" "$BASE_URL" "$(sed -e "s#^$FROM_DIR##" <<<"$file")"
 			done < <(find "${FROM_DIR}${path}" -type f -print0)
 		else
 			# if file, just use filename to get url
-			printf "%s/remsync/%s\n" "$BASE_URL" "$path"
+			printf "%s/f/%s\n" "$BASE_URL" "$path"
 		fi
 	done
 fi
