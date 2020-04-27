@@ -30,3 +30,6 @@ This runs on an ubuntu server, but it should be OS agnostic. `vps_install` will 
 - https://github.com/seanbreckenridge/forever-webui
 - https://github.com/seanbreckenridge/foreverjs-list
 - https://github.com/seanbreckenridge/wca_userinfo
+- https://github.com/seanbreckenridge/xqc-dvd
+- https://github.com/seanbreckenridge/xkcd-favorites
+- https://github.com/seanbreckenridge/animeshorts
