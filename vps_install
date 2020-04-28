@@ -97,10 +97,10 @@ mkdir_if_not_exists "$WCA_LOGS"
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-ubuntu-14-04
 # password protect goaccess html log files
 if [ ! -e /etc/nginx/.htpasswd ]; then
-  sudo htpasswd -c /etc/nginx/.htpasswd sean
-  sudo mkdir -p /var/www/html/logs
-  touch ~/.goaccess.html
-  sudo ln -f ~/.goaccess.html /var/www/html/logs/index.html
+	sudo htpasswd -c /etc/nginx/.htpasswd sean
+	sudo mkdir -p /var/www/html/logs
+	touch ~/.goaccess.html
+	sudo ln -f ~/.goaccess.html /var/www/html/logs/index.html
 fi
 
 # elixir
@@ -108,14 +108,12 @@ mix local.hex --force
 mix local.rebar --force
 
 # setup wca userinfo
-if [ ! -e "${WCA_USERINFO}/target/release/wca_userinfo" ]
-then
-  cd_or_exit "$WCA_USERINFO"
-  cargo build --bins --release
-  rm -rf "${WCA_USERINFO}/target/release/deps"
-  rm -rf "${WCA_USERINFO}/target/release/build"
+if [ ! -e "${WCA_USERINFO}/target/release/wca_userinfo" ]; then
+	cd_or_exit "$WCA_USERINFO"
+	cargo build --bins --release
+	rm -rf "${WCA_USERINFO}/target/release/deps"
+	rm -rf "${WCA_USERINFO}/target/release/build"
 fi
-
 
 # setup foreverjs-list
 cd_or_exit "$FOREVER_LIST"
