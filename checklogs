@@ -1,0 +1,70 @@
+#!/bin/bash
+#
+# A tool to help me find malicious IPs requesting against my system
+# I dont want to use fail2ban, feels to risky to autoban people
+#
+# checklogs either queries the nginx logs for an IP
+# address, and prints the lines that match
+# or IP addresses which have made multiple requests
+# with status code 301 and have php in the request
+# (so they're probably injection attacks)
+#
+# summary queries each expected 'bad ip'
+# against the nginx logs, and prints ones that
+# arent yet in the /etc/nginx/blacklist.conf
+
+cd /var/log/nginx
+
+# how many requests to bad php files before we show the IP
+MIN_REQUESTS=10
+# pages that scrapers are fine to scrape, they somehow matched php anyways
+ALLOWED_TO_SCRAPE=("ads.txt" "robots.txt")
+
+function print_logs() {
+  zcat access.log.*.gz
+  cat access.log
+}
+
+function query_logs() {
+  case "$1" in
+  query)
+    if [ -z "$2" ]; then
+      print "give the IP address as the second argument"
+    fi
+    print_logs | grep "$2"
+    ;;
+  findphp)
+    print_logs | grep 301 | grep php | awk '{print $1}' | sort | uniq -cd | awk -v limit=$MIN_REQUESTS '$1 > limit {print $2}'
+     ;;
+   *)
+    echo "Must specify 'summarize', 'query', or 'findphp', as the argument"
+    exit 1
+    ;;
+  esac
+}
+
+
+if [ "$1" = "summarize" ]; then
+  # for each suspicious IP
+  for ip in $(query_logs findphp); do
+    # if this already isnt in the blacklist
+    if ! grep -q "$ip" /etc/nginx/blacklist.conf; then
+      # make sure this isnt just a scraper requesting robots.txt/ads.txt
+      REQUESTED_URLS="$(checklogs query "$ip" | awk '{print $7}' | sort | uniq)"
+      for allowed in "${ALLOWED_TO_SCRAPE[@]}"; do
+        REQUESTED_URLS="$(grep -v "$allowed"<<<"$REQUESTED_URLS")"
+      done
+      # if theres still malicious URLs left, print the IP and recent requests
+      # also print the nginx deny line, so I can copy it over
+      if [ "$(wc -l <<< "$REQUESTED_URLS")" -gt "0" ]; then
+        figlet "$ip"
+        printf "deny %s;\n" "$ip"
+        # print some of the 'bad urls'
+        echo "$REQUESTED_URLS"
+      fi
+    fi
+  done
+else
+  query_logs $*
+fi
+

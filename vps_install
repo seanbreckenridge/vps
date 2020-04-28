@@ -45,6 +45,7 @@ require python3.6
 require ruby
 require bundle
 require docker
+require figlet
 require docker-compose
 require pipenv
 require realpath
