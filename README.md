@@ -9,7 +9,7 @@ The [forever-webui](https://github.com/seanbreckenridge/forever-webui) allows yo
 * Puts application code into `~/code`
 * Centralizes logs in `~/logs`
 
-This runs on an Ubuntu server, but it should be OS agnostic. `vps_install` will throw a fatal error if I'm missing any required commands.
+This runs on an Ubuntu server, but it should be OS agnostic. `vps_install` will throw a fatal error before starting if I'm missing any required commands. My server runs `nginx`, lots of the log based commands assume that.
 
 * [`vps_install`](./vps_install) clones and sets up environments for each application. Checks that you have corresponding commands/packages installed and that required credential/files are in the right location, installs virtual environments/packages for each application.
 * [`restart`](./restart) kills all forever processes and restarts each of them
