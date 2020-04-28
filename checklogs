@@ -9,7 +9,7 @@
 # with status code 301 and have php in the request
 # (so they're probably injection attacks)
 #
-# summary queries each expected 'bad ip'
+# findbad queries each expected 'bad ip'
 # against the nginx logs, and prints ones that
 # arent yet in the /etc/nginx/blacklist.conf
 
@@ -35,16 +35,16 @@ function query_logs() {
 		print_logs | grep "$2"
 		;;
 	findphp)
-		print_logs | grep 301 | egrep -i 'myadmin|cgi|asp|php|wp-login|wp-admin|joomla' | awk '{print $1}' | sort | uniq -cd | awk -v limit=$MIN_REQUESTS '$1 > limit {print $2}'
+		print_logs | grep 301 | egrep -i 'myadmin|cgi|asp|php|wp-login|wp-admin|joomla' | awk '{print $1}' | sort | uniq -cd | awk -v limit=$MIN_REQUESTS '$1 >= limit {print $2}'
 		;;
 	*)
-		echo "Must specify 'summarize', 'query', or 'findphp', as the argument" 2>&1
+		echo "Must specify 'findbad', 'query', or 'findphp', as the argument" 2>&1
 		exit 1
 		;;
 	esac
 }
 
-if [ "$1" = "summarize" ]; then
+if [ "$1" = "findbad" ]; then
 	# for each suspicious IP
 	for ip in $(query_logs findphp); do
 		# if this already isnt in the blacklist
