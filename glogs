@@ -4,10 +4,10 @@
 cd /var/log/nginx
 case "$1" in
   recent)
-    goaccess --log-format=COMBINED access.log
+    tail -f access.log | goaccess --log-format=COMBINED -
     ;;
   all)
-   { cat access.log; zcat access.log.*.gz; } | goaccess --log-format=COMBINED -
+   { zcat access.log.*.gz && tail -f access.log; } | goaccess --log-format=COMBINED -
      ;;
   *)
     echo "Must specify 'recent' or 'all' as argument"
