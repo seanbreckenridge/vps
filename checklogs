@@ -29,7 +29,7 @@ function query_logs() {
 	case "$1" in
 	query)
 		if [ -z "$2" ]; then
-			echo "Give the IP address to query for as the second argument" 2>&1
+			echo "Give a string to grep for to query as the second argument" 2>&1
 			exit 1
 		fi
 		print_logs | grep "$2"
