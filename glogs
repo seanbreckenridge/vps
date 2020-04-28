@@ -9,7 +9,10 @@ case "$1" in
   all)
    { zcat access.log.*.gz && tail -f -n +1 access.log; } | goaccess --log-format=COMBINED -
      ;;
+  html)
+   { zcat access.log.*.gz && cat access.log; } | sudo goaccess --log-format=COMBINED -o "${HOME}/.goaccess.html" -
+     ;;
   *)
-    echo "Must specify 'recent' or 'all' as argument"
+    echo "Must specify 'recent', 'all', or 'html' as argument"
     exit 1
 esac

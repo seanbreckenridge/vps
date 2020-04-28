@@ -57,6 +57,7 @@ require sponge
 require rsync
 require zcat
 require goaccess
+require htpasswd
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
@@ -90,6 +91,15 @@ mkdir_if_not_exists "$DOCKER_LOGS"
 mkdir_if_not_exists "$FOREVER_LOGS"
 mkdir_if_not_exists "$FOREVER_LIST_LOGS"
 mkdir_if_not_exists "$WCA_LOGS"
+
+# https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-ubuntu-14-04
+# password protect goaccess html log files
+if [ ! -e /etc/nginx/.htpasswd ]; then
+  sudo htpasswd -c /etc/nginx/.htpasswd sean
+  sudo mkdir -p /var/www/html/logs
+  touch ~/.goaccess.html
+  sudo ln -f ~/.goaccess.html /var/www/html/logs/index.html
+fi
 
 # elixir
 mix local.hex --force
