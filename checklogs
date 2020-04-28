@@ -60,7 +60,7 @@ if [ "$1" = "summarize" ]; then
         figlet "$ip"
         printf "deny %s;\n" "$ip"
         # print some of the 'bad urls'
-        echo "$REQUESTED_URLS"
+        echo "$REQUESTED_URLS" | tail -n 15
       fi
     fi
   done
