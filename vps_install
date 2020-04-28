@@ -55,6 +55,8 @@ require elixir # sudo apt install erlang-inets erlang-dev elixir
 require cargo
 require sponge
 require rsync
+require zcat
+require goaccess
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"

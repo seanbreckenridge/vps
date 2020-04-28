@@ -14,6 +14,7 @@ This runs on an ubuntu server, but it should be OS agnostic. `vps_install` will 
 * [`vps_install`](./vps_install) clones and sets up environments for each application. Checks that you have corresponding commands/packages installed and that required crededential/files are in the right location, installs virtual environments/packages for each application.
 * [`restart`](./restart) kills all forever processes and restarts each of them
 * [`logs`](./logs) streams the logs from all applications
+* [`glogs`](./glogs) uses [goaccess](https://goaccess.io/) to visualize nginx logs.
 * [`truncate_logs`](./truncate_logs) safely truncates the log files down to 10000 lines each
 * [`backup`](./backup) copies cache/token files to a tar.gz so they can be backed up. [run every few hours w/ cron](https://gist.github.com/seanbreckenridge/191556c41f0ebd86e7dbec8a8e929fbf)
 * [`generate_static_sites`](./generate_static_sites) builds my static websites and places them in `/var/www/html`.

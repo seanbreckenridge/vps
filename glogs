@@ -1,0 +1,15 @@
+#!/bin/bash
+# uses goaccess to summarize nginx logs
+
+cd /var/log/nginx
+case "$1" in
+  recent)
+    goaccess --log-format=COMBINED access.log
+    ;;
+  all)
+   { cat access.log; zcat access.log.*.gz; } | goaccess --log-format=COMBINED -
+     ;;
+  *)
+    echo "Must specify 'recent' or 'all' as argument"
+    exit 1
+esac
