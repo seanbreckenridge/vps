@@ -29,7 +29,8 @@ function query_logs() {
 	case "$1" in
 	query)
 		if [ -z "$2" ]; then
-			print "give the IP address as the second argument"
+			echo "Give the IP address to query for as the second argument" 2>&1
+			exit 1
 		fi
 		print_logs | grep "$2"
 		;;
@@ -37,7 +38,7 @@ function query_logs() {
 		print_logs | grep 301 | grep php | awk '{print $1}' | sort | uniq -cd | awk -v limit=$MIN_REQUESTS '$1 > limit {print $2}'
 		;;
 	*)
-		echo "Must specify 'summarize', 'query', or 'findphp', as the argument"
+		echo "Must specify 'summarize', 'query', or 'findphp', as the argument" 2>&1
 		exit 1
 		;;
 	esac
