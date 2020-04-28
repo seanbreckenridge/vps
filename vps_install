@@ -94,8 +94,14 @@ mix local.hex --force
 mix local.rebar --force
 
 # setup wca userinfo
-cd_or_exit "$WCA_USERINFO"
-cargo build --bins --release
+if [ ! -e "${WCA_USERINFO}/target/release/wca_userinfo" ]
+then
+  cd_or_exit "$WCA_USERINFO"
+  cargo build --bins --release
+  rm -rf "${WCA_USERINFO}/target/release/deps"
+  rm -rf "${WCA_USERINFO}/target/release/build"
+fi
+
 
 # setup foreverjs-list
 cd_or_exit "$FOREVER_LIST"
@@ -108,7 +114,7 @@ pipenv --python "$(command -v python3.7)"
 pipenv install -r "$MID_CACHE_REPO/requirements.txt"
 pipenv run python3 setup.py install
 pipenv run mal_id_cache --init-dir
-pipenv run mal_id_cache --force-state 0
+#pipenv run mal_id_cache --force-state 0
 
 # setup notify bot
 cd_or_exit "$NOTIFY_BOT"
