@@ -60,13 +60,14 @@ require zcat
 require goaccess
 require htpasswd
 require uglifycss
+require egrep
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
 
 mkdir_if_not_exists "$CODE"
 mkdir_if_not_exists "$MID_CACHE"
-mkdir_if_not_exists "$HOME/remsync"
+mkdir_if_not_exists "$HOME/f"
 
 cd_or_exit "${CODE}"
 

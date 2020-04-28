@@ -4,16 +4,38 @@
 # 0 */1 * * * /home/sean/vps/glogs html
 # /var/www/html/logs/index.html is symlinked to ~/.goaccess.html
 
+# once a user is in /etc/nginx/blacklist.conf
+# dont show it in the glogs file
 cd /var/log/nginx
+
+function generate_blacklist_regex() {
+	# a | separated list of IPs to filter from logs
+	# each item starts with ^, so that the IP matches
+	# the beginning of the line
+	EGREP_FILTER_LIST=""
+	while IFS= read -r line; do
+		# get the banned IP
+		ip=$(awk '{print $2}' <<<"$line" | tr -d ';')
+		EGREP_FILTER_LIST="${EGREP_FILTER_LIST}^${ip} |"
+	done <"/etc/nginx/blacklist.conf"
+	EGREP_FILTER_LIST="${EGREP_FILTER_LIST::-1}"
+	echo "$EGREP_FILTER_LIST"
+}
+
+function filter_banned_users() {
+	# remove banned users from access logs
+	egrep -v "$(generate_blacklist_regex)"
+}
+
 case "$1" in
 recent)
-	tail -f -n +1 access.log | goaccess --log-format=COMBINED -
+	tail -f -n +1 access.log | filter_banned_users | goaccess --log-format=COMBINED -
 	;;
 all)
-	{ zcat access.log.*.gz && tail -f -n +1 access.log; } | goaccess --log-format=COMBINED -
+	{ zcat access.log.*.gz && tail -f -n +1 access.log; } | filter_banned_users | goaccess --log-format=COMBINED -
 	;;
 html)
-	{ zcat access.log.*.gz && cat access.log; } | goaccess --log-format=COMBINED -o "${HOME}/.goaccess.html" -
+	{ zcat access.log.*.gz && cat access.log; } | filter_banned_users | goaccess --log-format=COMBINED -o "${HOME}/.goaccess.html" -
 	;;
 *)
 	echo "Must specify 'recent', 'all', or 'html' as argument"
