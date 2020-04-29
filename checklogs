@@ -10,7 +10,7 @@
 # (so they're probably injection attacks)
 # +# 'checklogs query <QUERY>' runs a grep against the logs
 # 'checklogs findphp' prints any ips from the logs that look malicious
-# 'checklogs summarize' finds malicious users that arent in my blacklist already
+# 'checklogs findbad' finds malicious users that arent in my blacklist already
 # and prints some information about them
 #
 # findbad queries each expected 'bad ip'
