@@ -1,6 +1,6 @@
 # vps
 
-Scripts used for installing/managing/restarting/monitoring processes on my server.
+Scripts used for installing/managing/restarting/monitoring processes on my server (and my server).
 
 Uses [forever](https://github.com/foreversd/forever) to run background processes.
 
