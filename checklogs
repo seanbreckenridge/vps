@@ -8,6 +8,10 @@
 # or IP addresses which have made multiple requests
 # with status code 301 and have php in the request
 # (so they're probably injection attacks)
+# +# 'checklogs query <QUERY>' runs a grep against the logs
+# 'checklogs findphp' prints any ips from the logs that look malicious
+# 'checklogs summarize' finds malicious users that arent in my blacklist already
+# and prints some information about them
 #
 # summary queries each expected 'bad ip'
 # against the nginx logs, and prints ones that
@@ -16,12 +20,12 @@
 cd /var/log/nginx
 
 # how many requests to bad php files before we show the IP
-MIN_REQUESTS=5
+MIN_REQUESTS=3
 # pages that scrapers are fine to scrape, they somehow matched php anyways
 ALLOWED_TO_SCRAPE=("ads.txt" "robots.txt")
 
 function print_logs() {
-	zcat access.log.*.gz
+	zcat $(ls -1t access.log.*.gz)
 	cat access.log
 }
 

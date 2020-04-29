@@ -60,7 +60,6 @@ require zcat
 require goaccess
 require htpasswd
 require uglifycss
-require egrep
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
