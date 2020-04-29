@@ -20,7 +20,7 @@
 cd /var/log/nginx
 
 # how many requests to bad php files before we show the IP
-MIN_REQUESTS=3
+MIN_REQUESTS=5
 # pages that scrapers are fine to scrape, they somehow matched php anyways
 ALLOWED_TO_SCRAPE=("ads.txt" "robots.txt")
 
@@ -60,7 +60,7 @@ if [ "$1" = "findbad" ]; then
 			done
 			# if theres still malicious URLs left, print the IP and recent requests
 			# also print the nginx deny line, so I can copy it over
-			if [ "$(wc -l <<<"$REQUESTED_URLS")" -gt "0" ]; then
+			if [ "$(wc -l <<<"$REQUESTED_URLS")" -gt "$MIN_REQUESTS" ]; then
 				figlet "$ip"
 				printf "deny %s;\n" "$ip"
 				# print some of the 'bad urls'
