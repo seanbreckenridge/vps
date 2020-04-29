@@ -59,3 +59,10 @@ forever start --uid "wca-userinfo" \
 	--append --spinSleepTime 5000 --minUptime 1000 \
 	--sourceDir "${WCA_USERINFO}" \
 	-c "bash" "run_server.sh" &
+
+
+forever start --uid "albums" \
+	--logFile "${ALBUMS_LOGS}/forever.log" \
+	--append --spinSleepTime 5000 --minUptime 5000 \
+	--sourceDir "${ALBUMS}/server" \
+	-c "bash" "run_server.sh" &

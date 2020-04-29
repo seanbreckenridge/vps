@@ -67,6 +67,7 @@ source "${CUR_DIR}/directories"
 mkdir_if_not_exists "$CODE"
 mkdir_if_not_exists "$MID_CACHE"
 mkdir_if_not_exists "$HOME/f"
+mkdir_if_not_exists "$HOME/.credentials"
 
 cd_or_exit "${CODE}"
 
@@ -79,10 +80,12 @@ clone_if_not_exists "https://github.com/seanbreckenridge/forever-webui" "$FOREVE
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_BOT/mal-id-cache"
 clone_if_not_exists "https://github.com/seanbreckenridge/foreverjs-list" "$FOREVER_LIST"
 clone_if_not_exists "https://github.com/seanbreckenridge/wca_userinfo" "$WCA_USERINFO"
+clone_if_not_exists "https://github.com/seanbreckenridge/albums" "$ALBUMS"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
 expect_file "$COUNTDOWN_BOT/token.yaml"
+expect_file "${HOME}/.credentials/sheets.googleapis.com-python-nextalbums.json"
 
 # create log directories if they dont exist
 mkdir_if_not_exists "$MID_LOGS"
@@ -93,6 +96,7 @@ mkdir_if_not_exists "$DOCKER_LOGS"
 mkdir_if_not_exists "$FOREVER_LOGS"
 mkdir_if_not_exists "$FOREVER_LIST_LOGS"
 mkdir_if_not_exists "$WCA_LOGS"
+mkdir_if_not_exists "$ALBUMS_LOGS"
 
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-ubuntu-14-04
 # password protect goaccess html log files
@@ -106,6 +110,11 @@ fi
 # elixir
 mix local.hex --force
 mix local.rebar --force
+
+# setup albums server
+cd_or_exit "$ALBUMS/server"
+pipenv --python "$(command -v python3.7)"
+pipenv install
 
 # setup wca userinfo
 if [ ! -e "${WCA_USERINFO}/target/release/wca_userinfo" ]; then
