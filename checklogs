@@ -39,7 +39,7 @@ function query_logs() {
 		print_logs | grep "$2"
 		;;
 	findphp)
-		print_logs | grep 301 | egrep -i 'myadmin|cgi|asp|php|wp-login|wp-admin|joomla' | awk '{print $1}' | sort | uniq -cd | awk -v limit=$MIN_REQUESTS '$1 >= limit {print $2}'
+		print_logs | grep -E '301|400' | grep -E -i 'myadmin|cgi|asp|php|wp-login|wp-admin|joomla' | awk '{print $1}' | sort | uniq -cd | awk -v limit=$MIN_REQUESTS '$1 >= limit {print $2}'
 		;;
 	*)
 		echo "Must specify 'findbad', 'query', or 'findphp', as the argument" 2>&1
@@ -54,7 +54,7 @@ if [ "$1" = "findbad" ]; then
 		# if this already isnt in the blacklist
 		if ! grep -q "$ip" /etc/nginx/blacklist.conf; then
 			# make sure this isnt just a scraper requesting robots.txt/ads.txt
-			REQUESTED_URLS="$(checklogs query "$ip" | awk '{print $7}' | sort | uniq)"
+			REQUESTED_URLS="$(query_logs query "$ip" | awk '{print $7}' | sort | uniq)"
 			for allowed in "${ALLOWED_TO_SCRAPE[@]}"; do
 				REQUESTED_URLS="$(grep -v "$allowed" <<<"$REQUESTED_URLS")"
 			done
@@ -69,5 +69,5 @@ if [ "$1" = "findbad" ]; then
 		fi
 	done
 else
-	query_logs $*
+	query_logs "$@"
 fi
