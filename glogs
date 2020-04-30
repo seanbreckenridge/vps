@@ -2,7 +2,6 @@
 # uses goaccess to summarize nginx logs
 # glogs html is run every hour with:
 # 0 */1 * * * /home/sean/vps/glogs html
-# /var/www/html/logs/index.html is symlinked to ~/.goaccess.html
 
 # once a user is in /etc/nginx/blacklist.conf
 # dont show it in the glogs file
@@ -46,7 +45,7 @@ all)
 	;;
 html)
 	# generate goaccess html report for all logs
-	{ zcat access.log.*.gz && cat access.log; } | filter_banned_users | goaccess --log-format=COMBINED -o "${HOME}/.goaccess.html" -
+	{ zcat access.log.*.gz && cat access.log; } | filter_banned_users | goaccess --log-format=COMBINED -o "${HOME}/.goaccess_html/index.html" -
 	;;
 *)
 	echo "Must specify 'recent', 'all', 'raw', or 'html' as argument"

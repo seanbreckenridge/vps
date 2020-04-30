@@ -102,9 +102,7 @@ mkdir_if_not_exists "$ALBUMS_LOGS"
 # password protect goaccess html log files
 if [ ! -e /etc/nginx/.htpasswd ]; then
 	sudo htpasswd -c /etc/nginx/.htpasswd sean
-	sudo mkdir -p /var/www/html/logs
-	touch ~/.goaccess.html
-	sudo ln -f ~/.goaccess.html /var/www/html/logs/index.html
+	mkdir -p ~/.goaccess_html
 fi
 
 # elixir
