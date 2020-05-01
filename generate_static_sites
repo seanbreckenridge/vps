@@ -93,7 +93,7 @@ pipenv install
 html-minifier --collapse-whitespace --minify-css --minify-js --remove-attribute-quotes --remove-comments --remove-empty-attributes --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-style-link-type-attributes --remove-tag-whitespace --input-dir "${ANIMESHORTS_DIR}/output" --output-dir "${ANIMESHORTS_DIR}/animeshorts" --file-ext html
 mv "${ANIMESHORTS_DIR}/output/images" "${ANIMESHORTS_DIR}/animeshorts"
 mv "${ANIMESHORTS_DIR}/output/css" "${ANIMESHORTS_DIR}/animeshorts"
-find . -name "*.css" -exec uglifycss {} --output {} \;
+find "${ANIMESHORTS_DIR}" -name "*.css" -exec uglifycss {} --output {} \;
 
 move_to_document_root "$ANIMESHORTS_DIR/animeshorts"
 
