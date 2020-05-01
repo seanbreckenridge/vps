@@ -50,6 +50,8 @@ html)
   # ./banned.html includes banned users
   { zcat access.log.*.gz && cat access.log; } | goaccess --log-format=COMBINED -o "${HOME}/.goaccess_html/banned.html" -
   echo
+  # add link from main page to banned page
+  sed -i -e "s|Dashboard</span>|Dashboard</span><span style=\"font-size: 50%; margin-left: 20px; letter-spacing: 0.2px\"><a href=\"./banned.html\">banned users</a></span>|" "${HOME}/.goaccess_html/index.html"
 	;;
 *)
 	echo "Must specify 'recent', 'all', 'raw', or 'html' as argument"
