@@ -13,7 +13,6 @@ This runs on an Ubuntu server, but it should be OS agnostic. `vps_install` will 
 * [`super`](./super) lets me interact with the underlying `supervisord`/`supervisorctl` processes with my environment variables/configuration.
 * [`logs`](./logs) streams the logs from all applications
 * [`glogs`](./glogs) uses [goaccess](https://goaccess.io/) to visualize nginx logs. `glogs html` generates a html summary, putting output at `~/.goaccess_html/index.html`, which is served with an nginx `alias`. Password protection for that route created in `vps_install`. That filters out any IPs already in `/etc/nginx/blacklist.conf`
-* [`checklogs`](./checklogs) allows to me to query the nginx logs for possible malicious IPs. It matches injection-like (301, php) URLs, makes sure those IPs arent already in my `/etc/nginx/blacklist.conf`, and prints out nginx `deny` lines so I can copy them into the blacklist if they look malicious.
 * [`backup`](./backup) copies cache/token files to a tar.gz so they can be backed up. [run every few hours w/ cron](https://gist.github.com/seanbreckenridge/191556c41f0ebd86e7dbec8a8e929fbf)
 * [`generate_static_sites`](./generate_static_sites) builds my static websites and places them in `/var/www/html`.
 * [`remsync`](./remsync) is a script thats run on my machine, which rsyncs files from a local directory to the server. That directory is served with nginx, so I can sync something to the server from my CLI and send someone a link. [example output](https://gist.github.com/seanbreckenridge/2b11729859d248069a0eabf2e91e2800).
