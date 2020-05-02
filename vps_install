@@ -4,7 +4,7 @@
 cd_or_exit() {
 	if [ ! -d "$1" ]; then
 		printf "Could not cd into directory: %s\n" "$1"
-		exit
+		exit 1
 	else
 		cd "$1"
 	fi
