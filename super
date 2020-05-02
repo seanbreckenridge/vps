@@ -1,6 +1,6 @@
 #!/bin/bash
-# A wrapper script for supervisor
-# which sources my environment varialbes
+# A wrapper script for supervisord/supervisorctl
+# which sources my environment variables
 
 # source application environment variables
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
@@ -27,6 +27,8 @@ case "$1" in
     supervisorctl --configuration="${CUR_DIR}/supervisord.conf" "$@"
     ;;
   *)
-    echo "Must specify command" 2>&1
+    # parse this case statement to get the choices
+    SPECIFY_CHOIES="$(grep -P '^\s*\w+\)\s*$' "${BASH_SOURCE[0]}" | tr -d "[ )]" | sed -e 's|$|,|' | xargs | rev | cut -c 2- | rev)"
+    printf "Must specify one of: %s\n" "$SPECIFY_CHOIES" 2>&1
     ;;
 esac
