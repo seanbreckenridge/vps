@@ -49,12 +49,10 @@ require figlet
 require docker-compose
 require pipenv
 require realpath
-require npm
-require grunt
-require forever
+require supervisord
+require jq
 require elixir # sudo apt install erlang-inets erlang-dev elixir
 require cargo
-require sponge
 require rsync
 require zcat
 require goaccess
@@ -63,6 +61,8 @@ require uglifycss
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
+
+expect_file "${CUR_DIR}/secret"
 
 mkdir_if_not_exists "$CODE"
 mkdir_if_not_exists "$MID_CACHE"
@@ -76,9 +76,7 @@ clone_if_not_exists "https://github.com/seanbreckenridge/mal-notify-bot" "$NOTIF
 clone_if_not_exists "https://github.com/seanbreckenridge/discord-countdown-bot" "$COUNTDOWN_BOT"
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-unapproved" "$UNAP_SERVER"
 clone_if_not_exists "https://github.com/seanbreckenridge/docker-jikan" "$DOCKER_JIKAN"
-clone_if_not_exists "https://github.com/seanbreckenridge/forever-webui" "$FOREVER_WEB"
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_BOT/mal-id-cache"
-clone_if_not_exists "https://github.com/seanbreckenridge/foreverjs-list" "$FOREVER_LIST"
 clone_if_not_exists "https://github.com/seanbreckenridge/wca_userinfo" "$WCA_USERINFO"
 clone_if_not_exists "https://github.com/seanbreckenridge/albums" "$ALBUMS"
 
@@ -93,10 +91,9 @@ mkdir_if_not_exists "$NOTIFY_LOGS"
 mkdir_if_not_exists "$COUNTDOWN_LOGS"
 mkdir_if_not_exists "$UNAP_LOGS"
 mkdir_if_not_exists "$DOCKER_LOGS"
-mkdir_if_not_exists "$FOREVER_LOGS"
-mkdir_if_not_exists "$FOREVER_LIST_LOGS"
 mkdir_if_not_exists "$WCA_LOGS"
 mkdir_if_not_exists "$ALBUMS_LOGS"
+mkdir_if_not_exists "$SUPERVISOR_LOGS"
 
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-ubuntu-14-04
 # password protect goaccess html log files
@@ -122,11 +119,6 @@ if [ ! -e "${WCA_USERINFO}/target/release/wca_userinfo" ]; then
 	rm -rf "${WCA_USERINFO}/target/release/build"
 fi
 
-# setup foreverjs-list
-cd_or_exit "$FOREVER_LIST"
-[ -z "$FOREVER_LIST_TOKEN" ] && echo "Set the FOREVER_LIST_TOKEN environment variable" && exit 1
-npm install
-
 # setup mal id cache
 cd_or_exit "$MID_CACHE_REPO"
 pipenv --python "$(command -v python3.7)"
@@ -144,14 +136,6 @@ pipenv install
 cd_or_exit "$COUNTDOWN_BOT"
 pipenv --python "$(command -v python3.6)"
 pipenv install
-
-# setup forever web
-cd_or_exit "$FOREVER_WEB"
-npm install
-if [ ! -f "users.json" ]; then
-	node add_user
-fi
-grunt --force
 
 # setup unapproved server
 cd_or_exit "$UNAP_SERVER"

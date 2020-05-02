@@ -1,0 +1,32 @@
+#!/bin/bash
+# A wrapper script for supervisor
+# which sources my environment varialbes
+
+# source application environment variables
+CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+source "${CUR_DIR}/directories"
+export VPS_DIR="$CUR_DIR"
+# load password
+SUPERVISOR_PW="$(jq -jr '.supervisor_password' "${CUR_DIR}/secret")"
+export SUPERVISOR_PW
+
+case "$1" in
+  kill)
+    pkill -x supervisord
+    tail -f "${SUPERVISOR_LOGS}/"*.log
+    ;;
+  daemon)
+    supervisord --configuration="${CUR_DIR}/supervisord.conf"
+    ;;
+  foreground)
+    # run supervisor
+    supervisord --configuration="${CUR_DIR}/supervisord.conf" -n
+  ;;
+  ctl)
+    shift # remove 'ctl' from arg list
+    supervisorctl --configuration="${CUR_DIR}/supervisord.conf" "$@"
+    ;;
+  *)
+    echo "Must specify command" 2>&1
+    ;;
+esac

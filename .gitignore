@@ -3,3 +3,4 @@ tags*
 /backup_dir
 *.tar.gz
 *.zip
+secret
