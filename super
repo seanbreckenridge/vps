@@ -19,6 +19,7 @@ function run_super() {
 			pkill -x supervisord
 		else
 			echo "No supervisord process running..." 1>&2
+			exit 1
 		fi
 		;;
 	daemon)
@@ -36,6 +37,7 @@ function run_super() {
 		# parse this case statement to get the choices
 		SPECIFY_CHOIES="$(grep -P '^\s*\w+\)\s*$' "${BASH_SOURCE[0]}" | tr -d "[ )]" | sed -e 's|$|,|' | xargs | rev | cut -c 2- | rev)"
 		printf "Must specify one of: %s\n" "$SPECIFY_CHOIES" 1>&2
+		exit 1
 		;;
 	esac
 }
