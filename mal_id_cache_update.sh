@@ -10,4 +10,3 @@ ssh-add -l || ssh-add "${HOME}/.ssh/github"
 
 cd "${MID_CACHE_REPO}"
 exec pipenv run mal_id_cache --loop --commit
-
