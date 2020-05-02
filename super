@@ -1,6 +1,10 @@
 #!/bin/bash
 # A wrapper script for supervisord/supervisorctl
 # which sources my environment variables
+#
+# This supports completion, run
+# complete -F _longopt super in ~/.bash_profile
+# to generate autocompletion for bash
 
 # source application environment variables
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
@@ -12,9 +16,9 @@ export SUPERVISOR_PW
 
 function run_super() {
 	case "$1" in
-	kill)
+	--kill)
 		if pgrep -x supervisord >/dev/null 2>&1; then
-			run_super ctl "stop all"
+			run_super --ctl "stop all"
 			tail "$SUPERVISOR_LOGS"/*.log
 			pkill -x supervisord
 		else
@@ -22,21 +26,21 @@ function run_super() {
 			exit 1
 		fi
 		;;
-	daemon)
+	--daemon)
 		supervisord --configuration="${CUR_DIR}/supervisord.conf"
 		;;
-	foreground)
+	--foreground)
 		# run supervisor
 		supervisord --configuration="${CUR_DIR}/supervisord.conf" -n
 		;;
-	ctl)
+	--ctl)
 		shift # remove 'ctl' from arg list
 		supervisorctl --configuration="${CUR_DIR}/supervisord.conf" "$@"
 		;;
-	*)
+	-h | --help | *)
 		# parse this case statement to get the choices
-		SPECIFY_CHOIES="$(grep -P '^\s*\w+\)\s*$' "${BASH_SOURCE[0]}" | tr -d "[ )]" | sed -e 's|$|,|' | xargs | rev | cut -c 2- | rev)"
-		printf "Must specify one of: %s\n" "$SPECIFY_CHOIES" 1>&2
+		SPECIFY_CHOIES="$(grep -P '^\s*--\w+\)\s*$' "${HOME}/vps/super" | tr -d '[ )\t]')"
+		printf "Must specify one of:\n%s\n" "$SPECIFY_CHOIES" 1>&2
 		exit 1
 		;;
 	esac
