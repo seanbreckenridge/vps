@@ -41,7 +41,6 @@ expect_file() {
 }
 
 require python3.7
-require python3.6
 require ruby
 require bundle
 require docker
@@ -129,12 +128,12 @@ pipenv run mal_id_cache --init-dir
 
 # setup notify bot
 cd_or_exit "$NOTIFY_BOT"
-pipenv --python "$(command -v python3.6)"
+pipenv --python "$(command -v python3.7)"
 pipenv install
 
 # setup countdown bot
 cd_or_exit "$COUNTDOWN_BOT"
-pipenv --python "$(command -v python3.6)"
+pipenv --python "$(command -v python3.7)"
 pipenv install
 
 # setup unapproved server
