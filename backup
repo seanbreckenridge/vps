@@ -25,6 +25,14 @@ expect_file_and_copy() {
 	cp "$1" "$2"
 }
 
+expect_dir_and_copy() {
+	if [ ! -d "$1" ]; then
+		printf "Fatal Error: no such directory %s\n" "$1"
+		exit 1
+	fi
+	cp -Rv "$1" "$BACKUP_DIR"
+}
+
 optional_copy() {
 	if [ -f "$1" ]; then
 		cp "$1" "$2"
@@ -64,6 +72,10 @@ expect_file_and_copy "$NOTIFY_BOT/old" "$BACKUP_NOTIFY"
 expect_file_and_copy "$COUNTDOWN_BOT/token.yaml" "$BACKUP_COUNTDOWN"
 optional_copy "$COUNTDOWN_BOT/server.db" "$BACKUP_COUNTDOWN"
 expect_file_and_copy "$UNAP_SERVER/unapproved_info.json" "$BACKUP_UNAPPROVED"
+
+expect_dir_and_copy "/etc/netdata"
+expect_dir_and_copy "/etc/nginx"
+expect_dir_and_copy "/etc/fail2ban"
 
 tree "$BACKUP_DIR"
 tar -cvf "$BACKUP_TAR_NAME" "$BACKUP_DIR_NAME" && printf "Created '%s'\n" "$BACKUP_TAR_NAME"

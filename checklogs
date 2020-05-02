@@ -25,7 +25,6 @@ MIN_REQUESTS=5
 ALLOWED_TO_SCRAPE=("ads.txt" "robots.txt")
 
 function print_logs() {
-	zcat $(ls -1t access.log.*.gz)
 	cat access.log
 }
 
