@@ -110,6 +110,9 @@ fi
 mix local.hex --force
 mix local.rebar --force
 
+# install glue assets
+npm install --prefix "$GLUE/assets"
+
 # setup albums server
 cd_or_exit "$ALBUMS/server"
 pipenv --python "$(command -v python3.7)"
