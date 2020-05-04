@@ -22,6 +22,7 @@ This runs on an Debian server, but it should be OS agnostic. `vps_install` will 
 
 ### Applications:
 
+- https://github.com/seanbreckenridge/glue
 - https://github.com/seanbreckenridge/mal-id-cache
 - https://github.com/seanbreckenridge/mal-notify-bot
 - https://github.com/seanbreckenridge/discord-countdown-bot
