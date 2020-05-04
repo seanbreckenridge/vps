@@ -7,25 +7,6 @@
 # dont show it in the glogs file
 cd /var/log/nginx
 
-function generate_blacklist_regex() {
-	# a | separated list of IPs to filter from logs
-	# each item starts with ^, so that the IP matches
-	# the beginning of the line
-	EGREP_FILTER_LIST=""
-	while IFS= read -r line; do
-		# get the banned IP
-		ip=$(awk '{print $2}' <<<"$line" | tr -d ';')
-		EGREP_FILTER_LIST="${EGREP_FILTER_LIST}^${ip} |"
-	done <"/etc/nginx/blacklist.conf"
-	EGREP_FILTER_LIST="${EGREP_FILTER_LIST::-1}"
-	echo "$EGREP_FILTER_LIST"
-}
-
-function filter_banned_users() {
-	# remove banned users from access logs
-	grep -v -E "$(generate_blacklist_regex)"
-}
-
 case "$1" in
 raw)
 	# just print the logs
@@ -36,15 +17,15 @@ raw)
 	;;
 recent)
 	# goaccess terminal recent logs
-	tail -f -n +1 access.log | filter_banned_users | goaccess --log-format=COMBINED -
+	tail -f -n +1 access.log | goaccess --log-format=COMBINED -
 	;;
 all)
 	# goaccess terminal all logs
-	tail -f -n +1 access.log | filter_banned_users | goaccess --log-format=COMBINED -
+	tail -f -n +1 access.log | goaccess --log-format=COMBINED -
 	;;
 html)
 	# generate goaccess html report for all logs
-	cat access.log | filter_banned_users | goaccess --log-format=COMBINED -o "${HOME}/.goaccess_html/index.html" -
+	cat access.log | goaccess --log-format=COMBINED -o "${HOME}/.goaccess_html/index.html" -
 	echo
 	# ./banned.html includes banned users
 	cat access.log | goaccess --log-format=COMBINED -o "${HOME}/.goaccess_html/banned.html" -
