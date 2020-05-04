@@ -4,6 +4,8 @@ Scripts used for installing/managing/restarting/monitoring processes on my serve
 
 Uses [supervisord](http://supervisord.org/) to manage processes.
 
+[My fork of superhooks](https://github.com/seanbreckenridge/superhooks) notifies me in discord whenever one of my processes dies, as does [netdata](https://www.netdata.cloud/) if there are any outliers in the hundreds of metrics it takes.
+
 * Puts application code into `~/code`
 * Centralizes logs in `~/logs`
 
