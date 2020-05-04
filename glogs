@@ -10,10 +10,7 @@ cd /var/log/nginx
 case "$1" in
 raw)
 	# just print the logs
-	# sort from: https://rstefan.blogspot.com/2014/01/how-to-merge-and-sort-by-date-nginx.html
-	{
 		cat access.log
-	} | sort -t ' ' -k 4.9,4.12n -k 4.5,4.7M -k 4.2,4.3n -k 4.14,4.15n -k 4.17,4.18n -k 4.20,4.21n
 	;;
 recent)
 	# goaccess terminal recent logs
@@ -24,14 +21,8 @@ all)
 	tail -f -n +1 access.log | goaccess --log-format=COMBINED -
 	;;
 html)
-	# generate goaccess html report for all logs
-	cat access.log | goaccess --log-format=COMBINED -o "${HOME}/.goaccess_html/index.html" -
-	echo
-	# ./banned.html includes banned users
-	cat access.log | goaccess --log-format=COMBINED -o "${HOME}/.goaccess_html/banned.html" -
-	echo
-	# add link from main page to banned page
-	sed -i -e "s|Dashboard</span>|Dashboard</span><span style=\"font-size: 50%; margin-left: 20px; letter-spacing: 0.2px\"><a href=\"./banned.html\">banned users</a></span>|" "${HOME}/.goaccess_html/index.html"
+	goaccess --log-format=COMBINED -o "${HOME}/.goaccess_html/banned.html" access.log
+  echo
 	;;
 *)
 	echo "Must specify 'recent', 'all', 'raw', or 'html' as argument"
