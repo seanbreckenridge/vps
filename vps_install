@@ -83,6 +83,7 @@ expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
 expect_file "$COUNTDOWN_BOT/token.yaml"
 expect_file "${HOME}/.credentials/sheets.googleapis.com-python-nextalbums.json"
+expect_file "${HOME}/.discord_web_hook.txt"
 
 # create log directories if they dont exist
 mkdir_if_not_exists "$MID_LOGS"
@@ -141,6 +142,9 @@ cd_or_exit "$UNAP_SERVER"
 bundle install
 python3 -m pip install --user --upgrade pip
 python3 -m pip install --user jikanpy requests
+
+# install superhooks-discord
+python3 -m pip install --user git+https://github.com/seanbreckenridge/superhooks
 
 cd "$DOCKER_JIKAN" && docker-compose up -d # start jikan
 "$UNAP_SERVER"/cache_loop.sh once          # initial call to build cache
