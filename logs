@@ -4,4 +4,6 @@
 # sudo usermod -a -G adm $(whoami)
 
 cd "${HOME}/logs" || exit 1
+#find /var/log/nginx /var/log/fail2ban.log . -type f -name "*.log"
 find /var/log/nginx /var/log/fail2ban.log . -type f -name "*.log" | xargs -r tail -n 50 -f
+
