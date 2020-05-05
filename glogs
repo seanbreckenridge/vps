@@ -9,12 +9,12 @@ cd /var/log/nginx
 
 case "$1" in
 status)
-  [ -z "$2" ] && echo "specify HTTP status as second argument" && exit 1
-  awk -v field=$2 '$9 == field {print}' access.log
-  ;;
+	[ -z "$2" ] && echo "specify HTTP status as second argument" && exit 1
+	awk -v field=$2 '$9 == field {print}' access.log
+	;;
 raw)
 	# just print the logs
-		cat access.log
+	cat access.log
 	;;
 recent)
 	# goaccess terminal recent logs
@@ -26,7 +26,7 @@ all)
 	;;
 html)
 	goaccess --log-format=COMBINED -o "${HOME}/.goaccess_html/banned.html" access.log
-  echo
+	echo
 	;;
 *)
 	echo "Must specify 'recent', 'all', 'raw', 'status', or 'html' as argument"

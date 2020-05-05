@@ -57,7 +57,7 @@ require zcat
 require goaccess
 require htpasswd
 require uglifycss
-require psql  # remind me to setup postgres for glue
+require psql # remind me to setup postgres for glue
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
@@ -80,7 +80,6 @@ clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_
 clone_if_not_exists "git@github.com:seanbreckenridge/wca_userinfo.git" "$WCA_USERINFO"
 clone_if_not_exists "git@github.com:seanbreckenridge/albums.git" "$ALBUMS"
 clone_if_not_exists "git@github.com:seanbreckenridge/glue.git" "$GLUE"
-
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
