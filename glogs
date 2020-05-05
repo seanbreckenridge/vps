@@ -29,7 +29,7 @@ html)
   echo
 	;;
 *)
-	echo "Must specify 'recent', 'all', 'raw', or 'html' as argument"
+	echo "Must specify 'recent', 'all', 'raw', 'status', or 'html' as argument"
 	exit 1
 	;;
 esac
