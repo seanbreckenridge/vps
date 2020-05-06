@@ -25,7 +25,7 @@ all)
 	tail -f -n +1 access.log | goaccess --log-format=COMBINED -
 	;;
 html)
-	goaccess --log-format=COMBINED -o "${HOME}/.goaccess_html/banned.html" access.log
+	goaccess --log-format=COMBINED -o "${HOME}/.goaccess_html/index.html" access.log
 	echo
 	;;
 *)
