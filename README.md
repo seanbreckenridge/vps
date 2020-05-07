@@ -14,7 +14,7 @@ This runs on an Debian server, but it should be OS agnostic. `vps_install` will 
 * [`vps_install`](./vps_install) clones and sets up environments for each application. Checks that you have corresponding commands/packages installed and that required credential/files are in the right location, installs virtual environments/packages for each application.
 * [`super`](./super) lets me interact with the underlying `supervisord`/`supervisorctl` processes with my environment variables/configuration.
 * [`logs`](./logs) streams the logs from all applications
-* [`glogs`](./glogs) uses [goaccess](https://goaccess.io/) to visualize nginx logs. `glogs html` generates a html summary, putting output at `~/.goaccess_html/index.html`, which is served with an nginx `alias`. Password protection for that route created in `vps_install`. That filters out any IPs already in `/etc/nginx/blacklist.conf`
+* [`glogs`](./glogs) uses [goaccess](https://goaccess.io/) to visualize nginx logs.
 * [`backup`](./backup) copies cache/token files to a tar.gz so they can be backed up. [run every few hours w/ cron](https://gist.github.com/seanbreckenridge/191556c41f0ebd86e7dbec8a8e929fbf)
 * [`generate_static_sites`](./generate_static_sites) builds my static websites and places them in `/var/www/html`.
 * [`remsync`](./remsync) is a script thats run on my machine, which rsyncs files from a local directory to the server. That directory is served with nginx, so I can sync something to the server from my CLI and send someone a link. [example output](https://gist.github.com/seanbreckenridge/2b11729859d248069a0eabf2e91e2800).
