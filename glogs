@@ -1,10 +1,6 @@
 #!/bin/bash
 # uses goaccess to summarize nginx logs
-# glogs html is run every hour with:
-# 0 */1 * * * /home/sean/vps/glogs html
 
-# once a user is in /etc/nginx/blacklist.conf
-# dont show it in the glogs file
 cd /var/log/nginx
 
 case "$1" in
@@ -24,12 +20,8 @@ all)
 	# goaccess terminal all logs
 	tail -f -n +1 access.log | goaccess --log-format=COMBINED -
 	;;
-html)
-	goaccess --log-format=COMBINED -o "${HOME}/.goaccess_html/index.html" access.log
-	echo
-	;;
 *)
-	echo "Must specify 'recent', 'all', 'raw', 'status', or 'html' as argument"
+	echo "Must specify 'recent', 'all', 'raw', 'status' as argument"
 	exit 1
 	;;
 esac
