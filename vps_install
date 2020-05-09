@@ -44,7 +44,6 @@ require python3.7
 require ruby
 require bundle
 require docker
-require figlet
 require docker-compose
 require pipenv
 require realpath
@@ -110,7 +109,7 @@ mix local.hex --force
 mix local.rebar --force
 
 # install glue assets
-npm install --prefix "$GLUE/assets"
+npm install --prefix "$GLUE/apps/glue/assets"
 
 # setup albums server
 cd_or_exit "$ALBUMS/server"
