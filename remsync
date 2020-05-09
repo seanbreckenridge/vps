@@ -35,7 +35,7 @@ split() {
 # server information
 SYNC_USER="sean"
 SYNC_KEYFILE="${HOME}/.ssh/vultr" # ssh keyfile
-TO_SERVER=144.202.109.193
+TO_SERVER=140.82.50.43
 TO_DIR="/home/${SYNC_USER}/f/"
 BASE_URL="https://sean.fish"
 
