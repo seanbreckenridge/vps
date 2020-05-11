@@ -73,7 +73,7 @@ move_to_document_root "$DVD_DIR"
 ## XKCD ###################
 
 cd "$XKCD_DIR"
-python3 -m pip install --user -r requirements.txt
+python3 -m pip install --user -U -r requirements.txt
 python3 generate.py
 
 REMOVE_FILES=("favorites.yaml" "generate.py" "LICENSE" "README.md" "requirements.txt" ".nojekyll" ".gitignore")
