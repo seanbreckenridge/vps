@@ -15,12 +15,16 @@ raw)
 	# just print the logs
 	cat access.log
 	;;
+filtered)
+  # print all logs, without my IP/netdata/logs
+	cat access.log | grep -iv -E "$FILTER_STR"
+  ;;
 all)
 	# goaccess terminal all logs
 	tail -f -n +1 access.log | grep -iv -E "$FILTER_STR" | goaccess --log-format=COMBINED -
 	;;
 *)
-	echo "Must specify 'all', 'raw', 'status' as argument"
+	echo "Must specify 'all', 'raw', 'filtered' or 'status' as argument"
 	exit 1
 	;;
 esac
