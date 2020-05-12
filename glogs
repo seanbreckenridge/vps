@@ -3,6 +3,9 @@
 
 cd /var/log/nginx
 
+MY_IP="$(pinky -fbw | awk 'NR < 2 {print $5}')"
+FILTER_STR="/netdata|/logs|^::1|^127.0.0.1|^${MY_IP}"
+
 case "$1" in
 status)
 	[ -z "$2" ] && echo "specify HTTP status as second argument" && exit 1
@@ -12,16 +15,12 @@ raw)
 	# just print the logs
 	cat access.log
 	;;
-recent)
-	# goaccess terminal recent logs
-	tail -f -n +1 access.log | goaccess --log-format=COMBINED -
-	;;
 all)
 	# goaccess terminal all logs
-	tail -f -n +1 access.log | goaccess --log-format=COMBINED -
+	tail -f -n +1 access.log | grep -iv -E "$FILTER_STR" | goaccess --log-format=COMBINED -
 	;;
 *)
-	echo "Must specify 'recent', 'all', 'raw', 'status' as argument"
+	echo "Must specify 'all', 'raw', 'status' as argument"
 	exit 1
 	;;
 esac
