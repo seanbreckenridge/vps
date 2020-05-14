@@ -67,6 +67,7 @@ mkdir_if_not_exists "$CODE"
 mkdir_if_not_exists "$MID_CACHE"
 mkdir_if_not_exists "$HOME/f"
 mkdir_if_not_exists "$HOME/.credentials"
+mkdir_if_not_exists "$HOME/.todo"
 
 cd_or_exit "${CODE}"
 
@@ -79,12 +80,14 @@ clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_
 clone_if_not_exists "git@github.com:seanbreckenridge/wca_userinfo.git" "$WCA_USERINFO"
 clone_if_not_exists "git@github.com:seanbreckenridge/albums.git" "$ALBUMS"
 clone_if_not_exists "git@github.com:seanbreckenridge/glue.git" "$GLUE"
+clone_if_not_exists "git@github.com:seanbreckenridge/todotxt_deadline_notify.git" "$TODO_NOTIFY"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
 expect_file "$COUNTDOWN_BOT/token.yaml"
 expect_file "${HOME}/.credentials/sheets.googleapis.com-python-nextalbums.json"
 expect_file "${HOME}/.discord_web_hook.txt"
+expect_file "${HOME}/.todo/discord.txt"
 
 # create log directories if they dont exist
 mkdir_if_not_exists "$MID_LOGS"
@@ -95,6 +98,7 @@ mkdir_if_not_exists "$DOCKER_LOGS"
 mkdir_if_not_exists "$WCA_LOGS"
 mkdir_if_not_exists "$ALBUMS_LOGS"
 mkdir_if_not_exists "$GLUE_LOGS"
+mkdir_if_not_exists "$TODO_NOTIFY_LOGS"
 mkdir_if_not_exists "$SUPERVISOR_LOGS"
 
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-ubuntu-14-04
@@ -107,6 +111,11 @@ fi
 # elixir
 mix local.hex --force
 mix local.rebar --force
+
+cd_or_exit "$TODO_NOTIFY"
+mix deps.get
+mix compile
+mix test
 
 # install glue assets
 npm install --prefix "$GLUE/apps/glue/assets"
