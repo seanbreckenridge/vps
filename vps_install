@@ -118,6 +118,8 @@ mix compile
 mix test
 
 # install glue assets
+cd_or_exit "$GLUE"
+mix ecto.create
 npm install --prefix "$GLUE/apps/glue/assets"
 
 # setup albums server
