@@ -49,7 +49,7 @@ require pipenv
 require realpath
 require supervisord
 require jq
-require elixir # sudo apt install erlang-inets erlang-dev elixir erlang-parsetools
+require elixir # sudo apt install erlang-inets erlang-dev elixir erlang-parsetools erlang-xmerl
 require cargo
 require rsync
 require zcat
