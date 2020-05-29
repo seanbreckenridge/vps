@@ -4,7 +4,7 @@ Scripts used for installing/managing/restarting/monitoring processes on my serve
 
 Uses [supervisord](http://supervisord.org/) to manage processes.
 
-[My fork of superhooks](https://github.com/seanbreckenridge/superhooks) notifies me in discord whenever one of my processes dies, as does [netdata](https://www.netdata.cloud/) if there are any outliers in the hundreds of metrics it takes.
+[My fork of superhooks](https://gitlab.com/seanbreckenridge/superhooks) notifies me in discord whenever one of my processes dies, as does [netdata](https://www.netdata.cloud/) if there are any outliers in the hundreds of metrics it takes.
 
 * Puts application code into `~/code`
 * Centralizes logs in `~/logs`
@@ -22,16 +22,16 @@ This runs on an Debian server, but it should be OS agnostic. `vps_install` will 
 
 ### Applications:
 
-- https://github.com/seanbreckenridge/glue
+- https://gitlab.com/seanbreckenridge/glue
 - https://github.com/seanbreckenridge/mal-id-cache
-- https://github.com/seanbreckenridge/mal-notify-bot
-- https://github.com/seanbreckenridge/discord-countdown-bot
-- https://github.com/seanbreckenridge/mal-unapproved
-- https://github.com/seanbreckenridge/docker-jikan
-- https://github.com/seanbreckenridge/wca_userinfo
-- [seanbreckenridge/albums](https://github.com/seanbreckenridge/albums) (server)
-- https://github.com/seanbreckenridge/todotxt_deadline_notify
-- https://github.com/seanbreckenridge/xqc-dvd
-- https://github.com/seanbreckenridge/xkcd-favorites
-- https://github.com/seanbreckenridge/animeshorts
+- https://gitlab.com/seanbreckenridge/mal-notify-bot
+- https://gitlab.com/seanbreckenridge/discord-countdown-bot
+- https://gitlab.com/seanbreckenridge/mal-unapproved
+- https://gitlab.com/seanbreckenridge/docker-jikan
+- https://gitlab.com/seanbreckenridge/wca_userinfo
+- [seanbreckenridge/albums](https://gitlab.com/seanbreckenridge/albums) (server)
+- https://gitlab.com/seanbreckenridge/todotxt_deadline_notify
+- https://gitlab.com/seanbreckenridge/xqc-dvd
+- https://gitlab.com/seanbreckenridge/xkcd-favorites
+- https://gitlab.com/seanbreckenridge/animeshorts
 

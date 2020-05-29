@@ -72,15 +72,15 @@ mkdir_if_not_exists "$HOME/.todo"
 cd_or_exit "${CODE}"
 
 clone_if_not_exists "git@github.com:seanbreckenridge/mal-id-cache.git" "$MID_CACHE_REPO"
-clone_if_not_exists "git@github.com:seanbreckenridge/mal-notify-bot.git" "$NOTIFY_BOT"
-clone_if_not_exists "git@github.com:seanbreckenridge/discord-countdown-bot.git" "$COUNTDOWN_BOT"
-clone_if_not_exists "git@github.com:seanbreckenridge/mal-unapproved.git" "$UNAP_SERVER"
-clone_if_not_exists "git@github.com:seanbreckenridge/docker-jikan.git" "$DOCKER_JIKAN"
+clone_if_not_exists "git@gitlab.com:seanbreckenridge/mal-notify-bot.git" "$NOTIFY_BOT"
+clone_if_not_exists "git@gitlab.com:seanbreckenridge/discord-countdown-bot.git" "$COUNTDOWN_BOT"
+clone_if_not_exists "git@gitlab.com:seanbreckenridge/mal-unapproved.git" "$UNAP_SERVER"
+clone_if_not_exists "git@gitlab.com:seanbreckenridge/docker-jikan.git" "$DOCKER_JIKAN"
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_BOT/mal-id-cache"
-clone_if_not_exists "git@github.com:seanbreckenridge/wca_userinfo.git" "$WCA_USERINFO"
-clone_if_not_exists "git@github.com:seanbreckenridge/albums.git" "$ALBUMS"
-clone_if_not_exists "git@github.com:seanbreckenridge/glue.git" "$GLUE"
-clone_if_not_exists "git@github.com:seanbreckenridge/todotxt_deadline_notify.git" "$TODO_NOTIFY"
+clone_if_not_exists "git@gitlab.com:seanbreckenridge/wca_userinfo.git" "$WCA_USERINFO"
+clone_if_not_exists "git@gitlab.com:seanbreckenridge/albums.git" "$ALBUMS"
+clone_if_not_exists "git@gitlab.com:seanbreckenridge/glue.git" "$GLUE"
+clone_if_not_exists "git@gitlab.com:seanbreckenridge/todotxt_deadline_notify.git" "$TODO_NOTIFY"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
@@ -160,7 +160,7 @@ python3 -m pip install --user --upgrade pip
 python3 -m pip install --user jikanpy requests
 
 # install superhooks-discord
-python3 -m pip install --user git+https://github.com/seanbreckenridge/superhooks
+python3 -m pip install --user git+https://gitlab.com/seanbreckenridge/superhooks
 
 cd "$DOCKER_JIKAN" && docker-compose up -d # start jikan
 "$UNAP_SERVER"/cache_loop.sh once          # initial call to build cache
