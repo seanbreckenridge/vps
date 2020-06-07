@@ -26,8 +26,8 @@ remove_files() {
 move_to_document_root() {
 	TARGET="${DOCUMENT_ROOT}/$(basename "$1")"
 	if [ -d "$DOCUMENT_ROOT" ]; then
-		sudo rm -rf "$TARGET"
-		sudo mv -v "$1" "$DOCUMENT_ROOT"
+		rm -rf "$TARGET"
+		mv -v "$1" "$DOCUMENT_ROOT"
 	else
 		printf "Error moving files: '%s' does not exist.\n" "$DOCUMENT_ROOT"
 	fi
@@ -46,7 +46,8 @@ require uglifycss
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 BUILD_DIR="${CUR_DIR}/static_build"
 
-DOCUMENT_ROOT="/var/www/html"
+DOCUMENT_ROOT="${HOME}/static_files"
+[ ! -d "$DOCUMENT_ROOT" ] && mkdir -p "$DOCUMENT_ROOT"
 
 # specifies URI path
 DVD_DIR="${BUILD_DIR}/dvd"
