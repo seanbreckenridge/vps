@@ -1,5 +1,5 @@
 #!/bin/bash
-# shorten <url> [path}
+# shorten <url> [path]
 # shorten url to path
 # if path isn't provided, generates
 # a random string
