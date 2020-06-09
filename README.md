@@ -30,7 +30,7 @@ This runs on an Debian server, but it should be OS agnostic. `vps_install` will 
 - https://gitlab.com/seanbreckenridge/mal-unapproved
 - https://gitlab.com/seanbreckenridge/docker-jikan
 - https://gitlab.com/seanbreckenridge/wca_userinfo
-- [gitlab.com/seanbreckenridge/albums](https://gitlab.com/seanbreckenridge/albums) (server)
+- https://gitlab.com/seanbreckenridge/albums (server)
 - https://gitlab.com/seanbreckenridge/todotxt_deadline_notify
 - https://gitlab.com/seanbreckenridge/xqc-dvd
 - https://gitlab.com/seanbreckenridge/xkcd-favorites
