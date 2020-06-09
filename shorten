@@ -23,5 +23,5 @@ if [ $(grep -qi error <<<"$SHORTURL_PART") ]; then
 else
 	echo "${UPLOAD_TO}${SHORTURL_PART}"
 	# copy the url to my clipboard
-	echo "${UPLOAD_TO}${SHORTURL_PART}" | clipcopy
+	echo -n "${UPLOAD_TO}${SHORTURL_PART}" | clipcopy
 fi
