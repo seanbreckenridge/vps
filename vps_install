@@ -60,8 +60,6 @@ require uglifycss
 require psql # remind me to setup postgres for glue
 require go
 
-
-
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
 
@@ -105,6 +103,7 @@ mkdir_if_not_exists "$GLUE_LOGS"
 mkdir_if_not_exists "$TODO_NOTIFY_LOGS"
 mkdir_if_not_exists "$SUPERVISOR_LOGS"
 mkdir_if_not_exists "$SUBPATH_SERVE_LOGS"
+mkdir_if_not_exists "$SHORTURL_DATA"
 
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-ubuntu-14-04
 # password protect goaccess html log files
@@ -117,6 +116,10 @@ fi
 mix local.hex --force
 mix local.rebar --force
 
+# short URLs
+go get -v -u "gitlab.com/seanbreckenridge/no-db-static-shorturl"
+
+# dotfiles
 LOCAL_DOTFILES="$HOME/.dotfiles"
 clone_if_not_exists "https://gitlab.com/seanbreckenridge/dotfiles.git" "$LOCAL_DOTFILES"
 go get -v -u "gitlab.com/seanbreckenridge/subpath-serve"

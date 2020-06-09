@@ -35,4 +35,5 @@ This runs on an Debian server, but it should be OS agnostic. `vps_install` will 
 - https://gitlab.com/seanbreckenridge/xkcd-favorites
 - https://gitlab.com/seanbreckenridge/animeshorts
 - https://gitlab.com/seanbreckenridge/subpath-serve
+- https://gitlab.com/seanbreckenridge/no-db-static-shorturl
 

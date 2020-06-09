@@ -14,6 +14,8 @@ export ALBUMS="${CODE}/albums"
 export GLUE="${CODE}/glue"
 export TODO_NOTIFY="${CODE}/todotxt_deadline_notify"
 
+export SHORTURL_DATA="${HOME}/shorturls"
+
 export LOGS_BASE="${HOME}/logs"
 export MID_LOGS="${LOGS_BASE}/mal-id-cache"
 export NOTIFY_LOGS="${LOGS_BASE}/mal-notify-bot"
