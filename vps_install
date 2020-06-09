@@ -120,7 +120,6 @@ mix local.rebar --force
 LOCAL_DOTFILES="$HOME/.dotfiles"
 clone_if_not_exists "https://gitlab.com/seanbreckenridge/dotfiles.git" "$LOCAL_DOTFILES"
 go get -v -u "gitlab.com/seanbreckenridge/subpath-serve"
-exit 0
 
 cd_or_exit "$TODO_NOTIFY"
 mix deps.get
