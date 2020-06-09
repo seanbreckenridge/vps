@@ -1,0 +1,27 @@
+#!/bin/bash
+# shorten <url> [path}
+# shorten url to path
+# if path isn't provided, generates
+# a random string
+
+UPLOAD_TO="https://sean.fish/s/"
+
+SHORTURL_TOKEN="${SHORTURL_TOKEN:?No shorturl token set}"
+# handle user input
+URL="${1:?No url provided to shorten}"
+HASH="$2"
+
+# create JSON string
+data=$(printf '{"key":"%s", "url":"%s","hash":"%s"}' "$SHORTURL_TOKEN" "$URL" "$HASH")
+
+# make request to server
+SHORTURL_PART="$(curl --silent "Content-Type: application/json" --request POST --data "$data" "$UPLOAD_TO")"
+
+if [ $(grep -qi error <<<"$SHORTURL_PART") ]; then
+	# if there was an error
+	echo "$SHORTURL_PART"
+else
+	echo "${UPLOAD_TO}${SHORTURL_PART}"
+	# copy the url to my clipboard
+	echo "${UPLOAD_TO}${SHORTURL_PART}" | clipcopy
+fi
