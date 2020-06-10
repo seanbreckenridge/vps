@@ -102,7 +102,6 @@ mkdir_if_not_exists "$ALBUMS_LOGS"
 mkdir_if_not_exists "$GLUE_LOGS"
 mkdir_if_not_exists "$TODO_NOTIFY_LOGS"
 mkdir_if_not_exists "$SUPERVISOR_LOGS"
-mkdir_if_not_exists "$SUBPATH_SERVE_LOGS"
 mkdir_if_not_exists "$SHORTURL_DATA"
 
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-ubuntu-14-04

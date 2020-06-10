@@ -26,6 +26,5 @@ export WCA_LOGS="${LOGS_BASE}/wca_userinfo"
 export ALBUMS_LOGS="${LOGS_BASE}/albums"
 export GLUE_LOGS="${LOGS_BASE}/glue"
 export TODO_NOTIFY_LOGS="${LOGS_BASE}/todotxt_deadline_notify"
-export SUBPATH_SERVE_LOGS="${LOGS_BASE}/subpath-serve"
 
 export SUPERVISOR_LOGS="${LOGS_BASE}/supervisor"
