@@ -1,8 +1,13 @@
 #!/bin/bash
 # shorten <url> [path]
-# shorten url to path
-# if path isn't provided, generates
-# a random string
+# uses my URL shortener (https://gitlab.com/seanbreckenridge/no-db-static-shorturl)
+# to shorten a URL to some random string
+# if 'path' (second argument) isn't provided,
+# the server generates a random hash
+# e.g.
+# shorten "https://wiki.archlinux.org/index.php/File_opener" open
+# would return "https://sean.fish/s/open"
+# which now redirects to the archwiki link
 
 UPLOAD_TO="https://sean.fish/s/"
 
