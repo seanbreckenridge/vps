@@ -60,7 +60,7 @@ require uglifycss
 require psql # remind me to setup postgres for glue
 require go
 
-CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+readonly CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
 
 expect_file "${CUR_DIR}/secret"
@@ -119,7 +119,7 @@ mix local.rebar --force
 go get -v -u "gitlab.com/seanbreckenridge/no-db-static-shorturl"
 
 # dotfiles
-LOCAL_DOTFILES="$HOME/.dotfiles"
+readonly LOCAL_DOTFILES="$HOME/.dotfiles"
 clone_if_not_exists "https://gitlab.com/seanbreckenridge/dotfiles.git" "$LOCAL_DOTFILES"
 go get -v -u "gitlab.com/seanbreckenridge/subpath-serve"
 
