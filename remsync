@@ -91,7 +91,12 @@ if [ "$#" -gt 0 ]; then
 			done < <(find "${FROM_DIR}${path}" -type f -print0)
 		else
 			# if file, just use filename to get url
-			printf "%s/f/%s\n" "$BASE_URL" "$path"
+			FILEURL="$(printf "%s/f/%s\n" "$BASE_URL" "$path")"
+			echo "$FILEURL"
+			[ "$#" -eq 1 ] && {
+				printf "%s" "$FILEURL" | xclip -selection clipboard
+				notify-send "Copied ${FILEURL} to your clipboard"
+			}
 		fi
 	done
 fi
