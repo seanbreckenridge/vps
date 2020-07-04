@@ -30,7 +30,7 @@ expect_dir_and_copy() {
 		printf "Fatal Error: no such directory %s\n" "$1"
 		exit 1
 	fi
-	cp -Rv "$1" "$BACKUP_DIR"
+	cp -R "$1" "$BACKUP_DIR"
 }
 
 optional_copy() {
@@ -47,7 +47,6 @@ delete_if_exists() {
 
 require tar
 require realpath
-require tree
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 cd "$CUR_DIR"
@@ -80,6 +79,5 @@ expect_dir_and_copy "/etc/nginx"
 expect_dir_and_copy "/etc/fail2ban"
 expect_dir_and_copy "$HOME/.todo"
 
-tree "$BACKUP_DIR"
 tar -cvf "$BACKUP_TAR_NAME" "$BACKUP_DIR_NAME" && printf "Created '%s'\n" "$BACKUP_TAR_NAME"
 delete_if_exists "$BACKUP_DIR"
