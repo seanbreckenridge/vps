@@ -16,9 +16,9 @@ raw)
 	cat access.log
 	;;
 filtered)
-  # print all logs, without my IP/netdata/logs
+	# print all logs, without my IP/netdata/logs
 	cat access.log | grep -iv -E "$FILTER_STR"
-  ;;
+	;;
 all)
 	# goaccess terminal all logs
 	tail -f -n +1 access.log | grep -iv -E "$FILTER_STR" | goaccess --log-format=COMBINED -

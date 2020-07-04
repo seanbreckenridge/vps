@@ -174,7 +174,7 @@ python3 -m pip install --user jikanpy requests
 python3 -m pip install --user git+https://gitlab.com/seanbreckenridge/superhooks
 
 cd "$DOCKER_JIKAN" && docker-compose up -d # start jikan
-"$UNAP_SERVER"/cache_loop once          # initial call to build cache
+"$UNAP_SERVER"/cache_loop once             # initial call to build cache
 "$UNAP_SERVER"/uglify_css
 
 # nginx logs

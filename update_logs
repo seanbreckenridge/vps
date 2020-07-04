@@ -8,7 +8,6 @@ OUTPUT_FILE="${HOME}/.goaccess_html/index.html"
 NGINX_LOGFILE=/var/log/nginx/access.log
 
 while true; do
-  grep -ivE "$FILTER_STR" "$NGINX_LOGFILE" | goaccess --log-format=COMBINED -o "$OUTPUT_FILE" -
-  sleep 600
+	grep -ivE "$FILTER_STR" "$NGINX_LOGFILE" | goaccess --log-format=COMBINED -o "$OUTPUT_FILE" -
+	sleep 600
 done
-
