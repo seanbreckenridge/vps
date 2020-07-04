@@ -10,8 +10,13 @@
 #
 # to "install", add aliases to $PATH:
 #
-# alias remsync="$HOME/code/vps/remsync"
-# alias remsync_ranger="ranger ${HOME}/.local/share/remsync"  # to quickly delete files
+# # to sync
+# alias remsync="$REPOS/vps/remsync"
+# alias remsync_public="REMSYNC_PUBLIC=1 $REPOS/vps/remsync"  # to push to /F/ (public index)
+#
+# # to use ranger to quickly remove/add files
+# alias remsync_ranger="ranger $HOME/.local/share/remsync && remsync"
+# alias remsync_public_ranger="ranger $HOME/.local/share/remsync_public && remsync_public"
 #
 # files are served by nginx as static files:
 #
@@ -33,14 +38,20 @@ split() {
 ########## CONFIGURATION
 
 # server information
-SYNC_USER="sean"
-SYNC_KEYFILE="${HOME}/.ssh/vultr" # ssh keyfile
-TO_SERVER=140.82.50.43
-TO_DIR="/home/${SYNC_USER}/f/"
-BASE_URL="https://sean.fish"
+readonly SYNC_USER="sean"
+readonly SYNC_KEYFILE="${HOME}/.ssh/vultr" # ssh keyfile
+readonly TO_SERVER=140.82.50.43
+declare TO_DIR="/home/${SYNC_USER}/f/"
+[[ -n "$REMSYNC_PUBLIC" ]] && TO_DIR="/home/${SYNC_USER}/F/"
+readonly BASE_URL="https://sean.fish"
+readonly TO_DIR
 
 # local information
-FROM_DIR="${HOME}/.local/share/remsync/"
+declare FROM_DIR="${HOME}/.local/share/remsync/"
+[[ -n "$REMSYNC_PUBLIC" ]] && FROM_DIR="${HOME}/.local/share/remsync_public/"
+readonly FROM_DIR
+
+echo "$FROM_DIR"
 
 ########## RUN
 
@@ -51,12 +62,12 @@ if [ ! -f "$SYNC_KEYFILE" ]; then
 fi
 
 # make local dir if it doesnt exist
-[ ! -d "$FROM_DIR" ] && mkdir -p "$FROM_DIR"
+[[ ! -d "$FROM_DIR" ]] && mkdir -p "$FROM_DIR"
 
 # if files were passed, copy files to local sync dir
-if [ "$#" -gt 0 ]; then
+if (($# > 0)); then
 	for path in "$@"; do
-		if [ -e "$path" ]; then
+		if [[ -r "$path" ]]; then
 			cp -vR "$path" "$FROM_DIR"
 		else
 			printf "No such file: %s\n" "$path" 1>&2
@@ -77,23 +88,25 @@ ssh -o IPQoS=0 -i "${SYNC_KEYFILE}" "${SYNC_USER}@${TO_SERVER}" \
 printf \"remsync size: \" ;\
 du -h --summarize \"${TO_DIR}\" | cut -f1;\
 "
-
 # print urls of synced files
-if [ "$#" -gt 0 ]; then
+if (($# > 0)); then
 	split
+	# get the private/public part of the URL (f/F)
+	dir_part="$(rev <<<"$TO_DIR" | cut -d'/' -f 2)"
 	# for each item
 	for path in "$@"; do
+		basename_path="$(basename "$path")"
 		# if directory
-		if [ -d "$path" ]; then
+		if [[ -d "$path" ]]; then
 			# loop through directory and print urls
 			while IFS= read -r -d '' file; do
-				printf "%s/f/%s\n" "$BASE_URL" "$(sed -e "s#^$FROM_DIR##" <<<"$file")"
+				printf "%s/%s/%s\n" "$BASE_URL" "$dir_part" "$file"
 			done < <(find "${FROM_DIR}${path}" -type f -print0)
 		else
 			# if file, just use filename to get url
-			FILEURL="$(printf "%s/f/%s\n" "$BASE_URL" "$path")"
+			FILEURL="$(printf "%s/%s/%s\n" "$BASE_URL" "$dir_part" "$basename_path")"
 			echo "$FILEURL"
-			[ "$#" -eq 1 ] && {
+			[[ "$#" == 1 && -f "$1" ]] && {
 				printf "%s" "$FILEURL" | xclip -selection clipboard
 				notify-send "Copied ${FILEURL} to your clipboard"
 			}
