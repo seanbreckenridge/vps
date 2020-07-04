@@ -18,7 +18,7 @@ This runs on an Debian server, but it should be OS agnostic. `vps_install` will 
 * [`update_logs`](./update_logs) uses [goaccess](https://goaccess.io/) to visualize nginx logs
 * [`backup`](./backup) copies cache/token files to a tar.gz so they can be backed up. [run every few hours w/ cron](https://gist.github.com/seanbreckenridge/191556c41f0ebd86e7dbec8a8e929fbf)
 * [`generate_static_sites`](./generate_static_sites) builds my static websites and places them in `/var/www/html`.
-* [`remsync`](./remsync) is a script thats run on my machine, which rsyncs files from a local directory to the server. That directory is served with nginx, so I can sync something to the server from my CLI and send someone a link. [example output](https://gist.github.com/seanbreckenridge/2b11729859d248069a0eabf2e91e2800)
+* [`remsync`](./remsync) is a script thats run on my machine, which rsyncs files from a local directory to the server. That directory is served with nginx, so I can sync something to the server from my CLI and send someone a link. [example output](https://gist.github.com/seanbreckenridge/2b11729859d248069a0eabf2e91e2800). Has to endpoints, `f` and `F`, which specify private (a non-autoindexed nginx listing) and public indexes.
 * [`shorten`](./shorten) creates a shortened url using [this](https://gitlab.com/seanbreckenridge/no-db-static-shorturl)
 * [`directories`](./directories) is a helper script sourced at the top of other scripts that defines common application location environment variables
 
