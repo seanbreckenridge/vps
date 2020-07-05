@@ -176,9 +176,10 @@ python3 -m pip install --user git+https://gitlab.com/seanbreckenridge/superhooks
 cd "$DOCKER_JIKAN" && docker-compose up -d # start jikan
 "$UNAP_SERVER"/cache_loop once             # initial call to build cache
 "$UNAP_SERVER"/uglify_css
+cd "$DOCKER_JIKAN" && docker-compose down
 
 # nginx logs
-groups | grep -q "adm" || sudo usermod -a -G adm $(whoami)
+groups | grep -q "adm" || sudo usermod -a -G adm "$(whoami)"
 
 # configure crontabs
 crontab -l | grep -q dotfiles || echo 'add "*/10 * * * * sh -c "cd $HOME/.dotfiles && git pull"" to your crontab"'
