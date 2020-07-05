@@ -91,6 +91,8 @@ expect_file "${HOME}/.credentials/sheets.googleapis.com-python-nextalbums.json"
 expect_file "${HOME}/.discord_web_hook.txt"
 expect_file "${HOME}/.todo/discord.txt"
 
+set -u
+
 # create log directories if they dont exist
 mkdir_if_not_exists "$MID_LOGS"
 mkdir_if_not_exists "$NOTIFY_LOGS"
@@ -104,6 +106,8 @@ mkdir_if_not_exists "$TODO_NOTIFY_LOGS"
 mkdir_if_not_exists "$SUPERVISOR_LOGS"
 mkdir_if_not_exists "$SHORTURL_DATA"
 
+set +u
+
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-ubuntu-14-04
 # password protect goaccess html log files
 if [ ! -e /etc/nginx/.htpasswd ]; then
@@ -115,10 +119,10 @@ fi
 mix local.hex --force
 mix local.rebar --force
 
-# short URLs
+# my url shortener URLs
 go get -v -u "gitlab.com/seanbreckenridge/no-db-static-shorturl"
 
-# dotfiles
+# server that serves my dotfiles
 readonly LOCAL_DOTFILES="$HOME/.dotfiles"
 clone_if_not_exists "https://gitlab.com/seanbreckenridge/dotfiles.git" "$LOCAL_DOTFILES"
 go get -v -u "gitlab.com/seanbreckenridge/subpath-serve"
