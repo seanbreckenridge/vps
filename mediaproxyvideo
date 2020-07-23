@@ -1,0 +1,43 @@
+#!/bin/bash
+# A rofi GUI mediaproxy wrapper to specify format for proxying a video
+# copied from my mpvf script: https://github.com/seanbreckenridge/mpvf.git
+
+cd "${REPOS}/vps" || exit $?
+
+mediaproxy_error() {
+	notify -u critical "mediaproxy error" "$1"
+}
+
+if [[ -z "$CLIPBOARD_CONTENTS" ]]; then
+	if ! CLIPBOARD_CONTENTS="$(clippaste)"; then
+		mediaproxy_error "Failed to get clipboard contents." && exit 1
+	fi
+fi
+
+readonly URL="${CLIPBOARD_CONTENTS}"
+
+notify "mediaproxy" "Downloading formats..."
+if ! YOUTUBE_DL_FORMATS_RAW=$(youtube-dl -F "$URL" 2>&1); then
+	# youtube-dl failed to get formats
+	mediaproxy_error "$YOUTUBE_DL_FORMATS_RAW"
+	exit 1
+fi
+
+YOUTUBE_DL_FORMATS=$(echo "$YOUTUBE_DL_FORMATS_RAW" | grep -v "^\[") # remove progress info
+YOUTUBE_DL_FORMATS_TITLE=$(echo "$YOUTUBE_DL_FORMATS" | head -n 1)   # get format title
+
+if ! FORMAT_CHOICE=$(echo "$YOUTUBE_DL_FORMATS" | sed -e "1d" | rofi -dmenu -i -p "$YOUTUBE_DL_FORMATS_TITLE"); then
+	mediaproxy_error "Error: You didn't select one of the formats!"
+	exit 1
+fi
+
+#Get format code
+FORMAT_CODE=$(echo "$FORMAT_CHOICE" | cut -d" " -f1)
+
+# if video only, add bestaudio to format code
+if echo "$FORMAT_CHOICE" | grep -q "video only"; then
+	FORMAT_CODE="${FORMAT_CODE}+bestaudio"
+fi
+
+notify "mediaproxy" "Running mediaproxy..."
+./mediaproxy -f "$FORMAT_CODE" "${URL}"

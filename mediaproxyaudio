@@ -1,0 +1,13 @@
+#!/bin/bash
+# download audio from some media
+
+cd "$REPOS/vps" || exit $?
+
+if ! CLIPBOARD_CONTENTS="$(clippaste)"; then
+	notify "Failed to get clipboard contents." && exit 1
+fi
+
+notify "mediaproxy" "Starting mediaproxy download..."
+if ! ./mediaproxy -f 'bestaudio[ext=m4a]' -x "${CLIPBOARD_CONTENTS}"; then
+	notify -u critical "mediaproxy error" "Check /tmp/mediaproxy.log for more info"
+fi
