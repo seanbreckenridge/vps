@@ -8,8 +8,6 @@
 #
 #   # dont serve directories
 #   try_files $uri =404;
-#   sendfile on;
-#   sendfile_max_chunk 1m;
 #   autoindex off;
 # }
 
