@@ -25,8 +25,9 @@ readonly BASE_URL="https://sean.fish"
 readonly WORDLIST="${HOME}/.local/share/wordlist.txt"
 [[ ! -r "${WORDLIST}" ]] && curl --silent "https://gist.githubusercontent.com/seanbreckenridge/603242562a59264f6afe8a3056bf6932/raw/98d35708fa344717d8eee15d11987de6c8e26d7d/1-1000.txt" >"$WORDLIST"
 
+# 997002 possible URLs, low chance to conflict
 random_readable_url() {
-	printf '%s\n' "$(shuf -n3 "$WORDLIST" | awk '{ printf "%s%s", toupper(substr($1, 1, 1)), substr($1, 2) }')"
+	printf '%s\n' "$(shuf -n2 "$WORDLIST" | awk '{ printf "%s%s", toupper(substr($1, 1, 1)), substr($1, 2) }')"
 }
 
 # parse arguments
