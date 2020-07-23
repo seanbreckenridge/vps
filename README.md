@@ -21,7 +21,7 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 * [`backup`](./backup) copies cache/token files to a tar.gz so they can be backed up. [run every few hours w/ cron](https://gist.github.com/seanbreckenridge/191556c41f0ebd86e7dbec8a8e929fbf)
 * [`generate_static_sites`](./generate_static_sites) builds my static websites and places them in `/var/www/html`.
 * [`remsync`](./remsync) is a script thats run on my machine, which rsyncs files from a local directory to the server. That directory is served with nginx, so I can sync something to the server from my CLI and send someone a link. [example output](https://gist.github.com/seanbreckenridge/2b11729859d248069a0eabf2e91e2800). Has to endpoints, `f` and `F`, which specify private (a non-autoindexed nginx listing) and public indexes.
-* [`mediaproxy`](./mediaproxy) to ssh into the server, `youtube-dl`/`ffmpeg` something and host it on a readable link
+* [`mediaproxy`](./mediaproxy) to ssh into the server, `youtube-dl`/`ffmpeg` something and host it on a readable link. Has video/audio wrapper that use more of my [personal scripts](https://github.com/seanbreckenridge/dotfiles/) to prompt me to to select format codes, (similar to [`mpvf`](https://github.com/seanbreckenridge/mpvf/)). That way, I can press a keybind, which grabs the URL from my clipboard and re-hosts it on my server.
 * [`shorten`](./shorten) creates a shortened url using [this](https://gitlab.com/seanbreckenridge/no-db-static-shorturl)
 * [`directories`](./directories) is a helper script sourced at the top of other scripts that defines common application location environment variables
 
