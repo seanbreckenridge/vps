@@ -79,6 +79,7 @@ declare ytdl_cmd
 ytdl_cmd="python3 -m youtube_dl $*"
 echo "[mediaproxy] Running command on server: ${ytdl_cmd}"
 
+set -e
 ssh -i "$SYNC_KEYFILE" "${SYNC_USER}@${TO_SERVER}" "$(printf '
 mkdir -p "${HOME}/.ytdl"
 find "${HOME}/.ytdl" -type f -mtime +31 -delete
@@ -90,6 +91,7 @@ eval "%s" && {
   rm "${downloaded_file}"
 }
 ' "${ytdl_cmd}" "${filename}.${extension}")" | tee -a /tmp/mediaproxy.log
+set +e
 
 readonly PUBLIC_URL="${BASE_URL}/${filename}.${extension}"
 printf '[mediaproxy] %s\n' "$PUBLIC_URL"
