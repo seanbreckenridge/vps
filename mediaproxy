@@ -1,5 +1,5 @@
 #!/bin/bash
-# Youtube-DLs a URL up to the BASE_URL/m/ directory
+# Youtube-DLs a URL up to the BASE_URL directory
 # and copies a link to the your clipboard
 # Any additional args are passed to youtube-dl
 # Nginx Block:
@@ -17,7 +17,7 @@
 readonly SYNC_USER="sean"
 readonly SYNC_KEYFILE="${HOME}/.ssh/vultr" # ssh keyfile
 readonly TO_SERVER=140.82.50.43
-readonly BASE_URL="https://sean.fish"
+readonly BASE_URL="https://sean.fish/m"
 
 ######### SETUP
 
@@ -25,9 +25,24 @@ readonly BASE_URL="https://sean.fish"
 readonly WORDLIST="${HOME}/.local/share/wordlist.txt"
 [[ ! -r "${WORDLIST}" ]] && curl --silent "https://gist.githubusercontent.com/seanbreckenridge/603242562a59264f6afe8a3056bf6932/raw/98d35708fa344717d8eee15d11987de6c8e26d7d/1-1000.txt" >"$WORDLIST"
 
-# 997002 possible URLs, low chance to conflict
+# (999 * 998) possible URLs
 random_readable_url() {
 	printf '%s\n' "$(shuf -n2 "$WORDLIST" | awk '{ printf "%s%s", toupper(substr($1, 1, 1)), substr($1, 2) }')"
+}
+
+# generate a unique URL to host this on
+# do a HEAD request to check if the URL 404s before returning
+generate_non_existent_url() {
+	while true; do
+		key="$(random_readable_url)" # e.g. 'WordsFrom'
+		URL="${BASE_URL}/${key}"
+		if curl --output /dev/null --silent --head --fail "${URL}"; then
+			: # the URL exists, retry
+		else
+			printf '%s' "$key"
+			break
+		fi
+	done
 }
 
 # parse arguments
@@ -44,7 +59,7 @@ for arg in "$@"; do
 	fi
 done
 # generate random name
-filename="$(random_readable_url)"
+filename="$(generate_non_existent_url)"
 readonly extension filename
 
 ########## RUN
@@ -66,6 +81,7 @@ echo "[mediaproxy] Running command on server: ${ytdl_cmd}"
 
 ssh -i "$SYNC_KEYFILE" "${SYNC_USER}@${TO_SERVER}" "$(printf '
 mkdir -p "${HOME}/.ytdl"
+find "${HOME}/.ytdl" -type f -mtime +31 -delete
 TMPDIR="$(mktemp -d /tmp/ytdl.XXXXX)"
 cd "${TMPDIR}"
 eval "%s" && {
@@ -75,7 +91,7 @@ eval "%s" && {
 }
 ' "${ytdl_cmd}" "${filename}.${extension}")" | tee -a /tmp/mediaproxy.log
 
-readonly PUBLIC_URL="${BASE_URL}/m/${filename}.${extension}"
+readonly PUBLIC_URL="${BASE_URL}/${filename}.${extension}"
 printf '[mediaproxy] %s\n' "$PUBLIC_URL"
 printf '%s' "$PUBLIC_URL" | clipcopy
 # https://sean.fish/d/notify
