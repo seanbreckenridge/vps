@@ -51,7 +51,12 @@ readonly extension filename
 
 # validate arguments
 echo "[mediaproxy] Running command locally to ensure it works..."
-cd /tmp && youtube-dl "--skip-download" "$@" || exit $?
+if cd /tmp; then
+	youtube-dl "--skip-download" "$@" || exit $?
+else
+	echo "somehow /tmp doesn't exist" >&2
+	exit 1
+fi
 
 # run youtube-dl on server
 # ffmpeg it to the correct location/extension
