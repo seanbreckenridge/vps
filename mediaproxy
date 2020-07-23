@@ -35,7 +35,7 @@ random_readable_url() {
 declare filename extension
 extension='mp4'
 [[ -z "$1" ]] && {
-	printf "Error: Must provide a URL to mirror\n" >&2
+	printf "[mediaproxy] Error: Must provide a URL to mirror\n" >&2
 	exit 1
 }
 # check if user asked to convert to audio
@@ -51,14 +51,14 @@ readonly extension filename
 ########## RUN
 
 # validate arguments
-echo "Running command locally to ensure it works..."
+echo "[mediaproxy] Running command locally to ensure it works..."
 cd /tmp && youtube-dl "--skip-download" "$@" || exit $?
 
 # run youtube-dl on server
 # ffmpeg it to the correct location/extension
 declare ytdl_cmd
 ytdl_cmd="python3 -m youtube_dl $*"
-echo "Running command on server: ${ytdl_cmd}"
+echo "[mediaproxy] Running command on server: ${ytdl_cmd}"
 
 ssh -i "$SYNC_KEYFILE" "${SYNC_USER}@${TO_SERVER}" "$(printf '
 mkdir -p "${HOME}/.ytdl"
@@ -72,7 +72,7 @@ eval "%s" && {
 ' "${ytdl_cmd}" "${filename}.${extension}")" | tee -a /tmp/mediaproxy.log
 
 readonly PUBLIC_URL="${BASE_URL}/m/${filename}.${extension}"
-printf '%s\n' "$PUBLIC_URL"
+printf '[mediaproxy] %s\n' "$PUBLIC_URL"
 printf '%s\n' "$PUBLIC_URL" | clipcopy
 # https://sean.fish/d/notify
 notify "mediaproxy" "Copied mirror link to clipboard."
