@@ -33,6 +33,7 @@ random_readable_url() {
 # generate a unique URL to host this on
 # do a HEAD request to check if the URL 404s before returning
 generate_non_existent_url() {
+	local key URL
 	while true; do
 		key="$(random_readable_url)" # e.g. 'WordsFrom'
 		URL="${BASE_URL}/${key}"
