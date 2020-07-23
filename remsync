@@ -56,7 +56,7 @@ echo "$FROM_DIR"
 ########## RUN
 
 # make sure credential file exists
-if [ ! -f "$SYNC_KEYFILE" ]; then
+if [[ ! -f "$SYNC_KEYFILE" ]]; then
 	printf "Could not find keyfile '%s'\n" "$SYNC_KEYFILE" 1>&2
 	exit 1
 fi
