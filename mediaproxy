@@ -1,0 +1,70 @@
+#!/bin/bash
+# Youtube-DLs a URL up to the BASE_URL/m/ directory
+# and copies a link to the your clipboard
+# Any additional args are passed to youtube-dl
+# Nginx Block:
+# location /m/ {
+#   alias /home/sean/.ytdl/;  # location
+#
+#   # dont serve directories
+#   try_files $uri =404;
+#   sendfile on;
+#   sendfile_max_chunk 1m;
+#   autoindex off;
+# }
+
+########## CONFIGURATION
+
+# server information
+readonly SYNC_USER="sean"
+readonly SYNC_KEYFILE="${HOME}/.ssh/vultr" # ssh keyfile
+readonly TO_SERVER=140.82.50.43
+readonly BASE_URL="https://sean.fish"
+
+######### SETUP
+
+# use a wordlist to generate a readable link
+readonly WORDLIST="${HOME}/.local/share/wordlist.txt"
+[[ ! -r "${WORDLIST}" ]] && curl --silent "https://gist.githubusercontent.com/seanbreckenridge/603242562a59264f6afe8a3056bf6932/raw/98d35708fa344717d8eee15d11987de6c8e26d7d/1-1000.txt" >"$WORDLIST"
+
+random_readable_url() {
+	printf '%s\n' "$(shuf -n3 "$WORDLIST" | awk '{ printf "%s%s", toupper(substr($1, 1, 1)), substr($1, 2) }')"
+}
+
+# parse arguments
+declare filename extension
+extension='mp4'
+[[ -z "$1" ]] && {
+	printf "Error: Must provide a URL to mirror\n" >&2
+	exit 1
+}
+# check if user asked to convert to audio
+for arg in "$@"; do
+	if [[ "$arg" == "-x" || "$arg" == "--extract-audio" ]]; then
+		extension='mp3'
+	fi
+done
+# generate random name
+filename="$(random_readable_url)"
+readonly extension filename
+
+########## RUN
+
+declare ytdl_cmd
+ytdl_cmd="python3 -m youtube_dl $*"
+echo "Running command: ${ytdl_cmd}"
+
+# run youtube-dl on server
+# ffmpeg it to the correct location/extension
+ssh -i "$SYNC_KEYFILE" "${SYNC_USER}@${TO_SERVER}" "$(printf '
+mkdir -p "${HOME}/.ytdl"
+TMPDIR="$(mktemp -d /tmp/ytdl.XXXXX)"
+cd "$TMPDIR"
+eval "%s" && {
+  downloaded_file="$(find . -type f -mindepth 1 | head -n1)"
+  ffmpeg -loglevel quiet -i "$downloaded_file" "${HOME}/.ytdl/%s"
+  rm "$downloaded_file"
+}
+' "$ytdl_cmd" "${filename}.${extension}")" | tee -a /tmp/mediaproxy.log
+
+printf "%s/m/%s.%s\n" "$BASE_URL" "$filename" "$extension"
