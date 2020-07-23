@@ -62,7 +62,7 @@ TMPDIR="$(mktemp -d /tmp/ytdl.XXXXX)"
 cd "$TMPDIR"
 eval "%s" && {
   downloaded_file="$(find . -type f -mindepth 1 | head -n1)"
-  ffmpeg -loglevel quiet -i "$downloaded_file" "${HOME}/.ytdl/%s"
+  ffmpeg -loglevel info -i "$downloaded_file" "${HOME}/.ytdl/%s"
   rm "$downloaded_file"
 }
 ' "$ytdl_cmd" "${filename}.${extension}")" | tee -a /tmp/mediaproxy.log
