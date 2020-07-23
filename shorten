@@ -24,7 +24,7 @@ declare SHORTURL_PART
 SHORTURL_PART="$(curl --silent "Content-Type: application/json" --request POST --data "$data" "$UPLOAD_TO")"
 
 # check for 'error' in response text
-if [[ $(grep -qi error <<<"$SHORTURL_PART") ]]; then
+if grep -qi error <<<"$SHORTURL_PART"; then
 	echo "${SHORTURL_PART}"
 else
 	echo "${UPLOAD_TO}${SHORTURL_PART}"

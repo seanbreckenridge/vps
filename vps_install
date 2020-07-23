@@ -2,7 +2,7 @@
 
 # cd to a directory; exit if cd failed
 cd_or_exit() {
-	if [ ! -d "$1" ]; then
+	if [[ ! -d "$1" ]]; then
 		printf "Could not cd into directory: %s\n" "$1"
 		exit 1
 	else
@@ -20,21 +20,21 @@ require() {
 
 # clone $1 (URL) if $2 (directory) doesnt exist
 clone_if_not_exists() {
-	if [ ! -d "$2" ]; then
+	if [[ ! -d "$2" ]]; then
 		git clone "$1" "$2"
 	fi
 }
 
 # mkdir if first arg doesnt exist
 mkdir_if_not_exists() {
-	if [ ! -d "$1" ]; then
+	if [[ ! -d "$1" ]]; then
 		mkdir -p "$1"
 	fi
 }
 
 # make sure a file exists or exit
 expect_file() {
-	if [ ! -f "$1" ]; then
+	if [[ ! -f "$1" ]]; then
 		printf "Fatal error: Expected file at %s\n" "$1"
 		exit 1
 	fi
@@ -143,7 +143,7 @@ pipenv --python "$(command -v python3.7)"
 pipenv install
 
 # setup wca userinfo
-if [ ! -e "${WCA_USERINFO}/target/release/wca_userinfo" ]; then
+if [[ ! -e "${WCA_USERINFO}/target/release/wca_userinfo" ]]; then
 	cd_or_exit "$WCA_USERINFO"
 	cargo build --bins --release
 	rm -rf "${WCA_USERINFO}/target/release/deps"

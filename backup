@@ -11,14 +11,14 @@ require() {
 
 # mkdir if first arg doesnt exist
 mkdir_if_not_exists() {
-	if [ ! -d "$1" ]; then
+	if [[ ! -d "$1" ]]; then
 		mkdir -p "$1"
 	fi
 }
 
 # make sure a file exists or exit
 expect_file_and_copy() {
-	if [ ! -f "$1" ]; then
+	if [[ ! -f "$1" ]]; then
 		printf "Fatal error: Expected file at %s\n" "$1"
 		exit 1
 	fi
@@ -26,7 +26,7 @@ expect_file_and_copy() {
 }
 
 expect_dir_and_copy() {
-	if [ ! -d "$1" ]; then
+	if [[ ! -d "$1" ]]; then
 		printf "Fatal Error: no such directory %s\n" "$1"
 		exit 1
 	fi
@@ -34,7 +34,7 @@ expect_dir_and_copy() {
 }
 
 optional_copy() {
-	if [ -f "$1" ]; then
+	if [[ -f "$1" ]]; then
 		cp "$1" "$2"
 	else
 		printf "Warning: Expected file at %s\n" "$1"
