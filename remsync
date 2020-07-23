@@ -78,12 +78,12 @@ if (($# > 0)); then
 fi
 
 # sync directory
-rsync -Pavh --delete-before -e "ssh -o IPQoS=0 -i $SYNC_KEYFILE" "$FROM_DIR" "${SYNC_USER}@${TO_SERVER}:${TO_DIR}"
+rsync -Pavh --delete-before -e "ssh -i $SYNC_KEYFILE" "$FROM_DIR" "${SYNC_USER}@${TO_SERVER}:${TO_DIR}"
 
 split
 
 # print how much of the server is currently in use
-ssh -o IPQoS=0 -i "${SYNC_KEYFILE}" "${SYNC_USER}@${TO_SERVER}" \
+ssh -i "${SYNC_KEYFILE}" "${SYNC_USER}@${TO_SERVER}" \
 	"df -h ~ ;\
 printf \"remsync size: \" ;\
 du -h --summarize \"${TO_DIR}\" | cut -f1;\
