@@ -63,12 +63,12 @@ echo "Running command on server: ${ytdl_cmd}"
 ssh -i "$SYNC_KEYFILE" "${SYNC_USER}@${TO_SERVER}" "$(printf '
 mkdir -p "${HOME}/.ytdl"
 TMPDIR="$(mktemp -d /tmp/ytdl.XXXXX)"
-cd "$TMPDIR"
+cd "${TMPDIR}"
 eval "%s" && {
   downloaded_file="$(find . -type f -mindepth 1 | head -n1)"
-  ffmpeg -loglevel info -i "$downloaded_file" "${HOME}/.ytdl/%s"
-  rm "$downloaded_file"
+  ffmpeg -loglevel info -i "${downloaded_file}" "${HOME}/.ytdl/%s"
+  rm "${downloaded_file}"
 }
-' "$ytdl_cmd" "${filename}.${extension}")" | tee -a /tmp/mediaproxy.log
+' "${ytdl_cmd}" "${filename}.${extension}")" | tee -a /tmp/mediaproxy.log
 
 printf "%s/m/%s.%s\n" "$BASE_URL" "$filename" "$extension"
