@@ -66,9 +66,13 @@ TMPDIR="$(mktemp -d /tmp/ytdl.XXXXX)"
 cd "${TMPDIR}"
 eval "%s" && {
   downloaded_file="$(find . -type f -mindepth 1 | head -n1)"
-  ffmpeg -loglevel info -i "${downloaded_file}" "${HOME}/.ytdl/%s"
+  ffmpeg -i "${downloaded_file}" "${HOME}/.ytdl/%s"
   rm "${downloaded_file}"
 }
 ' "${ytdl_cmd}" "${filename}.${extension}")" | tee -a /tmp/mediaproxy.log
 
-printf "%s/m/%s.%s\n" "$BASE_URL" "$filename" "$extension"
+readonly PUBLIC_URL="${BASE_URL}/m/${filename}.${extension}"
+printf '%s\n' "$PUBLIC_URL"
+printf '%s\n' "$PUBLIC_URL" | clipcopy
+# https://sean.fish/d/notify
+notify "mediaproxy" "Copied mirror link to clipboard."
