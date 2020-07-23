@@ -50,12 +50,16 @@ readonly extension filename
 
 ########## RUN
 
-declare ytdl_cmd
-ytdl_cmd="python3 -m youtube_dl $*"
-echo "Running command: ${ytdl_cmd}"
+# validate arguments
+echo "Running command locally to ensure it works..."
+cd /tmp && youtube-dl "--skip-download" "$@" || exit $?
 
 # run youtube-dl on server
 # ffmpeg it to the correct location/extension
+declare ytdl_cmd
+ytdl_cmd="python3 -m youtube_dl $*"
+echo "Running command on server: ${ytdl_cmd}"
+
 ssh -i "$SYNC_KEYFILE" "${SYNC_USER}@${TO_SERVER}" "$(printf '
 mkdir -p "${HOME}/.ytdl"
 TMPDIR="$(mktemp -d /tmp/ytdl.XXXXX)"
