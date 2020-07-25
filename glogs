@@ -17,14 +17,18 @@ raw)
 	;;
 filtered)
 	# print all logs, without my IP/netdata/logs
-	cat access.log | grep -iv -E "$FILTER_STR"
+	grep -iv -E "$FILTER_STR" access.log
 	;;
+filteredf)
+  # tail nginx logs, without my IP/netdata/logs
+  tail -f -n 100 access.log | grep -iv -E "$FILTER_STR"
+  ;;
 all)
 	# goaccess terminal all logs
 	tail -f -n +1 access.log | grep -iv -E "$FILTER_STR" | goaccess --log-format=COMBINED -
 	;;
 *)
-	echo "Must specify 'all', 'raw', 'filtered' or 'status' as argument"
+	echo "Must specify 'all', 'raw', 'filtered', 'filteredf' or 'status' as argument"
 	exit 1
 	;;
 esac
