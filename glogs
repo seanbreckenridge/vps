@@ -20,9 +20,9 @@ filtered)
 	grep -iv -E "$FILTER_STR" access.log
 	;;
 filteredf)
-  # tail nginx logs, without my IP/netdata/logs
-  tail -f -n 100 access.log | grep -iv -E "$FILTER_STR"
-  ;;
+	# tail nginx logs, without my IP/netdata/logs
+	tail -f -n 100 access.log | grep -iv -E "$FILTER_STR"
+	;;
 all)
 	# goaccess terminal all logs
 	tail -f -n +1 access.log | grep -iv -E "$FILTER_STR" | goaccess --log-format=COMBINED -
