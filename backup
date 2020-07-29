@@ -30,7 +30,7 @@ expect_dir_and_copy() {
 		printf "Fatal Error: no such directory %s\n" "$1"
 		exit 1
 	fi
-	cp -R "$1" "$BACKUP_DIR"
+	cp -R "$1" "$BACKUP_DIR" 2>/dev/null
 }
 
 optional_copy() {
