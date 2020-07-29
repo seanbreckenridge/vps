@@ -78,6 +78,7 @@ expect_dir_and_copy "/etc/netdata"
 expect_dir_and_copy "/etc/nginx"
 expect_dir_and_copy "/etc/fail2ban"
 expect_dir_and_copy "$HOME/.todo"
+expect_dir_and_copy "$HOME/shorturls"
 
 tar -cvf "$BACKUP_TAR_NAME" "$BACKUP_DIR_NAME" && printf "Created '%s'\n" "$BACKUP_TAR_NAME"
 delete_if_exists "$BACKUP_DIR"
