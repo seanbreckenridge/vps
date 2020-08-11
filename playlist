@@ -38,8 +38,7 @@ shuf <<<"$CHOSEN_SONGS" | sed -e "s|^|${PLAINTEXT_PLAYLIST_MUSIC_DIR}/|" >"$PLAY
 # copy all those files to simple filenames, as to not break ffmpeg quoting
 # convert any files that arent mp3 to mp3
 declare i=0
-IFS=$'\n'
-for song in $(cat $PLAYLIST_RAW); do
+while IFS= read -r song; do
 	((i++))
 	ext="${song##*.}"
 	newfp="${PLAYLIST_TMP_DIR}${i}.${ext}"
@@ -47,14 +46,13 @@ for song in $(cat $PLAYLIST_RAW); do
 	if [[ "$ext" != "mp3" ]]; then
 		newfp="${PLAYLIST_TMP_DIR}${i}.mp3"
 		echo "Converting non-mp3 file: ${song} -> ${newfp}"
-		ffmpeg -loglevel warning -i "$song" -f mp3 -hide_banner "$newfp" || exit $?
+		ffmpeg -loglevel warning -i "$song" -f mp3 -hide_banner "$newfp" </dev/null || exit $?
 	else
 		echo "File is already an mp3: ${song}"
 		cp -v "$song" "$newfp"
 	fi
 	printf "file '%s'\n" "$newfp" >>"$PLAYLIST_TXT"
-done
-IFS=' '
+done <"$PLAYLIST_RAW"
 
 # use PLAYLIST_TXT to combine all the mp3's together
 ffmpeg -hide_banner -f concat -safe 0 -i "$PLAYLIST_TXT" -c copy "$PLAYLIST_MP3" || exit $?
