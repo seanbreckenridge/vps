@@ -1,0 +1,65 @@
+#!/bin/bash
+# Concatenates all the songs in one of my plaintext playlists (https://github.com/seanbreckenridge/plaintext-playlist)
+# and syncs the one file to my server.
+#
+# I often use this to sync a playlist Im listening to before leaving the house
+# so I can listen to it on my phone.
+#
+# Requires: ./remsync, ffmpeg, plainplay, python3, realpath
+
+VPS_DIR="$(realpath "$(dirname ${BASH_SOURCE[0]})")"
+
+# declare file locations
+PLAYLIST_DIR="$(plainplay playlistdir)" || exit $?
+readonly PLAYLIST_MP3='/tmp/playlist.mp3'
+readonly PLAYLIST_TMP_DIR="${HOME}/.cache/playlist_tmp/"
+readonly PLAYLIST_RAW='/tmp/raw_playlist.txt'
+readonly PLAYLIST_TXT='/tmp/playlist.txt'
+
+# clear previous runs
+rm -f "$PLAYLIST_TXT" "$PLAYLIST_MP3" "$PLAYLIST_RAW"
+[[ -d "$PLAYLIST_TMP_DIR" ]] && rm -rf "$PLAYLIST_TMP_DIR"
+mkdir -p "$PLAYLIST_TMP_DIR"
+
+# get playlists to sync from user
+cd "$PLAYLIST_DIR" || exit $? # so xargs cat works
+CHOSEN_SONGS="$(find "$PLAYLIST_DIR" -type f -printf '%f\n' | fzf -m -i --prompt="Select the playlists to concatenate..." | xargs cat)" || exit $?
+
+[[ -z "$CHOSEN_SONGS" ]] && {
+	echo "You didn't choose any playlists" >&2
+	exit 1
+}
+
+# dont have to check if PLAINTEXT_PLAYLIST_MUSIC_DIR is set because the plainplay call
+# above would have exited if it wasnt set
+# shuffle songs, make the files absolute paths
+shuf <<<"$CHOSEN_SONGS" | sed -e "s|^|${PLAINTEXT_PLAYLIST_MUSIC_DIR}/|" >"$PLAYLIST_RAW"
+
+# copy all those files to simple filenames, as to not break ffmpeg quoting
+# convert any files that arent mp3 to mp3
+declare i=0
+IFS=$'\n'
+for song in $(cat $PLAYLIST_RAW); do
+	((i++))
+	ext="${song##*.}"
+	newfp="${PLAYLIST_TMP_DIR}${i}.${ext}"
+	# if its not mp3, convert it to mp3
+	if [[ "$ext" != "mp3" ]]; then
+		newfp="${PLAYLIST_TMP_DIR}${i}.mp3"
+		echo "Converting non-mp3 file: ${song} -> ${newfp}"
+		ffmpeg -loglevel warning -i "$song" -f mp3 -hide_banner "$newfp" || exit $?
+	else
+		echo "File is already an mp3: ${song}"
+		cp -v "$song" "$newfp"
+	fi
+	printf "file '%s'\n" "$newfp" >>"$PLAYLIST_TXT"
+done
+IFS=' '
+
+# use PLAYLIST_TXT to combine all the mp3's together
+ffmpeg -hide_banner -f concat -safe 0 -i "$PLAYLIST_TXT" -c copy "$PLAYLIST_MP3" || exit $?
+
+# cd to this directory
+cd "$VPS_DIR" || exit $?
+# call remsync to sync it to the server
+./remsync "$PLAYLIST_MP3" || exit $?
