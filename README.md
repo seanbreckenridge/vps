@@ -17,8 +17,8 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 * [`super`](./super) lets me interact with the underlying `supervisord`/`supervisorctl` processes with my environment variables/configuration.
 * [`logs`](./logs) streams the logs from all applications
 * [`glogs`](./glogs) lets me interact with the nginx logs
-* [`update_logs`](./update_logs) uses [goaccess](https://goaccess.io/) to visualize nginx logs
-* [`backup`](./backup) copies cache/token files to a tar.gz so they can be backed up. [run every few hours w/ cron](https://gist.github.com/seanbreckenridge/191556c41f0ebd86e7dbec8a8e929fbf)
+* [`update_logs`](./update_logs) uses [`goaccess`](https://goaccess.io/) to visualize nginx logs
+* [`backup`](./backup) copies cache/token files to a tar.gz so they can be backed up. [runs with bgproc](https://github.com/seanbreckenridge/bgproc)
 * [`generate_static_sites`](./generate_static_sites) builds my static websites and places them in `~/static_files`.
 * [`remsync`](./remsync) is a script thats run on my machine, which rsyncs files from a local directory to the server. That directory is served with nginx, so I can sync something to the server from my CLI and send someone a link. [example output](https://gist.github.com/seanbreckenridge/2b11729859d248069a0eabf2e91e2800). Has two endpoints, `f` and `F`, which specify private (a non-autoindexed nginx listing) and public indexes.
 * [`playlist`](./playlist) interfaces with my [playlist manager](https://github.com/seanbreckenridge/plaintext-playlist). It allows me to select multiple playlists, combines all the files from those playlists into an mp3 and syncs that up to my server with `remsync`. Often run this on my machine before I leave my house, and then listen to the playlist on my phone.
