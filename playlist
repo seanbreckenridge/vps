@@ -5,7 +5,7 @@
 # I often use this to sync a playlist Im listening to before leaving the house
 # so I can listen to it on my phone.
 #
-# Requires: ./remsync, ffmpeg, plainplay, python3, realpath
+# Requires: ./remsync, ffmpeg, plainplay, realpath
 
 VPS_DIR="$(realpath "$(dirname ${BASH_SOURCE[0]})")"
 
