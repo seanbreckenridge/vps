@@ -11,7 +11,7 @@ VPS_DIR="$(realpath "$(dirname ${BASH_SOURCE[0]})")"
 
 # declare file locations
 PLAYLIST_DIR="$(plainplay playlistdir)" || exit $?
-readonly PLAYLIST_MP3='${HOME}/.cache/playlist.mp3'
+readonly PLAYLIST_MP3="${HOME}/.cache/playlist.mp3"
 readonly PLAYLIST_TMP_DIR="${HOME}/.cache/playlist_tmp/"
 readonly PLAYLIST_RAW='/tmp/raw_playlist.txt'
 readonly PLAYLIST_TXT='/tmp/playlist.txt'
