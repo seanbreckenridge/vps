@@ -4,7 +4,7 @@ Scripts used for installing/managing/restarting/monitoring processes on my serve
 
 Uses [supervisord](http://supervisord.org/) to manage processes.
 
-[My fork of superhooks](https://gitlab.com/seanbreckenridge/superhooks) notifies me in discord whenever one of my processes dies, as does [netdata](https://www.netdata.cloud/) if there are any outliers in the hundreds of metrics it takes.
+[My fork of superhooks](https://github.com/seanbreckenridge/superhooks) notifies me in discord whenever one of my processes dies, as does [netdata](https://www.netdata.cloud/) if there are any outliers in the hundreds of metrics it takes.
 
 * Puts application code into `~/code`
 * Centralizes logs in `~/logs`
@@ -23,23 +23,23 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 * [`remsync`](./remsync) is a script thats run on my machine, which rsyncs files from a local directory to the server. That directory is served with nginx, so I can sync something to the server from my CLI and send someone a link. [example output](https://gist.github.com/seanbreckenridge/2b11729859d248069a0eabf2e91e2800). Has two endpoints, `f` and `F`, which specify private (a non-autoindexed nginx listing) and public indexes.
 * [`playlist`](./playlist) interfaces with my [playlist manager](https://github.com/seanbreckenridge/plaintext-playlist). It allows me to select multiple playlists, combines all the files from those playlists into an mp3 and syncs that up to my server with `remsync`. Often run this on my machine before I leave my house, and then listen to the playlist on my phone.
 * [`mediaproxy`](./mediaproxy) to ssh into the server, `youtube-dl`/`ffmpeg` something and host it on a readable link. Has video/audio wrapper that use more of my [personal scripts](https://github.com/seanbreckenridge/dotfiles/) to prompt me to to select format codes, (similar to [`mpvf`](https://github.com/seanbreckenridge/mpvf/)). That way, I can press a keybind, which grabs the URL from my clipboard and re-hosts it on my server.
-* [`shorten`](./shorten) creates a shortened url using [this](https://gitlab.com/seanbreckenridge/no-db-static-shorturl)
+* [`shorten`](./shorten) creates a shortened url using [this](https://github.com/seanbreckenridge/no-db-static-shorturl)
 * [`directories`](./directories) is a helper script sourced at the top of other scripts that defines common application location environment variables
 
 ### Applications:
 
-- https://gitlab.com/seanbreckenridge/glue
+- https://github.com/seanbreckenridge/glue
 - https://github.com/seanbreckenridge/mal-id-cache
-- https://gitlab.com/seanbreckenridge/mal-notify-bot
-- https://gitlab.com/seanbreckenridge/discord-countdown-bot
-- https://gitlab.com/seanbreckenridge/mal-unapproved
-- https://gitlab.com/seanbreckenridge/docker-jikan
-- https://gitlab.com/seanbreckenridge/wca_userinfo
-- https://gitlab.com/seanbreckenridge/albums (server)
-- https://gitlab.com/seanbreckenridge/todotxt_deadline_notify
-- https://gitlab.com/seanbreckenridge/xqc-dvd
-- https://gitlab.com/seanbreckenridge/xkcd-favorites
-- https://gitlab.com/seanbreckenridge/animeshorts
-- https://gitlab.com/seanbreckenridge/subpath-serve
-- https://gitlab.com/seanbreckenridge/no-db-static-shorturl
+- https://github.com/seanbreckenridge/mal-notify-bot
+- https://github.com/seanbreckenridge/discord-countdown-bot
+- https://github.com/seanbreckenridge/mal-unapproved
+- https://github.com/seanbreckenridge/docker-jikan
+- https://github.com/seanbreckenridge/wca_userinfo
+- https://github.com/seanbreckenridge/albums (server)
+- https://github.com/seanbreckenridge/todotxt_deadline_notify
+- https://github.com/seanbreckenridge/xqc-dvd
+- https://github.com/seanbreckenridge/xkcd-favorites
+- https://github.com/seanbreckenridge/animeshorts
+- https://github.com/seanbreckenridge/subpath-serve
+- https://github.com/seanbreckenridge/no-db-static-shorturl
 
