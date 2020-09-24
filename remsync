@@ -12,7 +12,7 @@
 #
 # # to sync
 # alias remsync="$REPOS/vps/remsync"
-# alias remsync_public="REMSYNC_PUBLIC=1 $REPOS/vps/remsync"  # to push to /F/ (public index)
+# alias remsync_public="REMSYNC_PUBLIC=1 $REPOS/vps/remsync"  # to push to /p/ (public index)
 #
 # # to use ranger to quickly remove/add files
 # alias remsync_ranger="ranger $HOME/.local/share/remsync && remsync"
@@ -42,7 +42,7 @@ readonly SYNC_USER="sean"
 readonly SYNC_KEYFILE="${HOME}/.ssh/vultr" # ssh keyfile
 readonly TO_SERVER=140.82.50.43
 declare TO_DIR="/home/${SYNC_USER}/f/"
-[[ -n "$REMSYNC_PUBLIC" ]] && TO_DIR="/home/${SYNC_USER}/F/"
+[[ -n "$REMSYNC_PUBLIC" ]] && TO_DIR="/home/${SYNC_USER}/p/"
 readonly BASE_URL="https://sean.fish"
 readonly TO_DIR
 
