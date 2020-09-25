@@ -9,7 +9,7 @@ FILTER_STR="/netdata|/logs|^::1|^127.0.0.1|^${MY_IP}"
 case "$1" in
 status)
 	[[ -z "$2" ]] && echo "specify HTTP status as second argument" && exit 1
-	awk -v field=$2 '$9 == field {print}' access.log
+	awk -v field="$2" '$9 == field {print}' access.log
 	;;
 raw)
 	# just print the logs

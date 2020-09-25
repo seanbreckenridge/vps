@@ -7,7 +7,7 @@
 #
 # Requires: ./remsync, ffmpeg, plainplay, realpath
 
-VPS_DIR="$(realpath "$(dirname ${BASH_SOURCE[0]})")"
+VPS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 
 # declare file locations
 PLAYLIST_DIR="$(plainplay playlistdir)" || exit $?
