@@ -163,7 +163,7 @@ pipenv run python3 setup.py install
 pipenv run mal_id_cache --init-dir
 # for that directory
 git config user.email "ssbreckenridge@icloud.com"
-git config user.name "[bot] sean"
+git config user.name "[bot]sean"
 #pipenv run mal_id_cache --force-state 0
 
 # setup notify bot
