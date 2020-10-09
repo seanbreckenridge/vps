@@ -64,6 +64,8 @@ readonly CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
 
 expect_file "${CUR_DIR}/secret"
+# ssh key for mal-id-cache
+expect_file "${HOME}/.ssh/bot_sean"
 
 mkdir_if_not_exists "$CODE"
 mkdir_if_not_exists "$MID_CACHE"
@@ -159,6 +161,9 @@ pipenv --python "$(command -v python3.7)"
 pipenv install -r "$MID_CACHE_REPO/requirements.txt"
 pipenv run python3 setup.py install
 pipenv run mal_id_cache --init-dir
+# for that directory
+git config user.email "ssbreckenridge@icloud.com"
+git config user.name "[bot] sean"
 #pipenv run mal_id_cache --force-state 0
 
 # setup notify bot
