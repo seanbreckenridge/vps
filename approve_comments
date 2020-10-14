@@ -5,7 +5,7 @@ CMD=APPROVE
 [[ "$1" == "ALL" ]] && CMD=ALL
 
 if [[ "$CMD" == 'APPROVE' ]]; then
-  ssh vultr "cd ~/code/glue/ && ./production_server --approve-comments"
+	ssh vultr "cd ~/code/glue/ && ./production_server --approve-comments"
 else
-  ssh vultr "cd ~/code/glue/ && ./production_server --review-comments"
+	ssh vultr "cd ~/code/glue/ && ./production_server --review-comments"
 fi
