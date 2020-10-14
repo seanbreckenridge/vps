@@ -2,7 +2,7 @@
 # run from my computer to approve guest book comments at https://sean.fish/#
 
 CMD=APPROVE
-[[ "$1" == "ALL" ]] && CMD=ALL
+[[ "$1" == *all ]] && CMD=ALL
 
 if [[ "$CMD" == 'APPROVE' ]]; then
 	ssh vultr "cd ~/code/glue/ && ./production_server --approve-comments"
