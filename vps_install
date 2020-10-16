@@ -124,6 +124,9 @@ fi
 mix local.hex --force
 mix local.rebar --force
 
+# generate a nicer error 502 error page
+go get -v -u "gitlab.com/seanbreckenridge/darker_errors"
+
 # my url shortener URLs
 go get -v -u "gitlab.com/seanbreckenridge/no-db-static-shorturl"
 
