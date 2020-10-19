@@ -7,8 +7,12 @@ source "${CUR_DIR}/directories"
 
 cd "${MID_CACHE_REPO}"
 
+# kill any previous runs, supervisor group still doesnt kill the
+# python child process, just the ssh-agent and the shell
+# this isnt perfect, the python process keeps running after
+ps -ef | grep "mal_id_cache --loop --commit" | grep -v 'grep' | awk '{print $2}' | xargs -r kill
+
 # run a new ssh-agent so that my bot account instead of my actual github
 # account gets attached to the commits
 exec ssh-agent sh -c 'ssh-add ~/.ssh/bot_sean; pipenv run mal_id_cache --loop --commit'
-# ssh-add "${HOME}/.ssh/bot_sean"
-# exec pipenv run mal_id_cache --loop --commit
+
