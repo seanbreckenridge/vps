@@ -88,6 +88,7 @@ clone_if_not_exists "git@gitlab.com:seanbreckenridge/wca_userinfo.git" "$WCA_USE
 clone_if_not_exists "git@gitlab.com:seanbreckenridge/albums.git" "$ALBUMS"
 clone_if_not_exists "git@gitlab.com:seanbreckenridge/glue.git" "$GLUE"
 clone_if_not_exists "git@gitlab.com:seanbreckenridge/todotxt_deadline_notify.git" "$TODO_NOTIFY"
+clone_if_not_exists "git@gitlab.com:seanbreckenridge/mnu_gsheets.git" "$MNU_GSHEETS"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
@@ -95,6 +96,7 @@ expect_file "$COUNTDOWN_BOT/token.yaml"
 expect_file "${HOME}/.credentials/sheets.googleapis.com-python-nextalbums.json"
 expect_file "${HOME}/.discord_web_hook.txt"
 expect_file "${HOME}/.todo/discord.txt"
+expect_file "${MNU_GSHEETS}/client_secret.json"
 
 set -u
 
@@ -119,6 +121,10 @@ if [ ! -e /etc/nginx/.htpasswd ]; then
 	sudo htpasswd -c /etc/nginx/.htpasswd sean
 	mkdir -p ~/.goaccess_html
 fi
+
+cd_or_exit "$MNU_GSHEETS"
+pipenv --python "$(command -v python3.7)"
+pipenv run python3 setup.py install
 
 # elixir
 mix local.hex --force

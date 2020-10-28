@@ -1,0 +1,14 @@
+#!/bin/bash -ex
+# updates the mnu spreadsheet
+# https://github.com/seanbreckenridge/mnu_gsheets
+
+THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+cd "$THIS_DIR"
+
+source ./directories
+
+cd "$MNU_GSHEETS"
+git pull
+pipenv run python3 setup.py install
+pipenv run ./update
+

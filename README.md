@@ -42,4 +42,5 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 - https://github.com/seanbreckenridge/animeshorts
 - https://github.com/seanbreckenridge/subpath-serve
 - https://github.com/seanbreckenridge/no-db-static-shorturl
+- https://github.com/seanbreckenridge/mnu_gsheets
 

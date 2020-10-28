@@ -13,6 +13,7 @@ declare -rx WCA_USERINFO="${CODE}/wca_userinfo"
 declare -rx ALBUMS="${CODE}/albums"
 declare -rx GLUE="${CODE}/glue"
 declare -rx TODO_NOTIFY="${CODE}/todotxt_deadline_notify"
+declare -rx MNU_GSHEETS="${CODE}/mnu_gsheets"
 
 declare -rx SHORTURL_DATA="${HOME}/shorturls"
 
