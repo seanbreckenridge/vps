@@ -11,4 +11,3 @@ cd "$MNU_GSHEETS"
 git pull
 pipenv run python3 setup.py install
 pipenv run ./update
-

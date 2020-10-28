@@ -15,4 +15,3 @@ ps -ef | grep "mal_id_cache --loop --commit" | grep -v 'grep' | awk '{print $2}'
 # run a new ssh-agent so that my bot account instead of my actual github
 # account gets attached to the commits
 exec ssh-agent sh -c 'ssh-add ~/.ssh/bot_sean; pipenv run mal_id_cache --loop --commit'
-
