@@ -60,6 +60,10 @@ require uglifycss
 require psql # remind me to setup postgres for glue
 require go
 
+# other things that are useful on here
+GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
+pip install -U rifleman
+
 readonly CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${CUR_DIR}/directories"
 
