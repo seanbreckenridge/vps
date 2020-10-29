@@ -71,7 +71,7 @@ mkdir_if_not_exists "$CODE"
 mkdir_if_not_exists "$MID_CACHE"
 # remsync, private and public
 mkdir_if_not_exists "$HOME/f"
-mkdir_if_not_exists "$HOME/p" # public files
+mkdir_if_not_exists "$HOME/p"     # public files
 mkdir_if_not_exists "$HOME/.ytdl" # music
 mkdir_if_not_exists "$HOME/.credentials"
 mkdir_if_not_exists "$HOME/.todo"
@@ -194,8 +194,8 @@ python3 -m pip install --user jikanpy requests
 # install superhooks-discord
 python3 -m pip install --user git+https://gitlab.com/seanbreckenridge/superhooks
 
-cd "$DOCKER_JIKAN" && docker-compose up -d # start jikan
-"$UNAP_SERVER"/cache_loop once             # initial call to build cache
+cd "$DOCKER_JIKAN" && docker-compose up -d                                         # start jikan
+[[ ! -r "${UNAP_SERVER}/unapproved_info.json" ]] && "$UNAP_SERVER"/cache_loop once # initial call to build cache
 "$UNAP_SERVER"/uglify_css
 cd "$DOCKER_JIKAN" && docker-compose down
 
