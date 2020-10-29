@@ -71,8 +71,8 @@ mkdir_if_not_exists "$CODE"
 mkdir_if_not_exists "$MID_CACHE"
 # remsync, private and public
 mkdir_if_not_exists "$HOME/f"
-mkdir_if_not_exists "$HOME/F"
 mkdir_if_not_exists "$HOME/p" # public files
+mkdir_if_not_exists "$HOME/.ytdl" # music
 mkdir_if_not_exists "$HOME/.credentials"
 mkdir_if_not_exists "$HOME/.todo"
 
