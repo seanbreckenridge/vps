@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -u
 # Concatenates all the songs in one of my plaintext playlists (https://github.com/seanbreckenridge/plaintext-playlist)
 # and syncs the one file to my server.
 #
@@ -54,10 +54,12 @@ while IFS= read -r song; do
 	printf "file '%s'\n" "$newfp" >>"$PLAYLIST_TXT"
 done <"$PLAYLIST_RAW"
 
+set -e
+
 # use PLAYLIST_TXT to combine all the mp3's together
-ffmpeg -hide_banner -f concat -safe 0 -i "$PLAYLIST_TXT" -c copy "$PLAYLIST_MP3" || exit $?
+ffmpeg -hide_banner -f concat -safe 0 -i "$PLAYLIST_TXT" -c copy "$PLAYLIST_MP3"
 
 # cd to this directory
-cd "$VPS_DIR" || exit $?
+cd "$VPS_DIR"
 # call remsync to sync it to the server
-./remsync "$PLAYLIST_MP3" || exit $?
+./remsync "$PLAYLIST_MP3"
