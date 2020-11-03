@@ -13,8 +13,8 @@ export VPS_DIR="$CUR_DIR"
 # load password
 SUPERVISOR_PW="$(jq -jr '.supervisor_password' "${CUR_DIR}/secret")"
 export SUPERVISOR_PW
-SHORTURL_TOKEN="$(jq -jr '.shorturl_token' "${CUR_DIR}/secret")"
-export SHORTURL_TOKEN
+SHORTURL_KEY="$(jq -jr '.shorturl_token' "${CUR_DIR}/secret")"
+export SHORTURL_KEY
 
 function run_super() {
 	case "$1" in
