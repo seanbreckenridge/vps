@@ -1,10 +1,24 @@
 #!/bin/bash
 # Backs up stuff from my server
+# run from my computer, sshs in and copies down to ~/.cache
 
+SSH_TO='vultr'
 BACKUP_LOG='/tmp/backup.log'
-mv "${HOME}/.cache/backup_dir.tar.gz" "${HOME}/.cache/backup_dir.tar.gz.bak"
+CACHE_DIR="${XDG_CACHE_HOME:-${HOME}/.cache/}"
+BACKUP_DIR="${CACHE_DIR}/backup_dir/"
+BACKUP_TO="${CACHE_DIR}/backup_dir.tar.gz"
+readonly SSH_TO BACKUP_DIR CACHE_DIR BACKUP_DIR BACKUP_TO
 
-date >> /tmp/backup.log
-ssh vultr "~/vps/backup" >> "${BACKUP_LOG}" && \
-scp vultr:~/vps/backup_dir.tar.gz "${HOME}/.cache" >> "${BACKUP_LOG}"
+[[ -d "$BACKUP_DIR" ]] && rm -rf "$BACKUP_DIR"
+
+# run backup on server and copy to
+echo 'Running backup on VPS...'
+date >>"${BACKUP_LOG}"
+ssh "$SSH_TO" "./vps/backup" >>"${BACKUP_LOG}" &&
+	scp "$SSH_TO":'./vps/backup_dir.tar.gz' "$BACKUP_TO" >>"${BACKUP_LOG}"
+
+# extracts to ~/.cache
+tar xf "$BACKUP_TO" -C "$CACHE_DIR"
+# preview with https://github.com/bootandy/dust
+command -v dust >/dev/null 2>&1 && dust -n 8 "$BACKUP_DIR"
 printf "Backed up %d files from the VPS\n" "$(tar tvf "${HOME}/.cache/backup_dir.tar.gz" | wc -l)"
