@@ -1,0 +1,10 @@
+#!/bin/bash
+# Backs up stuff from my server
+
+BACKUP_LOG='/tmp/backup.log'
+mv "${HOME}/.cache/backup_dir.tar.gz" "${HOME}/.cache/backup_dir.tar.gz.bak"
+
+date >> /tmp/backup.log
+ssh vultr "~/vps/backup" >> "${BACKUP_LOG}" && \
+scp vultr:~/vps/backup_dir.tar.gz "${HOME}/.cache" >> "${BACKUP_LOG}"
+printf "Backed up %d files from the VPS\n" "$(tar tvf "${HOME}/.cache/backup_dir.tar.gz" | wc -l)"

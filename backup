@@ -73,6 +73,7 @@ expect_file_and_copy "$UNAP_SERVER/unapproved_info.json" "$BACKUP_UNAPPROVED"
 optional_copy "$COUNTDOWN_BOT/server.db" "$BACKUP_COUNTDOWN"
 optional_copy "$HOME/.bashrc" "$BACKUP_DIR"
 optional_copy "$HOME/.bash_profile" "$BACKUP_DIR"
+optional_copy '/var/log/nginx/access.log' "$BACKUP_DIR"
 
 expect_dir_and_copy "/etc/netdata"
 expect_dir_and_copy "/etc/nginx"
