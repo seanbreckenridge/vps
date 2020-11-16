@@ -14,6 +14,7 @@ declare -rx ALBUMS="${CODE}/albums"
 declare -rx GLUE="${CODE}/glue"
 declare -rx TODO_NOTIFY="${CODE}/todotxt_deadline_notify"
 declare -rx MNU_GSHEETS="${CODE}/mnu_gsheets"
+declare -rx CHECKER_MAL="${CODE}/checker_mal"
 
 declare -rx SHORTURL_DATA="${HOME}/shorturls"
 
@@ -27,5 +28,6 @@ declare -rx WCA_LOGS="${LOGS_BASE}/wca_userinfo"
 declare -rx ALBUMS_LOGS="${LOGS_BASE}/albums"
 declare -rx GLUE_LOGS="${LOGS_BASE}/glue"
 declare -rx TODO_NOTIFY_LOGS="${LOGS_BASE}/todotxt_deadline_notify"
+declare -rx CHECKER_MAL_LOGS="${LOGS_BASE}/checker_mal"
 
 declare -rx SUPERVISOR_LOGS="${LOGS_BASE}/supervisor"

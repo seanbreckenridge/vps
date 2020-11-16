@@ -93,6 +93,7 @@ clone_if_not_exists "git@gitlab.com:seanbreckenridge/albums.git" "$ALBUMS"
 clone_if_not_exists "git@gitlab.com:seanbreckenridge/glue.git" "$GLUE"
 clone_if_not_exists "git@gitlab.com:seanbreckenridge/todotxt_deadline_notify.git" "$TODO_NOTIFY"
 clone_if_not_exists "git@gitlab.com:seanbreckenridge/mnu_gsheets.git" "$MNU_GSHEETS"
+clone_if_not_exists "git@github.com:Hiyori-API/checker_mal.git" "$CHECKER_MAL"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
@@ -115,6 +116,7 @@ mkdir_if_not_exists "$ALBUMS_LOGS"
 mkdir_if_not_exists "$GLUE_LOGS"
 mkdir_if_not_exists "$TODO_NOTIFY_LOGS"
 mkdir_if_not_exists "$SUPERVISOR_LOGS"
+mkdir_if_not_exists "$CHECKER_MAL_LOGS"
 mkdir_if_not_exists "$SHORTURL_DATA"
 
 set +u
