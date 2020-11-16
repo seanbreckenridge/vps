@@ -41,7 +41,6 @@ expect_file() {
 }
 
 require python3.7
-require ruby
 require bundle
 require docker
 require crontab
@@ -85,7 +84,6 @@ cd_or_exit "${CODE}"
 clone_if_not_exists "git@github.com:seanbreckenridge/mal-id-cache.git" "$MID_CACHE_REPO"
 clone_if_not_exists "git@gitlab.com:seanbreckenridge/mal-notify-bot.git" "$NOTIFY_BOT"
 clone_if_not_exists "git@gitlab.com:seanbreckenridge/discord-countdown-bot.git" "$COUNTDOWN_BOT"
-clone_if_not_exists "git@gitlab.com:seanbreckenridge/mal-unapproved.git" "$UNAP_SERVER"
 clone_if_not_exists "git@gitlab.com:seanbreckenridge/docker-jikan.git" "$DOCKER_JIKAN"
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_BOT/mal-id-cache"
 clone_if_not_exists "git@gitlab.com:seanbreckenridge/wca_userinfo.git" "$WCA_USERINFO"
@@ -109,7 +107,6 @@ set -u
 mkdir_if_not_exists "$MID_LOGS"
 mkdir_if_not_exists "$NOTIFY_LOGS"
 mkdir_if_not_exists "$COUNTDOWN_LOGS"
-mkdir_if_not_exists "$UNAP_LOGS"
 mkdir_if_not_exists "$DOCKER_LOGS"
 mkdir_if_not_exists "$WCA_LOGS"
 mkdir_if_not_exists "$ALBUMS_LOGS"
@@ -172,10 +169,12 @@ fi
 
 # setup mal id cache
 cd_or_exit "$MID_CACHE_REPO"
-pipenv --python "$(command -v python3.7)"
-pipenv install -r "$MID_CACHE_REPO/requirements.txt"
-pipenv run python3 setup.py install
-pipenv run mal_id_cache --init-dir
+
+# Don't need to setup, has been replaced by checker_mal
+#pipenv --python "$(command -v python3.7)"
+#pipenv install -r "$MID_CACHE_REPO/requirements.txt"
+#pipenv run python3 setup.py install
+#pipenv run mal_id_cache --init-dir
 # for that directory
 git config user.email "ssbreckenridge@icloud.com"
 git config user.name "[bot]sean"
@@ -191,19 +190,8 @@ cd_or_exit "$COUNTDOWN_BOT"
 pipenv --python "$(command -v python3.7)"
 pipenv install
 
-# setup unapproved server
-cd_or_exit "$UNAP_SERVER"
-bundle install
-python3 -m pip install --user --upgrade pip
-python3 -m pip install --user jikanpy requests
-
 # install superhooks-discord
 python3 -m pip install --user git+https://gitlab.com/seanbreckenridge/superhooks
-
-cd "$DOCKER_JIKAN" && docker-compose up -d                                         # start jikan
-[[ ! -r "${UNAP_SERVER}/unapproved_info.json" ]] && "$UNAP_SERVER"/cache_loop once # initial call to build cache
-"$UNAP_SERVER"/uglify_css
-cd "$DOCKER_JIKAN" && docker-compose down
 
 # nginx logs
 groups | grep -q "adm" || sudo usermod -a -G adm "$(whoami)"
