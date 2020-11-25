@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 # Backs up stuff from my server
 # run from my computer, sshs in and copies down to ~/.cache
 
