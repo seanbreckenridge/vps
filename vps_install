@@ -129,7 +129,7 @@ fi
 
 cd_or_exit "$PROJECTS"
 yarn  # install
-yarn build  # run initial build
+pip3 install --user -r ./requirements.txt
 
 cd_or_exit "$MNU_GSHEETS"
 pipenv --python "$(command -v python3.7)"
