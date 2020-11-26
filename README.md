@@ -45,3 +45,4 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 - https://github.com/seanbreckenridge/no-db-static-shorturl
 - https://github.com/seanbreckenridge/mnu_gsheets
 - https://github.com/Hiyori-API/checker_mal
+- https://github.com/seanbreckenridge/projects

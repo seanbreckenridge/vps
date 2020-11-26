@@ -41,7 +41,6 @@ expect_file() {
 }
 
 require python3.7
-require bundle
 require docker
 require crontab
 require docker-compose
@@ -56,6 +55,7 @@ require zcat
 require goaccess
 require htpasswd
 require uglifycss
+require yarn
 require psql # remind me to setup postgres for glue
 require go
 
@@ -92,6 +92,7 @@ clone_if_not_exists "git@gitlab.com:seanbreckenridge/glue.git" "$GLUE"
 clone_if_not_exists "git@gitlab.com:seanbreckenridge/todotxt_deadline_notify.git" "$TODO_NOTIFY"
 clone_if_not_exists "git@gitlab.com:seanbreckenridge/mnu_gsheets.git" "$MNU_GSHEETS"
 clone_if_not_exists "git@github.com:Hiyori-API/checker_mal.git" "$CHECKER_MAL"
+clone_if_not_exists "git@github.com:seanbreckenridge/projects.git" "$PROJECTS"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
@@ -115,6 +116,7 @@ mkdir_if_not_exists "$TODO_NOTIFY_LOGS"
 mkdir_if_not_exists "$SUPERVISOR_LOGS"
 mkdir_if_not_exists "$CHECKER_MAL_LOGS"
 mkdir_if_not_exists "$SHORTURL_DATA"
+mkdir_if_not_exists "$PROJECTS_LOGS"
 
 set +u
 
@@ -124,6 +126,10 @@ if [ ! -e /etc/nginx/.htpasswd ]; then
 	sudo htpasswd -c /etc/nginx/.htpasswd sean
 	mkdir -p ~/.goaccess_html
 fi
+
+cd_or_exit "$PROJECTS"
+yarn  # install
+yarn build  # run initial build
 
 cd_or_exit "$MNU_GSHEETS"
 pipenv --python "$(command -v python3.7)"
