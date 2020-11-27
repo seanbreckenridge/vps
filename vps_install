@@ -158,7 +158,7 @@ mix test
 # install glue assets
 cd_or_exit "$GLUE"
 mix ecto.create
-npm install --prefix "$GLUE/apps/glue/assets"
+npm install --prefix "$GLUE/assets"
 
 # setup albums server
 cd_or_exit "$ALBUMS/server"
