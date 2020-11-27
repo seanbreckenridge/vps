@@ -129,7 +129,7 @@ fi
 
 cd_or_exit "$PROJECTS"
 yarn  # install
-yarn build
+yarn prod-build
 pip3 install --user -r ./requirements.txt
 
 cd_or_exit "$MNU_GSHEETS"
