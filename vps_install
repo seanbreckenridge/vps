@@ -82,15 +82,15 @@ mkdir_if_not_exists "$HOME/.todo"
 cd_or_exit "${CODE}"
 
 clone_if_not_exists "git@github.com:seanbreckenridge/mal-id-cache.git" "$MID_CACHE_REPO"
-clone_if_not_exists "git@gitlab.com:seanbreckenridge/mal-notify-bot.git" "$NOTIFY_BOT"
-clone_if_not_exists "git@gitlab.com:seanbreckenridge/discord-countdown-bot.git" "$COUNTDOWN_BOT"
-clone_if_not_exists "git@gitlab.com:seanbreckenridge/docker-jikan.git" "$DOCKER_JIKAN"
+clone_if_not_exists "git@github.com:seanbreckenridge/mal-notify-bot.git" "$NOTIFY_BOT"
+clone_if_not_exists "git@github.com:seanbreckenridge/discord-countdown-bot.git" "$COUNTDOWN_BOT"
+clone_if_not_exists "git@github.com:seanbreckenridge/docker-jikan.git" "$DOCKER_JIKAN"
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_BOT/mal-id-cache"
-clone_if_not_exists "git@gitlab.com:seanbreckenridge/wca_userinfo.git" "$WCA_USERINFO"
-clone_if_not_exists "git@gitlab.com:seanbreckenridge/albums.git" "$ALBUMS"
-clone_if_not_exists "git@gitlab.com:seanbreckenridge/glue.git" "$GLUE"
-clone_if_not_exists "git@gitlab.com:seanbreckenridge/todotxt_deadline_notify.git" "$TODO_NOTIFY"
-clone_if_not_exists "git@gitlab.com:seanbreckenridge/mnu_gsheets.git" "$MNU_GSHEETS"
+clone_if_not_exists "git@github.com:seanbreckenridge/wca_userinfo.git" "$WCA_USERINFO"
+clone_if_not_exists "git@github.com:seanbreckenridge/albums.git" "$ALBUMS"
+clone_if_not_exists "git@github.com:seanbreckenridge/glue.git" "$GLUE"
+clone_if_not_exists "git@github.com:seanbreckenridge/todotxt_deadline_notify.git" "$TODO_NOTIFY"
+clone_if_not_exists "git@github.com:seanbreckenridge/mnu_gsheets.git" "$MNU_GSHEETS"
 clone_if_not_exists "git@github.com:Hiyori-API/checker_mal.git" "$CHECKER_MAL"
 clone_if_not_exists "git@github.com:seanbreckenridge/projects.git" "$PROJECTS"
 
@@ -141,15 +141,15 @@ mix local.hex --force
 mix local.rebar --force
 
 # generate a nicer error 502 error page
-go get -v -u "gitlab.com/seanbreckenridge/darker_errors"
+go get -v -u "github.com/seanbreckenridge/darker_errors"
 
 # my url shortener URLs
-go get -v -u "gitlab.com/seanbreckenridge/no-db-static-shorturl"
+go get -v -u "github.com/seanbreckenridge/no-db-static-shorturl"
 
 # server that serves my dotfiles
 readonly LOCAL_DOTFILES="$HOME/.dotfiles"
-clone_if_not_exists "https://gitlab.com/seanbreckenridge/dotfiles.git" "$LOCAL_DOTFILES"
-go get -v -u "gitlab.com/seanbreckenridge/subpath-serve"
+clone_if_not_exists "https://github.com/seanbreckenridge/dotfiles.git" "$LOCAL_DOTFILES"
+go get -v -u "github.com/seanbreckenridge/subpath-serve"
 
 cd_or_exit "$TODO_NOTIFY"
 mix deps.get
@@ -198,7 +198,7 @@ pipenv --python "$(command -v python3.7)"
 pipenv install
 
 # install superhooks-discord
-python3 -m pip install --user git+https://gitlab.com/seanbreckenridge/superhooks
+python3 -m pip install --user git+https://github.com/seanbreckenridge/superhooks
 
 # nginx logs
 groups | grep -q "adm" || sudo usermod -a -G adm "$(whoami)"
