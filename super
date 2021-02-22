@@ -26,7 +26,7 @@ function run_super() {
 			pkill -x supervisord
 		else
 			echo "No supervisord process running..." 1>&2
-			exit 1
+			return 1
 		fi
 		;;
 	--daemon)
@@ -44,9 +44,9 @@ function run_super() {
 		# parse this case statement to get the choices
 		SPECIFY_CHOIES="$(grep -P '^\s*--\w+\)\s*$' "${HOME}/vps/super" | tr -d '[ )\t]')"
 		printf "Must specify one of:\n%s\n" "$SPECIFY_CHOIES" 1>&2
-		exit 1
+		return 1
 		;;
 	esac
 }
 
-run_super "$@"
+run_super "$@" || exit $?
