@@ -1,11 +1,10 @@
 #!/bin/bash
 # run from my computer to approve guest book comments at https://sean.fish/#
+# specify one of --approve-comments, --review-comments, --print-count or --print-new-comments to this script
+# defaults to --approve-comments
+# see https://github.com/seanbreckenridge/glue/blob/master/production_server
 
-CMD=APPROVE
-[[ "$1" == *all ]] && CMD=ALL
-
-if [[ "$CMD" == 'APPROVE' ]]; then
-	ssh vultr "cd ~/code/glue/ && ./production_server --approve-comments"
-else
-	ssh vultr "cd ~/code/glue/ && ./production_server --review-comments"
-fi
+declare CMD
+CMD="$1"
+[[ -z "$1" ]] && CMD='--approve-comments'
+exec ssh vultr "cd ~/code/glue/ && ./production_server ${CMD}"
