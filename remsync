@@ -51,6 +51,8 @@ declare FROM_DIR="${HOME}/.local/share/remsync/"
 [[ -n "$REMSYNC_PUBLIC" ]] && FROM_DIR="${HOME}/.local/share/remsync_public/"
 readonly FROM_DIR
 
+mkdir -p "${FROM_DIR}"
+
 echo "$FROM_DIR"
 
 ########## RUN
