@@ -40,6 +40,12 @@ expect_file() {
 	fi
 }
 
+# setup asdf
+# https://asdf-vm.com/#/core-manage-asdf
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
+# setup https://github.com/asdf-vm/asdf-elixir w/ recent versions of erlang/elixir
+# by building from source
+
 require python3.7
 require docker
 require crontab
@@ -48,7 +54,7 @@ require pipenv
 require realpath
 require supervisord
 require jq
-require elixir # sudo apt install erlang-inets erlang-dev elixir erlang-parsetools erlang-xmerl
+require elixir
 require cargo
 require rsync
 require zcat
