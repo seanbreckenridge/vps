@@ -44,7 +44,11 @@ expect_file() {
 # https://asdf-vm.com/#/core-manage-asdf
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
 # setup https://github.com/asdf-vm/asdf-elixir w/ recent versions of erlang/elixir
-# by building from source
+# by building from source -- especially important that erlang is built from source
+# because my debian installs seem to break often with ssl/other erlang-dev upgrades
+
+# add asdf global versions to $PATH
+export PATH="${HOME}/.asdf/shims/:$PATH"
 
 require python3.7
 require docker
