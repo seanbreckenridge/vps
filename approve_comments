@@ -6,4 +6,4 @@
 
 declare CMD
 CMD="${1:---approve-comments}"
-exec ssh vultr "cd ~/code/glue/ && ./production_server ${CMD}"
+exec ssh vultr "$(printf 'cd ~/code/glue/ && PATH="${HOME}/.asdf/shims/:$PATH" ./production_server "%s"' "${CMD}")"
