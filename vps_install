@@ -144,7 +144,7 @@ pip3 install --user -r ./requirements.txt
 
 cd_or_exit "$MNU_GSHEETS"
 pipenv --python "$(command -v python3.7)"
-pipenv run python3 setup.py install
+pipenv install
 
 # elixir
 mix local.hex --force

@@ -9,5 +9,5 @@ source ./directories
 
 cd "$MNU_GSHEETS"
 git pull
-pipenv run python3 setup.py install
+pipenv install
 pipenv run ./update
