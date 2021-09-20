@@ -34,7 +34,7 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 - https://github.com/seanbreckenridge/mal-id-cache
 - https://github.com/seanbreckenridge/mal-notify-bot
 - https://github.com/seanbreckenridge/discord-countdown-bot
-- https://github.com/seanbreckenridge/docker-jikan
+- https://github.com/jikan-me/jikan-docker
 - https://github.com/seanbreckenridge/wca_userinfo
 - https://github.com/seanbreckenridge/albums (server)
 - https://github.com/seanbreckenridge/todotxt_deadline_notify
