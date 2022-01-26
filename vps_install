@@ -138,7 +138,7 @@ if [ ! -e /etc/nginx/.htpasswd ]; then
 fi
 
 cd_or_exit "$PROJECTS"
-yarn  # install
+yarn # install
 yarn prod-build
 pip3 install --user -r ./requirements.txt
 

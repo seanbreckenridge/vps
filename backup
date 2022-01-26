@@ -81,8 +81,8 @@ expect_dir_and_copy "$HOME/.todo"
 expect_dir_and_copy "$HOME/shorturls"
 
 # save data from my website
-curl -s 'https://sean.fish/api/gb_comment' > "$BACKUP_DIR/gb_comment.json"
-curl -s 'https://sean.fish/api/page_hit' > "$BACKUP_DIR/page_hit.json"
+curl -s 'https://sean.fish/api/gb_comment' >"$BACKUP_DIR/gb_comment.json"
+curl -s 'https://sean.fish/api/page_hit' >"$BACKUP_DIR/page_hit.json"
 
 tar cvfz "$BACKUP_TAR_NAME" "$BACKUP_DIR_NAME" && printf "Created '%s'\n" "$BACKUP_TAR_NAME"
 delete_if_exists "$BACKUP_DIR"

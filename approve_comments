@@ -4,6 +4,9 @@
 # defaults to --approve-comments
 # see https://github.com/seanbreckenridge/glue/blob/master/production_server
 
-declare CMD
-CMD="${1:---approve-comments}"
-exec ssh vultr "$(printf 'cd ~/code/glue/ && PATH="${HOME}/.asdf/shims/:$PATH" ./production_server "%s"' "${CMD}")"
+declare FLAG COMMAND
+FLAG="${1:---approve-comments}"
+# shellcheck disable=SC2016
+COMMAND="$(printf 'cd ~/code/glue/ && PATH="${HOME}/.asdf/shims/:$PATH" ./production_server "%s"' "${FLAG}")"
+printf "Running: '%s'\n" "${COMMAND}" 1>&2
+exec ssh vultr "${COMMAND}"
