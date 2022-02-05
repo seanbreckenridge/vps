@@ -15,6 +15,7 @@ declare -rx TODO_NOTIFY="${CODE}/todotxt_deadline_notify"
 declare -rx MNU_GSHEETS="${CODE}/mnu_gsheets"
 declare -rx CHECKER_MAL="${CODE}/checker_mal"
 declare -rx PROJECTS="${CODE}/projects"
+declare -rx MY_FEED="${CODE}/my_feed"
 
 declare -rx SHORTURL_DATA="${HOME}/shorturls"
 
@@ -29,5 +30,6 @@ declare -rx GLUE_LOGS="${LOGS_BASE}/glue"
 declare -rx TODO_NOTIFY_LOGS="${LOGS_BASE}/todotxt_deadline_notify"
 declare -rx CHECKER_MAL_LOGS="${LOGS_BASE}/checker_mal"
 declare -rx PROJECTS_LOGS="${LOGS_BASE}/projects"
+declare -rx MY_FEED_LOGS="${LOGS_BASE}/my_feed"
 
 declare -rx SUPERVISOR_LOGS="${LOGS_BASE}/supervisor"

@@ -68,6 +68,7 @@ require uglifycss
 require yarn
 require psql # remind me to setup postgres for glue
 require go
+require pyenv
 
 # other things that are useful on here
 GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
@@ -102,6 +103,7 @@ clone_if_not_exists "git@github.com:seanbreckenridge/todotxt_deadline_notify.git
 clone_if_not_exists "git@github.com:seanbreckenridge/mnu_gsheets.git" "$MNU_GSHEETS"
 clone_if_not_exists "git@github.com:Hiyori-API/checker_mal.git" "$CHECKER_MAL"
 clone_if_not_exists "git@github.com:seanbreckenridge/projects.git" "$PROJECTS"
+clone_if_not_exists "git@github.com:seanbreckenridge/my_feed.git" "$MY_FEED"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
@@ -124,6 +126,7 @@ mkdir_if_not_exists "$SUPERVISOR_LOGS"
 mkdir_if_not_exists "$CHECKER_MAL_LOGS"
 mkdir_if_not_exists "$SHORTURL_DATA"
 mkdir_if_not_exists "$PROJECTS_LOGS"
+mkdir_if_not_exists "$MY_FEED_LOGS"
 
 set +u
 
@@ -133,6 +136,15 @@ if [ ! -e /etc/nginx/.htpasswd ]; then
 	sudo htpasswd -c /etc/nginx/.htpasswd sean
 	mkdir -p ~/.goaccess_html
 fi
+
+cd_or_exit "$MY_FEED"
+cd ./backend
+python3 -m pip install -U virtualenv wheel pip
+pipenv --python ~/.pyenv/versions/3.10.2/bin/python
+pipenv install
+cd_or_exit "$MY_FEED"
+cd ./frontend
+yarn
 
 cd_or_exit "$PROJECTS"
 yarn # install
