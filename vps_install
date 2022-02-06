@@ -59,7 +59,6 @@ require realpath
 require supervisord
 require jq
 require elixir
-require cargo
 require rsync
 require zcat
 require goaccess
@@ -97,7 +96,6 @@ clone_if_not_exists "git@github.com:seanbreckenridge/mal-notify-bot.git" "$NOTIF
 clone_if_not_exists "git@github.com:seanbreckenridge/discord-countdown-bot.git" "$COUNTDOWN_BOT"
 clone_if_not_exists "https://github.com/jikan-me/jikan-docker" "$DOCKER_JIKAN"
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_BOT/mal-id-cache"
-clone_if_not_exists "git@github.com:seanbreckenridge/wca_userinfo.git" "$WCA_USERINFO"
 clone_if_not_exists "git@github.com:seanbreckenridge/glue.git" "$GLUE"
 clone_if_not_exists "git@github.com:seanbreckenridge/todotxt_deadline_notify.git" "$TODO_NOTIFY"
 clone_if_not_exists "git@github.com:seanbreckenridge/mnu_gsheets.git" "$MNU_GSHEETS"
@@ -119,7 +117,6 @@ mkdir_if_not_exists "$MID_LOGS"
 mkdir_if_not_exists "$NOTIFY_LOGS"
 mkdir_if_not_exists "$COUNTDOWN_LOGS"
 mkdir_if_not_exists "$DOCKER_LOGS"
-mkdir_if_not_exists "$WCA_LOGS"
 mkdir_if_not_exists "$GLUE_LOGS"
 mkdir_if_not_exists "$TODO_NOTIFY_LOGS"
 mkdir_if_not_exists "$SUPERVISOR_LOGS"
@@ -179,14 +176,6 @@ mix test
 cd_or_exit "$GLUE"
 mix ecto.create
 npm install --prefix "$GLUE/assets"
-
-# setup wca userinfo
-if [[ ! -e "${WCA_USERINFO}/target/release/wca_userinfo" ]]; then
-	cd_or_exit "$WCA_USERINFO"
-	cargo build --bins --release
-	rm -rf "${WCA_USERINFO}/target/release/deps"
-	rm -rf "${WCA_USERINFO}/target/release/build"
-fi
 
 # setup mal id cache
 cd_or_exit "$MID_CACHE_REPO"

@@ -35,7 +35,6 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 - https://github.com/seanbreckenridge/mal-notify-bot
 - https://github.com/seanbreckenridge/discord-countdown-bot
 - https://github.com/jikan-me/jikan-docker
-- https://github.com/seanbreckenridge/wca_userinfo
 - https://github.com/seanbreckenridge/todotxt_deadline_notify
 - https://github.com/seanbreckenridge/xqc-dvd
 - https://github.com/seanbreckenridge/xkcd-favorites
