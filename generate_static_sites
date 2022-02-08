@@ -109,7 +109,7 @@ set -x
 ## generate nicer errors
 rm -rf /tmp/error_html
 mkdir -p /tmp/error_html
-darker_errors -output-dir /tmp/error_html 'ERROR_TITLE:sean - STATUS_MSG' '502:ERROR_HEAD:<meta http-equiv="refresh" content="2">' '502:ERROR_MSG:<p>This page is currently being updated...<br /> This should be fixed in in a few seconds...</p>'
+darker_errors -output-dir /tmp/error_html 'ERROR_TITLE:sean - STATUS_MSG' '502:ERROR_HEAD:<meta http-equiv="refresh" content="5">' '502:ERROR_MSG:<p>This page is currently being updated...<br /> This should be fixed in in a few seconds...</p>'
 cp /tmp/error_html/502.html "${DOCUMENT_ROOT}"
 
 # requres me to to mark error_page for each request, see https://github.com/seanbreckenridge/darker_errors
