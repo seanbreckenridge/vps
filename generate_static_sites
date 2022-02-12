@@ -70,7 +70,7 @@ yarn install || exit $?
 yarn check || exit $?
 yarn build || exit $?
 # move to public so it works with cross origin requests
-mv "${BACK_ARROW_DIR}/back-arrow-bundle.js" "${HOME}/p/"
+mv -v "${BACK_ARROW_DIR}/back-arrow-bundle.js" "${HOME}/p/"
 
 ## DVD ####################
 
