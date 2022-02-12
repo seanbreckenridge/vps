@@ -53,13 +53,24 @@ DOCUMENT_ROOT="${HOME}/static_files"
 DVD_DIR="${BUILD_DIR}/dvd"
 XKCD_DIR="${BUILD_DIR}/xkcd"
 ANIMESHORTS_DIR="${BUILD_DIR}/animeshorts"
+BACK_ARROW_DIR="${BUILD_DIR}/back-arrow"
 
 # clone dirs
 reclone_dir "https://github.com/seanbreckenridge/xqc-dvd" "$DVD_DIR"
 reclone_dir "https://github.com/seanbreckenridge/xkcd-favorites" "$XKCD_DIR"
 reclone_dir "https://github.com/seanbreckenridge/animeshorts" "$ANIMESHORTS_DIR"
+reclone_dir "git@github.com:seanbreckenridge/back-arrow-script.git" "$BACK_ARROW_DIR"
 
 ## Build each Site
+
+## BACK-ARROW #############
+
+cd "${BACK_ARROW_DIR}"
+yarn install || exit $?
+yarn check || exit $?
+yarn build || exit $?
+# move to public so it works with cross origin requests
+mv "${BACK_ARROW_DIR}/back-arrow-bundle.js" "${HOME}/p/"
 
 ## DVD ####################
 
@@ -115,3 +126,6 @@ cp /tmp/error_html/502.html "${DOCUMENT_ROOT}"
 # requres me to to mark error_page for each request, see https://github.com/seanbreckenridge/darker_errors
 cd "$DOCUMENT_ROOT"
 darker_errors 'ERROR_TITLE:sean - STATUS_MSG'
+
+### 
+
