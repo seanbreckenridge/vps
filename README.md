@@ -45,3 +45,4 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 - https://github.com/Hiyori-API/checker_mal
 - https://github.com/seanbreckenridge/projects
 - https://github.com/seanbreckenridge/my_feed
+- https://github.com/seanbreckenridge/back-arrow-script/
