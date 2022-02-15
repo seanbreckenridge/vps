@@ -137,8 +137,8 @@ fi
 cd_or_exit "$MY_FEED"
 cd ./backend
 python3 -m pip install -U virtualenv wheel pip
-pipenv --python ~/.pyenv/versions/3.10.2/bin/python
-pipenv install
+python3 -m pipenv --python ~/.pyenv/versions/3.10.2/bin/python
+python3 -m pipenv install
 cd_or_exit "$MY_FEED"
 cd ./frontend
 yarn
@@ -149,8 +149,8 @@ yarn prod-build
 pip3 install --user -r ./requirements.txt
 
 cd_or_exit "$MNU_GSHEETS"
-pipenv --python "$(command -v python3.7)"
-pipenv install
+python3 -m pipenv --python "$(command -v python3.7)"
+python3 -m pipenv install
 
 # elixir
 mix local.hex --force
@@ -170,35 +170,21 @@ go get -v -u "github.com/seanbreckenridge/subpath-serve"
 cd_or_exit "$TODO_NOTIFY"
 mix deps.get
 mix compile
-mix test
-
-# install glue assets
-cd_or_exit "$GLUE"
-mix ecto.create
-npm install --prefix "$GLUE/assets"
 
 # setup mal id cache
 cd_or_exit "$MID_CACHE_REPO"
-
-# Don't need to setup, has been replaced by checker_mal
-#pipenv --python "$(command -v python3.7)"
-#pipenv install -r "$MID_CACHE_REPO/requirements.txt"
-#pipenv run python3 setup.py install
-#pipenv run mal_id_cache --init-dir
-# for that directory
 git config user.email "ssbreckenridge@icloud.com"
 git config user.name "[bot]sean"
-#pipenv run mal_id_cache --force-state 0
 
 # setup notify bot
 cd_or_exit "$NOTIFY_BOT"
-pipenv --python "$(command -v python3.7)"
-pipenv install
+python3 -m pipenv --python "$(command -v python3.7)"
+python3 -m pipenv install
 
 # setup countdown bot
 cd_or_exit "$COUNTDOWN_BOT"
-pipenv --python "$(command -v python3.7)"
-pipenv install
+python3 -m pipenv --python "$(command -v python3.7)"
+python3 -m pipenv install
 
 # install superhooks-discord
 python3 -m pip install --user git+https://github.com/seanbreckenridge/superhooks
