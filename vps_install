@@ -6,7 +6,7 @@ cd_or_exit() {
 		printf "Could not cd into directory: %s\n" "$1"
 		exit 1
 	else
-		cd "$1"
+		cd "$1" || exit $?
 	fi
 }
 
@@ -73,7 +73,9 @@ require pyenv
 GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
 pip install -U rifleman
 
-readonly CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+declare CUR_DIR
+CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+declare -rx CUR_DIR
 source "${CUR_DIR}/directories"
 
 expect_file "${CUR_DIR}/secret"
@@ -135,12 +137,12 @@ if [ ! -e /etc/nginx/.htpasswd ]; then
 fi
 
 cd_or_exit "$MY_FEED"
-cd ./backend
+cd_or_exit ./backend
 python3 -m pip install -U virtualenv wheel pip
 python3 -m pipenv --python ~/.pyenv/versions/3.10.2/bin/python
 python3 -m pipenv install
 cd_or_exit "$MY_FEED"
-cd ./frontend
+cd_or_exit ./frontend
 yarn
 
 cd_or_exit "$PROJECTS"
@@ -193,4 +195,5 @@ python3 -m pip install --user git+https://github.com/seanbreckenridge/superhooks
 groups | grep -q "adm" || sudo usermod -a -G adm "$(whoami)"
 
 # configure crontabs
+# shellcheck disable=SC2016
 crontab -l | grep -q dotfiles || echo 'add "*/10 * * * * sh -c "cd $HOME/.dotfiles && git pull"" to your crontab"'

@@ -81,6 +81,7 @@ ytdl_cmd="python3 -m youtube_dl $*"
 echo "[mediaproxy] Running command on server: ${ytdl_cmd}"
 
 set -e
+# shellcheck disable=SC2016
 ssh -i "$SYNC_KEYFILE" "${SYNC_USER}@${TO_SERVER}" "$(printf '
 mkdir -p "${HOME}/.ytdl"
 find "${HOME}/.ytdl" -type f -mtime +31 -delete

@@ -15,8 +15,8 @@
 # alias remsync_public="REMSYNC_PUBLIC=1 $REPOS/vps/remsync"  # to push to /p/ (public index)
 #
 # # to use ranger to quickly remove/add files
-# alias remsync_ranger="ranger $HOME/.local/share/remsync && remsync"
-# alias remsync_public_ranger="ranger $HOME/.local/share/remsync_public && remsync_public"
+# alias remsync_ranger="ranger $HOME/Documents/remsync && remsync"
+# alias remsync_public_ranger="ranger $HOME/Documents/remsync_public && remsync_public"
 #
 # files are served by nginx as static files:
 #
@@ -47,8 +47,8 @@ readonly BASE_URL="https://sean.fish"
 readonly TO_DIR
 
 # local information
-declare FROM_DIR="${HOME}/.local/share/remsync/"
-[[ -n "$REMSYNC_PUBLIC" ]] && FROM_DIR="${HOME}/.local/share/remsync_public/"
+declare FROM_DIR="${HOME}/Documents/remsync/"
+[[ -n "$REMSYNC_PUBLIC" ]] && FROM_DIR="${HOME}/Documents/remsync_public/"
 readonly FROM_DIR
 
 mkdir -p "${FROM_DIR}"
@@ -70,7 +70,7 @@ fi
 if (($# > 0)); then
 	for path in "$@"; do
 		if [[ -r "$path" ]]; then
-			cp -vR "$path" "$FROM_DIR"
+			cp -R "$path" "$FROM_DIR"
 		else
 			printf "No such file: %s\n" "$path" 1>&2
 			exit 1

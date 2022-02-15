@@ -49,7 +49,7 @@ require tar
 require realpath
 
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
-cd "$CUR_DIR"
+cd "$CUR_DIR" || exit $?
 source "${CUR_DIR}/directories"
 
 BACKUP_DIR_NAME="backup_dir"
