@@ -39,8 +39,7 @@ split() {
 
 # server information
 readonly SYNC_USER="sean"
-readonly SYNC_KEYFILE="${HOME}/.ssh/vultr" # ssh keyfile
-readonly TO_SERVER=140.82.50.43
+readonly SSH_TO='vultr'  # setup in ~/.ssh/config
 declare TO_DIR="/home/${SYNC_USER}/f/"
 [[ -n "$REMSYNC_PUBLIC" ]] && TO_DIR="/home/${SYNC_USER}/p/"
 readonly BASE_URL="https://sean.fish"
@@ -56,12 +55,6 @@ mkdir -p "${FROM_DIR}"
 echo "$FROM_DIR"
 
 ########## RUN
-
-# make sure credential file exists
-if [[ ! -f "$SYNC_KEYFILE" ]]; then
-	printf "Could not find keyfile '%s'\n" "$SYNC_KEYFILE" 1>&2
-	exit 1
-fi
 
 # make local dir if it doesnt exist
 [[ ! -d "$FROM_DIR" ]] && mkdir -p "$FROM_DIR"
@@ -80,12 +73,12 @@ if (($# > 0)); then
 fi
 
 # sync directory
-rsync -Pavh --delete-before -e "ssh -i $SYNC_KEYFILE" "$FROM_DIR" "${SYNC_USER}@${TO_SERVER}:${TO_DIR}"
+rsync -Pahv --delete-before -e 'ssh' "$FROM_DIR" ${SSH_TO}:${TO_DIR}
 
 split
 
 # print how much of the server is currently in use
-ssh -i "${SYNC_KEYFILE}" "${SYNC_USER}@${TO_SERVER}" \
+ssh "${SSH_TO}" \
 	"df -h ~ ;\
 printf \"remsync size: \" ;\
 du -h --summarize \"${TO_DIR}\" | cut -f1;\
@@ -99,12 +92,7 @@ if (($# > 0)); then
 	for path in "$@"; do
 		basename_path="$(basename "$path")"
 		# if directory
-		if [[ -d "$path" ]]; then
-			# loop through directory and print urls
-			while IFS= read -r -d '' file; do
-				printf "%s/%s/%s\n" "$BASE_URL" "$dir_part" "$file"
-			done < <(find "${FROM_DIR}${path}" -type f -print0)
-		else
+		if [[ ! -d "$path" ]]; then
 			# if file, just use filename to get url
 			FILEURL="$(printf "%s/%s/%s\n" "$BASE_URL" "$dir_part" "$basename_path")"
 			echo "$FILEURL"
