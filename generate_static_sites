@@ -99,7 +99,7 @@ move_to_document_root "$XKCD_DIR"
 
 cd "$ANIMESHORTS_DIR" || exit $?
 python3 -m pipenv --rm
-python3 -m pipenv --python "$(which python3.7)"
+python3 -m pipenv --python ~/.pyenv/versions/3.10.2/bin/python
 python3 -m pipenv install
 "$ANIMESHORTS_DIR"/generate
 
