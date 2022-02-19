@@ -18,17 +18,37 @@
 # alias remsync_ranger="ranger $HOME/Documents/remsync && remsync"
 # alias remsync_public_ranger="ranger $HOME/Documents/remsync_public && remsync_public"
 #
-# files are served by nginx as static files:
+# files are served by nginx as static files, with:
 #
-# location /f {
-#   alias /home/sean/f;  # location
+# private remsync
+#
+# rewrite ^/f$ /f/ permanent;
+#
+# location /f/ {
+#   alias /home/sean/f/;  # location
 #
 #   # dont serve directories
 #   try_files $uri =404;
 #   autoindex off;
 #
+#   # make sure files are downloaded instead of viewed
 #   expires -1;
 #   default_type application/octet-stream;
+# }
+#
+# public remsync
+#
+# rewrite ^/p$ /p/ permanent;
+#
+# location /p/ {
+#   alias /home/sean/p/;  # location
+#   try_files $uri $uri/ =404;
+#   autoindex on;
+#   autoindex_exact_size off;
+#   autoindex_localtime on;
+#   add_header "Access-Control-Allow-Origin"  *;
+#   expires 1h;
+#   add_header Cache-Control "public";
 # }
 
 split() {
@@ -39,7 +59,7 @@ split() {
 
 # server information
 readonly SYNC_USER="sean"
-readonly SSH_TO='vultr'  # setup in ~/.ssh/config
+readonly SSH_TO='vultr' # setup in ~/.ssh/config
 declare TO_DIR="/home/${SYNC_USER}/f/"
 [[ -n "$REMSYNC_PUBLIC" ]] && TO_DIR="/home/${SYNC_USER}/p/"
 readonly BASE_URL="https://sean.fish"
@@ -78,6 +98,7 @@ rsync -Pahv --delete-before -e 'ssh' "$FROM_DIR" ${SSH_TO}:${TO_DIR}
 split
 
 # print how much of the server is currently in use
+# shellcheck disable=SC2029
 ssh "${SSH_TO}" \
 	"df -h ~ ;\
 printf \"remsync size: \" ;\
