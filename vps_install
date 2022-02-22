@@ -50,7 +50,9 @@ expect_file() {
 # add asdf global versions to $PATH
 export PATH="${HOME}/.asdf/shims/:$PATH"
 
+require pyenv
 require python3.7
+require python3.10  # just a symlink to pyenv
 require docker
 require crontab
 require docker-compose
@@ -67,7 +69,6 @@ require uglifycss
 require yarn
 require psql # remind me to setup postgres for glue
 require go
-require pyenv
 
 # other things that are useful on here
 GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
@@ -139,7 +140,7 @@ fi
 cd_or_exit "$MY_FEED"
 cd_or_exit ./backend
 python3 -m pip install -U virtualenv wheel pip
-python3 -m pipenv --python ~/.pyenv/versions/3.10.2/bin/python
+python3 -m pipenv --python "$(command -v python3.10)"
 python3 -m pipenv install
 cd_or_exit "$MY_FEED"
 cd_or_exit ./frontend
@@ -151,7 +152,7 @@ yarn prod-build
 pip3 install --user -r ./requirements.txt
 
 cd_or_exit "$MNU_GSHEETS"
-python3 -m pipenv --python "$(command -v python3.7)"
+python3 -m pipenv --python "$(command -v python3.10)"
 python3 -m pipenv install
 
 # elixir
@@ -180,7 +181,7 @@ git config user.name "[bot]sean"
 
 # setup notify bot
 cd_or_exit "$NOTIFY_BOT"
-python3 -m pipenv --python "$(command -v python3.7)"
+python3 -m pipenv --python "$(command -v python3.10)"
 python3 -m pipenv install
 
 # setup countdown bot
