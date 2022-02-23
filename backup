@@ -84,6 +84,7 @@ expect_dir_and_copy "$HOME/shorturls"
 # save data from my website
 curl -s 'https://sean.fish/api/gb_comment' >"$BACKUP_DIR/gb_comment.json"
 curl -s 'https://sean.fish/api/page_hit' >"$BACKUP_DIR/page_hit.json"
+"${GLUE}/production_server" --epochs 2>/dev/null | grep '^EPOCHS:' | cut -d':' -f2 >"$BACKUP_DIR/page_hit_backup.json"
 
 tar cvfz "$BACKUP_TAR_NAME" "$BACKUP_DIR_NAME" && printf "Created '%s'\n" "$BACKUP_TAR_NAME"
 delete_if_exists "$BACKUP_DIR"
