@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Backs up cache/credential/data files
 
+set -u
+set -o pipefail
+
 # require that a executable be installed
 require() {
 	if [[ ! $(command -v "$1") ]]; then
@@ -64,6 +67,10 @@ delete_if_exists "$BACKUP_TAR_NAME"
 mkdir_if_not_exists "$BACKUP_COUNTDOWN"
 mkdir_if_not_exists "$BACKUP_NOTIFY"
 
+# save data from my website
+curl -s 'https://sean.fish/api/gb_comment' >"$BACKUP_DIR/gb_comment.json"
+curl -s 'https://sean.fish/api/page_hit' >"$BACKUP_DIR/page_hit.json"
+
 expect_file_and_copy "$NOTIFY_BOT/token.yaml" "$BACKUP_NOTIFY"
 expect_file_and_copy "$NOTIFY_BOT/old" "$BACKUP_NOTIFY"
 expect_file_and_copy "$NOTIFY_BOT/export.json" "$BACKUP_NOTIFY"
@@ -80,11 +87,6 @@ expect_dir_and_copy "/etc/nginx"
 expect_dir_and_copy "/etc/fail2ban"
 expect_dir_and_copy "$HOME/.todo"
 expect_dir_and_copy "$HOME/shorturls"
-
-# save data from my website
-curl -s 'https://sean.fish/api/gb_comment' >"$BACKUP_DIR/gb_comment.json"
-curl -s 'https://sean.fish/api/page_hit' >"$BACKUP_DIR/page_hit.json"
-"${GLUE}/production_server" --epochs 2>/dev/null | grep '^EPOCHS:' | cut -d':' -f2 >"$BACKUP_DIR/page_hit_backup.json"
 
 tar cvfz "$BACKUP_TAR_NAME" "$BACKUP_DIR_NAME" && printf "Created '%s'\n" "$BACKUP_TAR_NAME"
 delete_if_exists "$BACKUP_DIR"
