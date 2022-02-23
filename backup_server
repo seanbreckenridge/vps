@@ -2,6 +2,9 @@
 # Backs up stuff from my server
 # run from my computer, sshs in and copies down to ~/.cache
 
+THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+cd "${THIS_DIR}" || exit $?
+
 SSH_TO='vultr'
 BACKUP_LOG='/tmp/backup.log'
 CACHE_DIR="${XDG_CACHE_HOME:-${HOME}/.cache/}"
@@ -21,4 +24,8 @@ ssh "$SSH_TO" "./vps/backup" >>"${BACKUP_LOG}" &&
 tar xf "$BACKUP_TO" -C "$CACHE_DIR"
 # preview with https://github.com/bootandy/dust
 command -v dust >/dev/null 2>&1 && dust -n 8 "$BACKUP_DIR"
+
+set +x
+"${THIS_DIR}/approve_comments" --epochs 2>/dev/null | grep '^EPOCH' | cut -d':' -f2 | jq > "${BACKUP_DIR}/page_hits_epochs.json"
+
 printf "Backed up %d files from the VPS\n" "$(tar tvf "${HOME}/.cache/backup_dir.tar.gz" | wc -l)"
