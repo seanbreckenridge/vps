@@ -197,4 +197,4 @@ groups | grep -q "adm" || sudo usermod -a -G adm "$(whoami)"
 
 # configure crontabs
 # shellcheck disable=SC2016
-crontab -l | grep -q dotfiles || echo 'add "*/10 * * * * sh -c "cd $HOME/.dotfiles && git pull"" to your crontab"'
+crontab -l | grep -q dotfiles || echo 'add "*/10 * * * * sh -c "cd $HOME/.dotfiles && git reset --hard HEAD && git pull"" to your crontab"'
