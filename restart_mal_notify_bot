@@ -1,0 +1,8 @@
+#!/bin/bash
+# https://xkcd.com/1495/
+THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+cd "${THIS_DIR}"
+while true; do
+    ./super --ctl restart mal-notify-bot
+    sleep 7d
+done
