@@ -15,8 +15,9 @@ SUPERVISOR_PW="$(jq -jr '.supervisor_password' "${CUR_DIR}/secret")"
 SHORTURL_KEY="$(jq -jr '.shorturl_token' "${CUR_DIR}/secret")"
 CHECKER_MAL_SECRET="$(jq -jr '.checker_mal_secret' "${CUR_DIR}/secret")"
 CHECKER_MAL_URI="$(jq -jr '.checker_mal_uri' "${CUR_DIR}/secret")"
+MAL_CLIENTID="$(jq -jr '.mal_clientid' "${CUR_DIR}/secret")"
 BACK_ARROW=1
-export SHORTURL_KEY SUPERVISOR_PW CHECKER_MAL_SECRET CHECKER_MAL_URI BACK_ARROW
+export SHORTURL_KEY SUPERVISOR_PW CHECKER_MAL_SECRET CHECKER_MAL_URI BACK_ARROW MAL_CLIENTID
 
 # add asdf global versions to $PATH
 export PATH="${HOME}/.asdf/shims/:$PATH"
