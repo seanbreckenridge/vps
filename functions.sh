@@ -23,9 +23,8 @@ alias shorturls="ssh vultr 'ls shorturls'"
 alias shz="shorturls | fzf | sed -e 's|^|https://sean.fish/s/|' | tee /dev/tty | clipcopy"
 remsync-html-from-stdin() {
 	local tmpf
-	# https://sean.fish/d/tmpfile?redirect
-	tmpf="$(tmpfile html)"
-	echo 'Reading from stdin...' >&2
-	cat >"$tmpf"
+	# https://sean.fish/d/pipehtml?redirect
+	tmpf="$(pipehtml)"
 	remsync "$tmpf"
+	rm -f "$tmpf"
 }
