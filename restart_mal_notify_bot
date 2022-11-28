@@ -3,6 +3,6 @@
 THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 cd "${THIS_DIR}"
 while true; do
-    ./super --ctl restart mal-notify-bot
-    sleep 3d
+	./super --ctl restart mal-notify-bot
+	sleep 3d
 done

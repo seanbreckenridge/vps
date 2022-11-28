@@ -26,6 +26,6 @@ tar xf "$BACKUP_TO" -C "$CACHE_DIR"
 command -v dust >/dev/null 2>&1 && dust -n 8 "$BACKUP_DIR"
 
 set +x
-"${THIS_DIR}/approve_comments" --epochs 2>/dev/null | grep '^EPOCH' | cut -d':' -f2 | jq > "${BACKUP_DIR}/page_hits_epochs.json"
+"${THIS_DIR}/approve_comments" --epochs 2>/dev/null | grep '^EPOCH' | cut -d':' -f2 | jq >"${BACKUP_DIR}/page_hits_epochs.json"
 
 printf "Backed up %d files from the VPS\n" "$(tar tvf "${HOME}/.cache/backup_dir.tar.gz" | wc -l)"
