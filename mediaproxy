@@ -98,5 +98,5 @@ set +e
 readonly PUBLIC_URL="${BASE_URL}/${filename}.${extension}"
 printf '[mediaproxy] %s\n' "$PUBLIC_URL"
 printf '%s' "$PUBLIC_URL" | clipcopy
-# https://sean.fish/d/notify
+# https://github.com/seanbreckenridge/core
 notify "mediaproxy" "Copied mirror link to clipboard."
