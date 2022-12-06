@@ -24,7 +24,10 @@ alias shz="shorturls | fzf | sed -e 's|^|https://sean.fish/s/|' | tee /dev/tty |
 remsync-html-from-stdin() {
 	local tmpf
 	# https://sean.fish/d/pipehtml?redirect
-	tmpf="$(pipehtml)"
+	tmpf="$(pipehtml "$*")"
 	remsync "$tmpf"
 	rm -f "$tmpf"
+}
+remsync-text-from-stdin() {
+	text2html | html-head-all | remsync-html-from-stdin "$*"
 }
