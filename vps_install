@@ -186,7 +186,7 @@ python3 -m pipenv install
 
 # setup countdown bot
 cd_or_exit "$COUNTDOWN_BOT"
-python3 -m pipenv --python "$(command -v python3.7)"
+python3 -m pipenv --python "$(command -v python3.10)"
 python3 -m pipenv install
 
 # install superhooks-discord
