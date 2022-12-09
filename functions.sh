@@ -18,7 +18,7 @@ alias dotfiles-pull='ssh vultr "cd ./.dotfiles && git pull"'
 alias page-hits="curl -s 'https://sean.fish/api/page_hit' | jq '.count'"
 alias gb-comments="curl 'https://sean.fish/api/gb_comment' | jq 'reverse'"
 # print/select open shortened urls
-# https://github.com/seanbreckenridge/no-db-static-shorturl
+# https://github.com/seanbreckenridge/no-db-shorturl
 alias shorturls="ssh vultr 'ls shorturls'"
 alias shz="shorturls | fzf | sed -e 's|^|https://sean.fish/s/|' | tee /dev/tty | clipcopy"
 remsync-html-from-stdin() {

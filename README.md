@@ -23,7 +23,7 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 - [`remsync`](./remsync) is a script thats run on my machine, which rsyncs files from a local directory to the server. That directory is served with nginx, so I can sync something to the server from my CLI and send someone a link. [example output](https://gist.github.com/seanbreckenridge/2b11729859d248069a0eabf2e91e2800). Has two endpoints, `f` and `p`, which specify private (a non-autoindexed nginx listing) and public indexes.
 - [`playlist`](./playlist) interfaces with my [playlist manager](https://github.com/seanbreckenridge/plaintext-playlist). It allows me to select multiple playlists, combines all the files from those playlists into a single mp3 and syncs that up to my server with `remsync`. Often run this on my machine before I leave my house; I then listen to the file on my phone by going to corresponding URL.
 - [`mediaproxy`](./mediaproxy) to ssh into the server, `youtube-dl`/`ffmpeg` something and host it on a readable link. Has video/audio wrapper that use more of my [personal scripts](https://github.com/seanbreckenridge/dotfiles/) to prompt me to to select format codes, (similar to [`mpvf`](https://github.com/seanbreckenridge/mpvf/)). That way, I can press a keybind, which grabs the URL from my clipboard and re-hosts it on my server.
-- [`shorten`](./shorten) creates a shortened url using [this](https://github.com/seanbreckenridge/no-db-static-shorturl)
+- [`shorten`](./shorten) creates a shortened url using [this](https://github.com/seanbreckenridge/no-db-shorturl)
 - [`directories`](./directories) is a helper script sourced at the top of other scripts that defines common application location environment variables
 - [`approve_comments`](./approve_comments) approves comments for my guest book at [https://sean.fish](https://github.com/seanbreckenridge/glue)
 - [`mnu`](./mnu) runs the periodic job to update the [google sheet](https://github.com/seanbreckenridge/mnu_gsheets)
@@ -40,7 +40,7 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 - https://github.com/seanbreckenridge/xkcd-favorites
 - https://github.com/seanbreckenridge/animeshorts
 - https://github.com/seanbreckenridge/subpath-serve
-- https://github.com/seanbreckenridge/no-db-static-shorturl
+- https://github.com/seanbreckenridge/no-db-shorturl
 - https://github.com/seanbreckenridge/mnu_gsheets
 - https://github.com/Hiyori-API/checker_mal
 - https://github.com/seanbreckenridge/projects

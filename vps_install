@@ -163,7 +163,7 @@ mix local.rebar --force
 go get -v -u "github.com/seanbreckenridge/darker_errors"
 
 # my url shortener URLs
-go get -v -u "github.com/seanbreckenridge/no-db-static-shorturl"
+go get -v -u "github.com/seanbreckenridge/no-db-shorturl"
 
 # server that serves my dotfiles
 readonly LOCAL_DOTFILES="$HOME/.dotfiles"
