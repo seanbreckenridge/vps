@@ -13,11 +13,11 @@
 readonly UPLOAD_TO="https://sean.fish/s/"
 readonly SHORTURL_TOKEN="${SHORTURL_TOKEN:?No shorturl token set}"
 readonly URL="${1:?No url provided to shorten}"
-readonly HASH="$2" # fine if this is empty
+readonly HASH="$2" # is fine if this is empty
 
 # create JSON string
 declare data
-data="$(printf '{"key":"%s", "url":"%s","hash":"%s"}' "$SHORTURL_TOKEN" "$URL" "$HASH")"
+data="$(jq -n --arg TOKEN "$SHORTURL_TOKEN" --arg URL "$URL" --arg HASH "$HASH" '{"key":$TOKEN, "url":$URL,"hash":$HASH}')"
 
 # make request to server
 declare SHORTURL_PART
