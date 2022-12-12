@@ -1,6 +1,6 @@
 # vps
 
-Scripts used for installing/managing/restarting/monitoring processes on my server (and my server).
+Scripts used for installing/managing/restarting/monitoring processes on my server.
 
 Uses [supervisord](http://supervisord.org/) to manage processes.
 
