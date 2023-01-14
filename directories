@@ -29,5 +29,6 @@ declare -rx TODO_NOTIFY_LOGS="${LOGS_BASE}/todotxt_deadline_notify"
 declare -rx CHECKER_MAL_LOGS="${LOGS_BASE}/checker_mal"
 declare -rx PROJECTS_LOGS="${LOGS_BASE}/projects"
 declare -rx MY_FEED_LOGS="${LOGS_BASE}/my_feed"
+declare -rx CLIPBOARD_LOGS="${LOGS_BASE}/clipboard"
 
 declare -rx SUPERVISOR_LOGS="${LOGS_BASE}/supervisor"

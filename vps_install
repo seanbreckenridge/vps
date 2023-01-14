@@ -71,7 +71,7 @@ require psql # remind me to setup postgres for glue
 require go
 
 # other things that are useful on here
-GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
+GO111MODULE=on go install 'mvdan.cc/sh/v3/cmd/shfmt@latest'
 pip install -U rifleman
 
 declare CUR_DIR
@@ -127,6 +127,7 @@ mkdir_if_not_exists "$CHECKER_MAL_LOGS"
 mkdir_if_not_exists "$SHORTURL_DATA"
 mkdir_if_not_exists "$PROJECTS_LOGS"
 mkdir_if_not_exists "$MY_FEED_LOGS"
+mkdir_if_not_exists "$CLIPBOARD_LOGS"
 
 set +u
 
@@ -160,15 +161,16 @@ mix local.hex --force
 mix local.rebar --force
 
 # generate a nicer error 502 error page
-go get -v -u "github.com/seanbreckenridge/darker_errors"
+go install -v "github.com/seanbreckenridge/darker_errors@latest"
 
 # my url shortener URLs
-go get -v -u "github.com/seanbreckenridge/no-db-shorturl"
+go install -v "github.com/seanbreckenridge/no-db-shorturl@latest"
 
 # server that serves my dotfiles
 readonly LOCAL_DOTFILES="$HOME/.dotfiles"
 clone_if_not_exists "https://github.com/seanbreckenridge/dotfiles.git" "$LOCAL_DOTFILES"
-go get -v -u "github.com/seanbreckenridge/subpath-serve"
+go install -v "github.com/seanbreckenridge/subpath-serve@latest"
+go install -v "github.com/seanbreckenridge/server_clipboard/cmd/server_clipboard@latest"
 
 cd_or_exit "$TODO_NOTIFY"
 mix deps.get
