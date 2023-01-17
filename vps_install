@@ -97,7 +97,6 @@ cd_or_exit "${CODE}"
 clone_if_not_exists "git@github.com:seanbreckenridge/mal-id-cache.git" "$MID_CACHE_REPO"
 clone_if_not_exists "git@github.com:seanbreckenridge/mal-notify-bot.git" "$NOTIFY_BOT"
 clone_if_not_exists "git@github.com:seanbreckenridge/discord-countdown-bot.git" "$COUNTDOWN_BOT"
-clone_if_not_exists "https://github.com/jikan-me/jikan-docker" "$DOCKER_JIKAN"
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_BOT/mal-id-cache"
 clone_if_not_exists "git@github.com:seanbreckenridge/glue.git" "$GLUE"
 clone_if_not_exists "git@github.com:seanbreckenridge/todotxt_deadline_notify.git" "$TODO_NOTIFY"
@@ -105,6 +104,7 @@ clone_if_not_exists "git@github.com:seanbreckenridge/mnu_gsheets.git" "$MNU_GSHE
 clone_if_not_exists "git@github.com:Hiyori-API/checker_mal.git" "$CHECKER_MAL"
 clone_if_not_exists "git@github.com:seanbreckenridge/projects.git" "$PROJECTS"
 clone_if_not_exists "git@github.com:seanbreckenridge/my_feed.git" "$MY_FEED"
+clone_if_not_exists "git@github.com:seanbreckenridge/dbsentinel.git" "$MY_FEED"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
@@ -128,6 +128,7 @@ mkdir_if_not_exists "$SHORTURL_DATA"
 mkdir_if_not_exists "$PROJECTS_LOGS"
 mkdir_if_not_exists "$MY_FEED_LOGS"
 mkdir_if_not_exists "$CLIPBOARD_LOGS"
+mkdir_if_not_exists "$DBSENTINEL_LOGS"
 
 set +u
 
