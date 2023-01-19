@@ -53,9 +53,7 @@ export PATH="${HOME}/.asdf/shims/:$PATH"
 require pyenv
 require python3.7
 require python3.10 # just a symlink to pyenv
-require docker
 require crontab
-require docker-compose
 require pipenv
 require realpath
 require supervisord
@@ -119,7 +117,6 @@ set -u
 mkdir_if_not_exists "$MID_LOGS"
 mkdir_if_not_exists "$NOTIFY_LOGS"
 mkdir_if_not_exists "$COUNTDOWN_LOGS"
-mkdir_if_not_exists "$DOCKER_LOGS"
 mkdir_if_not_exists "$GLUE_LOGS"
 mkdir_if_not_exists "$TODO_NOTIFY_LOGS"
 mkdir_if_not_exists "$SUPERVISOR_LOGS"
