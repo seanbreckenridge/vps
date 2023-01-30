@@ -46,3 +46,4 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 - https://github.com/seanbreckenridge/back-arrow-script/
 - https://github.com/seanbreckenridge/server_clipboard
 - https://github.com/seanbreckenridge/dbsentinel
+- https://github.com/seanbreckenridge/currently_listening

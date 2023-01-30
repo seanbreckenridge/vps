@@ -102,6 +102,7 @@ clone_if_not_exists "git@github.com:seanbreckenridge/mnu_gsheets.git" "$MNU_GSHE
 clone_if_not_exists "git@github.com:Hiyori-API/checker_mal.git" "$CHECKER_MAL"
 clone_if_not_exists "git@github.com:seanbreckenridge/my_feed.git" "$MY_FEED"
 clone_if_not_exists "git@github.com:seanbreckenridge/dbsentinel.git" "$MY_FEED"
+clone_if_not_exists "git@github.com:seanbreckenridge/currently_listening.git" "$CURRENTLY_LISTENING"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
@@ -124,6 +125,7 @@ mkdir_if_not_exists "$SHORTURL_DATA"
 mkdir_if_not_exists "$MY_FEED_LOGS"
 mkdir_if_not_exists "$CLIPBOARD_LOGS"
 mkdir_if_not_exists "$DBSENTINEL_LOGS"
+mkdir_if_not_exists "$CURRENTLY_LOGS"
 
 set +u
 
@@ -133,6 +135,9 @@ if [ ! -e /etc/nginx/.htpasswd ]; then
 	sudo htpasswd -c /etc/nginx/.htpasswd sean
 	mkdir -p ~/.goaccess_html
 fi
+
+cd_or_exit "$CURRENTLY_LISTENING"
+make
 
 cd_or_exit "$MY_FEED"
 cd_or_exit ./backend
