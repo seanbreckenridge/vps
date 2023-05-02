@@ -68,7 +68,7 @@ readonly extension filename
 # validate arguments
 echo "[mediaproxy] Running command locally to ensure it works..."
 if cd /tmp; then
-	youtube-dl "--skip-download" "$@" || exit $?
+	yt-dlp "--skip-download" "$@" || exit $?
 else
 	echo "somehow /tmp doesn't exist" >&2
 	exit 1
@@ -77,7 +77,7 @@ fi
 # run youtube-dl on server
 # ffmpeg it to the correct location/extension
 declare ytdl_cmd
-ytdl_cmd="python3 -m youtube_dl $*"
+ytdl_cmd="python3 -m yt_dlp $*"
 echo "[mediaproxy] Running command on server: ${ytdl_cmd}"
 
 set -e

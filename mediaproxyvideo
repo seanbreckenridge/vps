@@ -17,7 +17,7 @@ fi
 readonly URL="${CLIPBOARD_CONTENTS}"
 
 notify "mediaproxy" "Downloading formats..."
-if ! YOUTUBE_DL_FORMATS_RAW=$(youtube-dl -F "$URL" 2>&1); then
+if ! YOUTUBE_DL_FORMATS_RAW=$(yt-dlp -F "$URL" 2>&1); then
 	# youtube-dl failed to get formats
 	mediaproxy_error "$YOUTUBE_DL_FORMATS_RAW"
 	exit 1
