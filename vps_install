@@ -53,6 +53,7 @@ export PATH="${HOME}/.asdf/shims/:$PATH"
 require pyenv
 require python3.7
 require python3.10 # just a symlink to pyenv
+require python3.11 # just a symlink to pyenv
 require crontab
 require pipenv
 require realpath
@@ -104,6 +105,7 @@ clone_if_not_exists "git@github.com:seanbreckenridge/projects.git" "$PROJECTS"
 clone_if_not_exists "git@github.com:seanbreckenridge/my_feed.git" "$MY_FEED"
 clone_if_not_exists "git@github.com:seanbreckenridge/dbsentinel.git" "$MY_FEED"
 clone_if_not_exists "git@github.com:seanbreckenridge/currently_listening.git" "$CURRENTLY_LISTENING"
+clone_if_not_exists "git@github.com:seanbreckenridge/filmswap.git" "$FILMSWAP"
 
 expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
@@ -111,6 +113,7 @@ expect_file "$COUNTDOWN_BOT/token.yaml"
 expect_file "${HOME}/.discord_web_hook.txt"
 expect_file "${HOME}/.todo/discord.txt"
 expect_file "${MNU_GSHEETS}/client_secret.json"
+expect_file "${FILMSWAP}/.env"
 
 set -u
 
@@ -128,6 +131,7 @@ mkdir_if_not_exists "$MY_FEED_LOGS"
 mkdir_if_not_exists "$CLIPBOARD_LOGS"
 mkdir_if_not_exists "$DBSENTINEL_LOGS"
 mkdir_if_not_exists "$CURRENTLY_LOGS"
+mkdir_if_not_exists "$FILMSWAP_LOGS"
 
 set +u
 
@@ -137,6 +141,10 @@ if [ ! -e /etc/nginx/.htpasswd ]; then
 	sudo htpasswd -c /etc/nginx/.htpasswd sean
 	mkdir -p ~/.goaccess_html
 fi
+
+cd_or_exit "$FILMSWAP"
+pipenv --python "$(which python3.11)"
+pipenv install
 
 cd_or_exit "$CURRENTLY_LISTENING"
 make
