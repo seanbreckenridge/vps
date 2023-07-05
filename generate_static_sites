@@ -11,7 +11,7 @@ require() {
 # $1: url, $2: location
 reclone_dir() {
 	[[ -d "$2" ]] && rm -rf "$2"
-	git clone --depth=1 --branch=master "$1" "$2"
+	git clone --depth=1 "$1" "$2"
 	rm -rf "$2/.git"
 }
 
@@ -54,12 +54,14 @@ DVD_DIR="${BUILD_DIR}/dvd"
 XKCD_DIR="${BUILD_DIR}/xkcd"
 ANIMESHORTS_DIR="${BUILD_DIR}/animeshorts"
 BACK_ARROW_DIR="${BUILD_DIR}/back-arrow"
+SUNS="${BUILD_DIR}/sun-in-the-corner-of-the-page"
 
 # clone dirs
 reclone_dir "https://github.com/seanbreckenridge/xqc-dvd" "$DVD_DIR"
 reclone_dir "https://github.com/seanbreckenridge/xkcd-favorites" "$XKCD_DIR"
 reclone_dir "https://github.com/seanbreckenridge/animeshorts" "$ANIMESHORTS_DIR"
 reclone_dir "git@github.com:seanbreckenridge/back-arrow-script.git" "$BACK_ARROW_DIR"
+reclone_dir "https://github.com/seanbreckenridge/suns-in-the-corner-of-the-page" "$SUNS"
 
 ## Build each Site
 
@@ -71,6 +73,13 @@ yarn check || exit $?
 yarn build || exit $?
 # move to public so it works with cross origin requests
 mv -v "${BACK_ARROW_DIR}/back-arrow-bundle.js" "${HOME}/p/"
+
+## SUNS ###################
+
+python3 -m pip install yattag click pyyaml
+cd "$SUNS" || exit $?
+python3 generate.py 'sun-in-the-corner-of-the-page'
+move_to_document_root "$SUNS/sun-in-the-corner-of-the-page"
 
 ## DVD ####################
 
