@@ -62,7 +62,7 @@ reclone_dir "https://github.com/seanbreckenridge/xqc-dvd" "$DVD_DIR"
 reclone_dir "https://github.com/seanbreckenridge/xkcd-favorites" "$XKCD_DIR"
 reclone_dir "https://github.com/seanbreckenridge/animeshorts" "$ANIMESHORTS_DIR"
 reclone_dir "git@github.com:seanbreckenridge/back-arrow-script.git" "$BACK_ARROW_DIR"
-reclone_dir "https://github.com/seanbreckenridge/suns-in-the-corner-of-the-page" "$SUNS"
+reclone_dir "https://github.com/seanbreckenridge/sun-in-the-corner-of-the-page" "$SUNS"
 
 ## Build each Site
 
