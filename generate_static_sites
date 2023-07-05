@@ -38,6 +38,7 @@ require elm
 require make
 require python3
 require python3.7
+require python3.11
 require realpath
 require pipenv
 require html-minifier # npm install -g html-minifier
@@ -76,9 +77,9 @@ mv -v "${BACK_ARROW_DIR}/back-arrow-bundle.js" "${HOME}/p/"
 
 ## SUNS ###################
 
-python3 -m pip install yattag click pyyaml
+python3.11 -m pip install yattag click pyyaml
 cd "$SUNS" || exit $?
-python3 generate.py 'sun-in-the-corner-of-the-page'
+python3.11 generate.py 'sun-in-the-corner-of-the-page'
 move_to_document_root "$SUNS/sun-in-the-corner-of-the-page"
 
 ## DVD ####################
