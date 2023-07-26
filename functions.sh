@@ -17,6 +17,9 @@ alias restart-glue='ssh vultr "cd ./code/glue && git pull && ~/vps/super --ctl r
 alias dotfiles-pull='ssh vultr "cd ./.dotfiles && git pull"'
 alias page-hits="curl -s 'https://sean.fish/api/page_hit' | jq '.count'"
 alias gb-comments="curl 'https://sean.fish/api/gb_comment' | jq 'reverse'"
+gb-comments-pretty() {
+	gb-comments | jq '.[] | "# \(.name)\n```\n\(.comment)\n```"' -r | glow -
+}
 # print/select open shortened urls
 # https://github.com/seanbreckenridge/no-db-shorturl
 alias shorturls="ssh vultr 'ls shorturls'"
