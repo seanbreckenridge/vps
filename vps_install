@@ -98,7 +98,6 @@ clone_if_not_exists "git@github.com:seanbreckenridge/mal-notify-bot.git" "$NOTIF
 clone_if_not_exists "git@github.com:seanbreckenridge/discord-countdown-bot.git" "$COUNTDOWN_BOT"
 clone_if_not_exists "https://github.com/seanbreckenridge/mal-id-cache" "$NOTIFY_BOT/mal-id-cache"
 clone_if_not_exists "git@github.com:seanbreckenridge/glue.git" "$GLUE"
-clone_if_not_exists "git@github.com:seanbreckenridge/todotxt_deadline_notify.git" "$TODO_NOTIFY"
 clone_if_not_exists "git@github.com:seanbreckenridge/mnu_gsheets.git" "$MNU_GSHEETS"
 clone_if_not_exists "git@github.com:Hiyori-API/checker_mal.git" "$CHECKER_MAL"
 clone_if_not_exists "git@github.com:seanbreckenridge/projects.git" "$PROJECTS"
