@@ -18,6 +18,8 @@
 # alias remsync_ranger="ranger $HOME/Documents/remsync && remsync"
 # alias remsync_public_ranger="ranger $HOME/Documents/remsync_public && remsync_public"
 #
+# to delete remote files for REMSYNC_PUBLIC, set REMSYNC_DELETE=1
+#
 # files are served by nginx as static files, with:
 #
 # private remsync
@@ -93,7 +95,10 @@ if (($# > 0)); then
 fi
 
 # sync directory
-rsync -Pahv --delete-before -e 'ssh' "$FROM_DIR" ${SSH_TO}:${TO_DIR}
+rsync_args=()
+[[ -z "$REMSYNC_PUBLIC" || -n "$REMSYNC_DELETE" ]] && rsync_args+=("--delete-before")
+echo rsync -Pahv "${rsync_args[@]}" -e 'ssh' "$FROM_DIR" ${SSH_TO}:${TO_DIR}
+rsync -Pahv "${rsync_args[@]}" -e 'ssh' "$FROM_DIR" ${SSH_TO}:${TO_DIR}
 
 split
 
