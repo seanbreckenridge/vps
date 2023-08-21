@@ -11,6 +11,8 @@ Uses [supervisord](http://supervisord.org/) to manage processes.
 
 This runs on an Debian server, but it should be OS agnostic. `vps_install` will throw a fatal error before starting if I'm missing any required commands. My server runs `nginx`, lots of the log based commands assume that.
 
+`jobs` includes jobs for [bgproc](https://github.com/seanbreckenridge/bgproc) (specifically, `bgproc_on_machine`) related to interacting with the server
+
 See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post describing how I set up this server.
 
 - [`vps_install`](./vps_install) clones and sets up environments for each application. Checks that you have corresponding commands/packages installed and that required credential/files are in the right location, installs virtual environments/packages for each application.

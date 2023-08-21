@@ -67,7 +67,7 @@ require htpasswd
 require uglifycss
 require yarn
 require go
-require renv  # cargo install readenv
+require renv # cargo install readenv
 
 # other things that are useful on here
 GO111MODULE=on go install 'mvdan.cc/sh/v3/cmd/shfmt@latest'

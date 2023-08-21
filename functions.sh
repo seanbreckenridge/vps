@@ -38,3 +38,9 @@ remsync-html-from-stdin() {
 remsync-text-from-stdin() {
 	text2html | html-head-all | remsync-html-from-stdin "$*"
 }
+
+alias nginx-goaccess='${REPOS}/vps/nginx-goaccess'
+__nginx_goaccess() {
+	_arguments '1: :((parsehtml parsehtmlcached view json sync cli))'
+}
+compdef __nginx_goaccess nginx-goaccess

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+wait-for-internet --quiet --timeout "${WFI_TIMEOUT:-10}" || exit 0
+
+evry 1 hour -dbsentinel-sync-animelist && {
+	"$REPOS/dbsentinel/scripts/sync_animelist_xml" || send-error 'dbsentinel upload animelist.xml failed'
+}
