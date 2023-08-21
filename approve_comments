@@ -6,7 +6,7 @@
 
 declare FLAG COMMAND
 FLAG="${1:---approve-comments}"
-[[ "$FLAG" == "--approve-comments" ]] && rm "$(evry location -guestbook_comments)"
+[[ "$FLAG" == "--approve-comments" ]] && rm -f "$(evry location -guestbook_comments)"
 # shellcheck disable=SC2016
 COMMAND="$(printf 'cd ~/code/glue/ && PATH="${HOME}/.asdf/shims/:$PATH" ./production_server "%s"' "${FLAG}")"
 printf "Running: '%s'\n" "${COMMAND}" 1>&2
