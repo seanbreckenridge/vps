@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+rsync -Pavhz -e ssh vultr:/var/log/nginx/access.log ~/.cache/
