@@ -3,4 +3,5 @@ tags*
 /backup_dir
 *.tar.gz
 *.zip
+.env
 secret

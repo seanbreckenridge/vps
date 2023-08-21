@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # A wrapper script for supervisord/supervisorctl
 # which sources my environment variables
 #
@@ -8,17 +8,16 @@
 
 # source application environment variables
 CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+cd "$CUR_DIR" || exit 1
 source "${CUR_DIR}/directories"
 export VPS_DIR="$CUR_DIR"
 # load password
-SUPERVISOR_PW="$(jq -jr '.supervisor_password' "${CUR_DIR}/secret")"
-SHORTURL_KEY="$(jq -jr '.shorturl_token' "${CUR_DIR}/secret")"
-CHECKER_MAL_SECRET="$(jq -jr '.checker_mal_secret' "${CUR_DIR}/secret")"
-MAL_CLIENTID="$(jq -jr '.mal_clientid' "${CUR_DIR}/secret")"
-CLIPBOARD_PASSWORD="$(jq -jr '.clipboard_password' "${CUR_DIR}/secret")"
-CURRENTLY_LISTENING_PASSWORD="$(jq -jr '.currently_listening_password' "${CUR_DIR}/secret")"
-BACK_ARROW=1
-export SHORTURL_KEY SUPERVISOR_PW CHECKER_MAL_SECRET BACK_ARROW MAL_CLIENTID CLIPBOARD_PASSWORD CURRENTLY_LISTENING_PASSWORD
+source "${CUR_DIR}/.env"
+if [[ -z "$SUPERVISOR_PW" ]]; then
+	echo 'Supervisord pw not in .env file' >&2
+	exit 1
+fi
+export SUPERVISOR_PW
 
 # add asdf global versions to $PATH
 export PATH="${HOME}/.asdf/shims/:$PATH"
