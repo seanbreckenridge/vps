@@ -89,7 +89,6 @@ mkdir_if_not_exists "$HOME/f"
 mkdir_if_not_exists "$HOME/p"     # public files
 mkdir_if_not_exists "$HOME/.ytdl" # music
 mkdir_if_not_exists "$HOME/.credentials"
-mkdir_if_not_exists "$HOME/.todo"
 
 cd_or_exit "${CODE}"
 
@@ -110,7 +109,6 @@ expect_file "$NOTIFY_BOT/token.yaml"
 expect_file "$NOTIFY_BOT/old"
 expect_file "$COUNTDOWN_BOT/token.yaml"
 expect_file "${HOME}/.discord_web_hook.txt"
-expect_file "${HOME}/.todo/discord.txt"
 expect_file "${MNU_GSHEETS}/client_secret.json"
 expect_file "${FILMSWAP}/.env"
 
@@ -121,7 +119,6 @@ mkdir_if_not_exists "$MID_LOGS"
 mkdir_if_not_exists "$NOTIFY_LOGS"
 mkdir_if_not_exists "$COUNTDOWN_LOGS"
 mkdir_if_not_exists "$GLUE_LOGS"
-mkdir_if_not_exists "$TODO_NOTIFY_LOGS"
 mkdir_if_not_exists "$SUPERVISOR_LOGS"
 mkdir_if_not_exists "$CHECKER_MAL_LOGS"
 mkdir_if_not_exists "$SHORTURL_DATA"
@@ -181,10 +178,6 @@ readonly LOCAL_DOTFILES="$HOME/.dotfiles"
 clone_if_not_exists "https://github.com/seanbreckenridge/dotfiles.git" "$LOCAL_DOTFILES"
 go install -v "github.com/seanbreckenridge/subpath-serve@latest"
 go install -v "github.com/seanbreckenridge/server_clipboard/cmd/server_clipboard@latest"
-
-cd_or_exit "$TODO_NOTIFY"
-mix deps.get
-mix compile
 
 # setup mal id cache
 cd_or_exit "$MID_CACHE_REPO"

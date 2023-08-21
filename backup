@@ -85,7 +85,6 @@ optional_copy '/var/log/nginx/access.log' "$BACKUP_DIR"
 expect_dir_and_copy "/etc/netdata"
 expect_dir_and_copy "/etc/nginx"
 expect_dir_and_copy "/etc/fail2ban"
-expect_dir_and_copy "$HOME/.todo"
 expect_dir_and_copy "$HOME/shorturls"
 
 tar cvfz "$BACKUP_TAR_NAME" "$BACKUP_DIR_NAME" && printf "Created '%s'\n" "$BACKUP_TAR_NAME"
