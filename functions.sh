@@ -2,18 +2,13 @@
 # shell functins to source into my laptop environment
 
 alias vultr='ssh vultr'
-alias vultr_logs='vultr "~/vps/logs"'
-alias shorten='${REPOS}/vps/shorten'
-alias remsync='${REPOS}/vps/remsync'
-alias remsync-public='REMSYNC_PUBLIC=1 ${REPOS}/vps/remsync' # to push to /p/ (public index)
+alias vultr_logs='vultr "~/vps/bin/logs"'
+alias remsync-public='REMSYNC_PUBLIC=1 remsync' # to push to /p/ (public index)
 # to use ranger to quickly remove/add files
 alias remsync-ranger='ranger "${HOME}/Documents/remsync" && remsync'
 alias remsync-public-ranger='ranger "${HOME}/Documents/remsync_public" && remsync-public'
-alias playlist='${REPOS}/vps/playlist'
-alias approve-comments='${REPOS}/vps/approve_comments'
-alias print-new-comments='${REPOS}/vps/approve_comments --print-new-comments'
-export CUBING_JSON="${REPOS}/glue/cubing.json"
-alias restart-glue='ssh vultr "cd ./code/glue && git pull && ~/vps/super --ctl restart glue-server"'
+alias print-new-comments='approve_comments --print-new-comments'
+alias restart-glue='ssh vultr "cd ./code/glue && git pull && ~/vps/bin/super --ctl restart glue-server"'
 alias dotfiles-pull='ssh vultr "cd ./.dotfiles && git pull"'
 alias page-hits="curl -s 'https://sean.fish/api/page_hit' | jq '.count'"
 alias gb-comments="curl 'https://sean.fish/api/gb_comment' | jq 'reverse'"
@@ -39,7 +34,6 @@ remsync-text-from-stdin() {
 	text2html | html-head-all | remsync-html-from-stdin "$*"
 }
 
-alias nginx-goaccess='${REPOS}/vps/nginx-goaccess'
 __nginx_goaccess() {
 	_arguments '1: :((parsehtml parsehtmlcached view json sync cli))'
 }

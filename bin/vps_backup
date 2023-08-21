@@ -59,12 +59,12 @@ delete_if_exists() {
 require tar
 require realpath
 
-CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
-cd "$CUR_DIR" || exit $?
-source "${CUR_DIR}/directories"
+VPS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")/..")"
+cd "$VPS_DIR" || exit $?
+source "${VPS_DIR}/directories"
 
 BACKUP_DIR_NAME="backup_dir"
-BACKUP_DIR="${CUR_DIR}/${BACKUP_DIR_NAME}"
+BACKUP_DIR="${VPS_DIR}/${BACKUP_DIR_NAME}"
 BACKUP_COUNTDOWN="${BACKUP_DIR}"/countdown
 BACKUP_NOTIFY="${BACKUP_DIR}"/notify
 BACKUP_TAR_NAME="${BACKUP_DIR_NAME}.tar.gz"

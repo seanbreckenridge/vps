@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-rsync -Pavh -e ssh vultr:~/p/mnu_exports ~/Documents/remsync_public/

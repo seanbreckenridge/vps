@@ -44,8 +44,8 @@ require pipenv
 require html-minifier # npm install -g html-minifier
 require uglifycss
 
-CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
-BUILD_DIR="${CUR_DIR}/static_build"
+VPS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")/..")"
+BUILD_DIR="${VPS_DIR}/static_build"
 
 DOCUMENT_ROOT="${HOME}/static_files"
 [[ ! -d "$DOCUMENT_ROOT" ]] && mkdir -p "$DOCUMENT_ROOT"

@@ -7,12 +7,13 @@
 # to generate autocompletion for bash
 
 # source application environment variables
-CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
-cd "$CUR_DIR" || exit 1
-source "${CUR_DIR}/directories"
-export VPS_DIR="$CUR_DIR"
+VPS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+cd "$VPS_DIR" || exit 1
+source "${VPS_DIR}/directories"
+export VPS_DIR
+
 # load password
-source "${CUR_DIR}/.env"
+source "${VPS_DIR}/.env"
 if [[ -z "$SUPERVISOR_PW" ]]; then
 	echo 'Supervisord pw not in .env file' >&2
 	exit 1
@@ -35,15 +36,15 @@ function run_super() {
 		fi
 		;;
 	--daemon)
-		supervisord --configuration="${CUR_DIR}/supervisord.conf"
+		supervisord --configuration="${VPS_DIR}/supervisord.conf"
 		;;
 	--foreground)
 		# run supervisor
-		supervisord --configuration="${CUR_DIR}/supervisord.conf" -n
+		supervisord --configuration="${VPS_DIR}/supervisord.conf" -n
 		;;
 	--ctl)
 		shift # remove 'ctl' from arg list
-		supervisorctl --configuration="${CUR_DIR}/supervisord.conf" "$@"
+		supervisorctl --configuration="${VPS_DIR}/supervisord.conf" "$@"
 		;;
 	-h | --help | *)
 		# parse this case statement to get the choices

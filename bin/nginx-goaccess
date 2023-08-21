@@ -11,12 +11,10 @@ if [[ ! -e "$CACHE_LOGS/Makefile" ]]; then
 	cat >"$CACHE_LOGS/Makefile" <<EOF
 # If the access.log file is older than the access.html file, recompute
 
-REPOS_DIR = "${REPOS}"
-
 all: access.html
 
 access.html: access.log
-	\$(REPOS_DIR)/vps/nginx-goaccess parsehtml
+	nginx-goaccess parsehtml
 
 EOF
 fi
@@ -60,7 +58,7 @@ nginx-goaccess() {
 		goaccess_log "${args[@]}"
 		;;
 	*)
-		echo "Usage: $0 {parsehtml|parsehtmlcached|view|json|sync|cli}"
+		echo "Usage: nginx-goaccess {parsehtml|parsehtmlcached|view|json|sync|cli}"
 		exit 1
 		;;
 	esac

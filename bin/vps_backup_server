@@ -17,7 +17,7 @@ readonly SSH_TO BACKUP_DIR CACHE_DIR BACKUP_DIR BACKUP_TO
 # run backup on server and copy to
 echo 'Running backup on VPS...'
 date >>"${BACKUP_LOG}"
-ssh "$SSH_TO" "./vps/backup" >>"${BACKUP_LOG}" &&
+ssh "$SSH_TO" "./vps/bin/vps_backup" >>"${BACKUP_LOG}" &&
 	scp "$SSH_TO":'./vps/backup_dir.tar.gz' "$BACKUP_TO" >>"${BACKUP_LOG}"
 
 # extracts to ~/.cache

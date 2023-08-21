@@ -73,12 +73,12 @@ require renv # cargo install readenv
 GO111MODULE=on go install 'mvdan.cc/sh/v3/cmd/shfmt@latest'
 pip install -U rifleman
 
-declare CUR_DIR
-CUR_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
-declare -rx CUR_DIR
-source "${CUR_DIR}/directories"
+declare THIS_DIR
+THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+VPS_DIR="${THIS_DIR}/.."
+source "${VPS_DIR}/directories"
+declare -rx VPS_DIR
 
-expect_file "${CUR_DIR}/secret"
 # ssh key for mal-id-cache
 expect_file "${HOME}/.ssh/bot_sean"
 

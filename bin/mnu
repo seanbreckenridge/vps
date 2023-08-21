@@ -1,0 +1,32 @@
+#!/bin/bash -exu
+# updates the mnu spreadsheet
+# https://github.com/seanbreckenridge/mnu_gsheets
+
+update_remote() {
+	THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+	cd "$THIS_DIR"
+
+	source ../directories
+
+	cd "$MNU_GSHEETS"
+	git pull
+	python3 -m pipenv install
+	python3 -m pipenv run ./update
+	python3 -m pipenv run ./update export
+	mkdir -p "$HOME/p/mnu_exports/"
+	# jq to prettify the mnu_export.json file and move it to ~/p/mnu_exports
+	jq . <mnu_export.json >"$HOME/p/mnu_exports/mnu_export.json"
+}
+
+case "${1:-}" in
+	update)
+		update_remote
+		;;
+	sync)
+		rsync -Pavh -e ssh vultr:~/p/mnu_exports ~/Documents/remsync_public/
+		;;
+	*)
+		echo "Usage: mnu <update|sync>"
+		;;
+esac
+

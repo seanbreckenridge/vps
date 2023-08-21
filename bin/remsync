@@ -8,16 +8,6 @@
 # If files/directories are passed as arguments, they're copied to
 # $FROM_DIR and are then pushed to the server
 #
-# to "install", add aliases to $PATH:
-#
-# # to sync
-# alias remsync="$REPOS/vps/remsync"
-# alias remsync_public="REMSYNC_PUBLIC=1 $REPOS/vps/remsync"  # to push to /p/ (public index)
-#
-# # to use ranger to quickly remove/add files
-# alias remsync_ranger="ranger $HOME/Documents/remsync && remsync"
-# alias remsync_public_ranger="ranger $HOME/Documents/remsync_public && remsync_public"
-#
 # to delete remote files for REMSYNC_PUBLIC, set REMSYNC_DELETE=1
 #
 # files are served by nginx as static files, with:
