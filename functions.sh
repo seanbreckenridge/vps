@@ -2,7 +2,7 @@
 # shell functins to source into my laptop environment
 
 alias vultr='ssh vultr'
-alias vultr_logs='vultr "~/vps/bin/logs"'
+alias vultr_logs='vultr "~/vps/logs"'
 alias remsync-public='REMSYNC_PUBLIC=1 remsync' # to push to /p/ (public index)
 # to use ranger to quickly remove/add files
 alias remsync-ranger='ranger "${HOME}/Documents/remsync" && remsync'

@@ -1,8 +1,9 @@
-#!/bin/bash -exu
+#!/bin/bash -eu
 # updates the mnu spreadsheet
 # https://github.com/seanbreckenridge/mnu_gsheets
 
 update_remote() {
+	set -x
 	THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 	cd "$THIS_DIR"
 
@@ -18,15 +19,19 @@ update_remote() {
 	jq . <mnu_export.json >"$HOME/p/mnu_exports/mnu_export.json"
 }
 
-case "${1:-}" in
-	update)
-		update_remote
-		;;
-	sync)
-		rsync -Pavh -e ssh vultr:~/p/mnu_exports ~/Documents/remsync_public/
-		;;
-	*)
-		echo "Usage: mnu <update|sync>"
-		;;
-esac
+sync_public() {
+	rsync -Pavh -e ssh vultr:~/p/mnu_exports ~/Documents/remsync_public/
+}
 
+case "${1:-}" in
+update)
+	update_remote
+	;;
+sync)
+	sync_public
+	;;
+*)
+	echo "Usage: mnu <update|sync>" >&2
+	exit 1
+	;;
+esac
