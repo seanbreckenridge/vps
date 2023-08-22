@@ -35,8 +35,8 @@ deploy() {
 		_deploy_ssh ~/vps -
 		;;
 	compdef)
-		# print a list of all deploy targets
-		echo glue dbsentinel dbsentinel-loop checker-mal feed filmswap mal-notify-bot projects vps
+		# parse this file to get a list of deploy targets
+		grep -oP '^\s+([\w\-]+)\)' "$0" | awk '!/compdef/ {printf substr($1, 0, length($1) - 1) " "} END { print "" } '
 		;;
 	*)
 		echo "unknown deploy target: $1" >&2
