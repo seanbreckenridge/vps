@@ -45,4 +45,4 @@ if [[ -n "$RUN_COMMAND" ]]; then
 fi
 super --ctl restart "${RESTART_PROGRAMS[@]}"
 
-logs
+timeout 60 logs || true
