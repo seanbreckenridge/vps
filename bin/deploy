@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+_deploy_ssh() {
+	# shellcheck disable=SC2029
+	ssh vultr ~/vps/bin/vps_deploy "$@"
+}
+
+deploy() {
+	case "$1" in
+	glue)
+		_deploy_ssh ~/code/glue glue-server
+		;;
+	dbsentinel)
+		_deploy_ssh ~/code/dbsentinel dbsentinel-frontend,dbsentinel-backend
+		;;
+	dbsentinel-loop)
+		_deploy_ssh ~/code/dbsentinel restart-dbsentinel
+		;;
+	checker-mal)
+		_deploy_ssh ~/code/checker_mal checker-mal-server
+		;;
+	feed)
+		_deploy_ssh ~/code/my_feed feed-frontend,feed-backend
+		;;
+	filmswap)
+		_deploy_ssh ~/code/filmswap filmswap
+		;;
+	mal-notify-bot)
+		_deploy_ssh ~/code/mal-notify-bot restart-mal-notify-bot
+		;;
+	projects)
+		_deploy_ssh ~/code/projects projects-update
+		;;
+	compdef)
+		# print a list of all deploy targets
+		echo glue dbsentinel dbsentinel-loop checker-mal feed filmswap mal-notify-bot projects
+		;;
+	*)
+		echo "unknown deploy target: $1" >&2
+		;;
+	esac
+}
+
+deploy "$@" || exit 1

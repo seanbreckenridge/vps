@@ -8,8 +8,6 @@ alias remsync-public='REMSYNC_PUBLIC=1 remsync' # to push to /p/ (public index)
 alias remsync-ranger='ranger "${HOME}/Documents/remsync" && remsync'
 alias remsync-public-ranger='ranger "${HOME}/Documents/remsync_public" && remsync-public'
 alias print-new-comments='approve_comments --print-new-comments'
-alias restart-glue='ssh vultr "cd ./code/glue && git pull && ~/vps/bin/super --ctl restart glue-server"'
-alias dotfiles-pull='ssh vultr "cd ./.dotfiles && git pull"'
 alias page-hits="curl -s 'https://sean.fish/api/page_hit' | jq '.count'"
 alias gb-comments="curl 'https://sean.fish/api/gb_comment' | jq 'reverse'"
 gb-comments-pretty() {
@@ -38,3 +36,12 @@ __nginx_goaccess() {
 	_arguments '1: :((parsehtml parsehtmlcached view json sync cli))'
 }
 compdef __nginx_goaccess nginx-goaccess
+
+__deploy() {
+	local targets
+	# call 'deploy compdef' to generate completion
+	targets="$(deploy compdef)"
+	_arguments "1:targets:(${targets})"
+}
+
+compdef __deploy deploy
