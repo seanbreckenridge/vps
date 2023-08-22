@@ -7,6 +7,12 @@ set -e
 
 # shellcheck disable=SC1091
 source "${HOME}/.bashrc"
+source "${HOME}/.bash_ext"
+
+set -x
+
+# this is setup the first time I login
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 
 declare SWITCH_DIR RESTART_PROGRAMS_RAW RUN_COMMAND RUN_COMMAND_PATH
 SWITCH_DIR="${1?Pass the directory to switch to as the first argument}"
@@ -35,7 +41,6 @@ if [[ -d .git ]]; then
 	git pull || true
 fi
 if [[ -n "$RUN_COMMAND" ]]; then
-	echo "Running command $RUN_COMMAND"
 	sh -c "$RUN_COMMAND"
 fi
 super --ctl restart "${RESTART_PROGRAMS[@]}"
