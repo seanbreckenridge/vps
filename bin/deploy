@@ -34,14 +34,15 @@ deploy() {
 	vps)
 		_deploy_ssh ~/vps -
 		;;
-	compdef)
-		# parse this file to get a list of deploy targets
-		grep -oP '^\s+([\w\-]+)\)' "$0" | awk '!/compdef/ {printf substr($1, 0, length($1) - 1) " "} END { print "" } '
-		;;
 	*)
 		echo "unknown deploy target: $1" >&2
 		;;
 	esac
 }
+
+if [[ -n "$VPS_DEPLOY_COMPDEF" ]]; then
+	grep -oP '^\s+([\w\-]+)\)\s*$' "$0" | tr -d ') \t'
+	exit 0
+fi
 
 deploy "$@" || exit 1

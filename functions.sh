@@ -1,5 +1,5 @@
 #!/bin/bash
-# shell functins to source into my laptop environment
+# shell functins to source into my laptop environment to interact with my server
 
 alias vultr='ssh vultr'
 alias vultr_logs='vultr "~/vps/logs"'
@@ -40,7 +40,7 @@ compdef __nginx_goaccess nginx-goaccess
 __deploy() {
 	local targets
 	# call 'deploy compdef' to generate completion
-	targets="$(deploy compdef)"
+	targets="$(VPS_DEPLOY_COMPDEF=1 deploy)"
 	_arguments "1:targets:(${targets})"
 }
 
