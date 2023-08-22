@@ -2,6 +2,8 @@
 # This is used to switch to a directory and restart supervisor programs
 # can be called from my machine like:
 # ssh vultr ~/vps/bin/vps_deploy switch_dir restart_programs run_command
+#
+# if restart_programs is -, then no programs are restarted
 
 set -e
 
@@ -21,6 +23,9 @@ RUN_COMMAND="$3"
 RUN_COMMAND_PATH=""
 declare -a RESTART_PROGRAMS=()
 # split by commas into array
+if [[ "$RESTART_PROGRAMS_RAW" == '-' ]]; then
+	RESTART_PROGRAMS_RAW=""
+fi
 IFS=',' read -r -a RESTART_PROGRAMS <<<"$RESTART_PROGRAMS_RAW"
 
 if [[ ! -d "$SWITCH_DIR" ]]; then
@@ -43,6 +48,8 @@ fi
 if [[ -n "$RUN_COMMAND" ]]; then
 	sh -c "$RUN_COMMAND"
 fi
-super --ctl restart "${RESTART_PROGRAMS[@]}"
+if [[ -n "$RESTART_PROGRAMS_RAW" ]]; then
+	super --ctl restart "${RESTART_PROGRAMS[@]}"
+fi
 
 timeout 60 logs || true

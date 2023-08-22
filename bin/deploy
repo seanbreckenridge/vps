@@ -31,9 +31,12 @@ deploy() {
 	projects)
 		_deploy_ssh ~/code/projects projects-update
 		;;
+	vps)
+		_deploy_ssh ~/vps -
+		;;
 	compdef)
 		# print a list of all deploy targets
-		echo glue dbsentinel dbsentinel-loop checker-mal feed filmswap mal-notify-bot projects
+		echo glue dbsentinel dbsentinel-loop checker-mal feed filmswap mal-notify-bot projects vps
 		;;
 	*)
 		echo "unknown deploy target: $1" >&2
