@@ -3,6 +3,8 @@
 # can be called from my machine like:
 # ssh vultr ~/vps/bin/vps_deploy switch_dir restart_programs run_command
 
+set -e
+
 # shellcheck disable=SC1091
 source "${HOME}/.bashrc"
 
@@ -29,12 +31,13 @@ if [[ -n "$RUN_COMMAND" ]]; then
 fi
 
 cd "$SWITCH_DIR" || exit 1
+if [[ -d .git ]]; then
+	git pull || true
+fi
 if [[ -n "$RUN_COMMAND" ]]; then
 	echo "Running command $RUN_COMMAND"
 	sh -c "$RUN_COMMAND"
 fi
-for program in "${RESTART_PROGRAMS[@]}"; do
-	echo "Restarting $program"
-done
+super --ctl restart "${RESTART_PROGRAMS[@]}"
 
 logs
