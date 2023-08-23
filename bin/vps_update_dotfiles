@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+cd ~/.dotfiles || exit $?
+git reset --hard HEAD~3
+exec git pull
