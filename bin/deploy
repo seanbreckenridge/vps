@@ -35,14 +35,24 @@ deploy() {
 		SKIP_LOGS=1 _deploy_ssh ~/vps -
 		;;
 	*)
-		echo "unknown deploy target: $1" >&2
+		if [[ -n "$1" ]]; then
+			echo "unknown deploy target: $1" >&2
+		else
+			echo "no deploy target specified" >&2
+		fi
+		echo "available targets: $(list_deploy_targets | tr '\n' ' ')" >&2
+		return 1
 		;;
 	esac
 }
 
-if [[ -n "$VPS_DEPLOY_COMPDEF" ]]; then
+list_deploy_targets() {
 	grep -oP '^\s+([\w\-]+)\)\s*$' "$0" | tr -d ') \t'
+}
+
+if [[ -n "$VPS_DEPLOY_COMPDEF" ]]; then
+	list_deploy_targets
 	exit 0
 fi
 
-deploy "$@" || exit 1
+deploy "$@" || exit $?
