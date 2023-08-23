@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+evry 4 weeks -backup-fish-backup && {
+	backup_to="${HOME}/Documents/Backups/fish_server"
+	mkdir -p "${backup_to}"
+	printlog 'backing up tar.gz sean.fish...'
+	cp ~/.cache/backup_dir.tar.gz "${backup_to}/$(epoch)_backup_dir.tar.gz"
+}
