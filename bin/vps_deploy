@@ -16,11 +16,10 @@ set -x
 # this is setup the first time I login
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 
-declare SWITCH_DIR RESTART_PROGRAMS_RAW RUN_COMMAND RUN_COMMAND_PATH
+declare SWITCH_DIR RESTART_PROGRAMS_RAW RUN_COMMAND
 SWITCH_DIR="${1?Pass the directory to switch to as the first argument}"
 RESTART_PROGRAMS_RAW="${2?Pass the programs to restart as the second argument}"
 RUN_COMMAND="$3"
-RUN_COMMAND_PATH=""
 declare -a RESTART_PROGRAMS=()
 # split by commas into array
 if [[ "$RESTART_PROGRAMS_RAW" == '-' ]]; then
@@ -31,14 +30,6 @@ IFS=',' read -r -a RESTART_PROGRAMS <<<"$RESTART_PROGRAMS_RAW"
 if [[ ! -d "$SWITCH_DIR" ]]; then
 	echo "Directory $SWITCH_DIR does not exist" >&2
 	exit 1
-fi
-
-if [[ -n "$RUN_COMMAND" ]]; then
-	RUN_COMMAND_PATH="$(command -v "$RUN_COMMAND")"
-	if [[ ! -x "$RUN_COMMAND_PATH" ]]; then
-		echo "Command $RUN_COMMAND not found" >&2
-		exit 1
-	fi
 fi
 
 cd "$SWITCH_DIR" || exit 1

@@ -2,7 +2,7 @@
 
 _deploy_ssh() {
 	# shellcheck disable=SC2029
-	ssh vultr ~/vps/bin/vps_deploy "$@"
+	ssh vultr SKIP_LOGS="$SKIP_LOGS" ~/vps/bin/vps_deploy "$@"
 }
 
 deploy() {
@@ -32,7 +32,7 @@ deploy() {
 		_deploy_ssh ~/code/projects projects-update
 		;;
 	vps)
-		_deploy_ssh ~/vps -
+		SKIP_LOGS=1 _deploy_ssh ~/vps -
 		;;
 	*)
 		echo "unknown deploy target: $1" >&2
