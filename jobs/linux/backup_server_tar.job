@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-evry 4 weeks -backup-fish-backup && {
+evry 2 weeks -backup-fish-backup && {
 	backup_to="${HOME}/Documents/Backups/fish_server"
 	mkdir -p "${backup_to}"
 	printlog 'backing up tar.gz sean.fish...'
