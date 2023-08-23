@@ -31,6 +31,12 @@ deploy() {
 	projects)
 		_deploy_ssh ~/code/projects projects-update
 		;;
+	currently_listening)
+		_deploy_ssh ~/code/currently_listening currently_listening,listenbrainz_client_poll make
+		;;
+	dotfiles)
+		SKIP_LOGS=1 _deploy_ssh ~/.dotfiles - vps_update_dotfiles
+		;;
 	vps)
 		SKIP_LOGS=1 _deploy_ssh ~/vps -
 		;;
