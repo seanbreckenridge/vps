@@ -52,4 +52,5 @@ if [[ -n "$RESTART_PROGRAMS_RAW" ]]; then
 	super --ctl restart "${RESTART_PROGRAMS[@]}"
 fi
 
+[[ -n "$SKIP_LOGS" ]] && exit 0
 timeout 60 logs || true
