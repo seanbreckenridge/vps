@@ -2,6 +2,8 @@
 # updates the mnu spreadsheet
 # https://github.com/seanbreckenridge/mnu_gsheets
 
+set -e
+
 update_remote() {
 	set -x
 	THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
