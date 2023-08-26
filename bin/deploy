@@ -2,43 +2,43 @@
 
 _deploy_ssh() {
 	# shellcheck disable=SC2029
-	ssh vultr SKIP_LOGS="$SKIP_LOGS" ~/vps/bin/vps_deploy "$@"
+	ssh vultr SKIP_LOGS="$SKIP_LOGS" ./vps/bin/vps_deploy "$@"
 }
 
 deploy() {
 	case "$1" in
 	glue)
-		_deploy_ssh ~/code/glue glue-server
+		_deploy_ssh ./code/glue glue-server
 		;;
 	dbsentinel)
-		_deploy_ssh ~/code/dbsentinel dbsentinel-frontend,dbsentinel-backend
+		_deploy_ssh ./code/dbsentinel dbsentinel-frontend,dbsentinel-backend
 		;;
 	dbsentinel-loop)
-		_deploy_ssh ~/code/dbsentinel restart-dbsentinel
+		_deploy_ssh ./code/dbsentinel restart-dbsentinel
 		;;
 	checker-mal)
-		_deploy_ssh ~/code/checker_mal checker-mal-server
+		_deploy_ssh ./code/checker_mal checker-mal-server
 		;;
 	feed)
-		_deploy_ssh ~/code/my_feed feed-frontend,feed-backend
+		_deploy_ssh ./code/my_feed feed-frontend,feed-backend
 		;;
 	filmswap)
-		_deploy_ssh ~/code/filmswap filmswap
+		_deploy_ssh ./code/filmswap filmswap
 		;;
 	mal-notify-bot)
-		_deploy_ssh ~/code/mal-notify-bot restart-mal-notify-bot
+		_deploy_ssh ./code/mal-notify-bot restart-mal-notify-bot
 		;;
 	projects)
-		_deploy_ssh ~/code/projects projects-update
+		_deploy_ssh ./code/projects projects-update
 		;;
 	currently_listening)
-		_deploy_ssh ~/code/currently_listening currently_listening,listenbrainz_client_poll make
+		_deploy_ssh ./code/currently_listening currently_listening,listenbrainz_client_poll make
 		;;
 	dotfiles)
-		SKIP_LOGS=1 _deploy_ssh ~/.dotfiles - vps_update_dotfiles
+		SKIP_LOGS=1 _deploy_ssh ./.dotfiles - vps_update_dotfiles
 		;;
 	vps)
-		SKIP_LOGS=1 _deploy_ssh ~/vps -
+		SKIP_LOGS=1 _deploy_ssh ./vps -
 		;;
 	*)
 		if [[ -n "$1" ]]; then
