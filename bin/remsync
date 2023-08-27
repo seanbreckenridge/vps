@@ -58,8 +58,8 @@ readonly BASE_URL="https://sean.fish"
 readonly TO_DIR
 
 # local information
-declare FROM_DIR="${HOME}/Documents/remsync/"
-[[ -n "$REMSYNC_PUBLIC" ]] && FROM_DIR="${HOME}/Documents/remsync_public/"
+declare FROM_DIR="${HOME}/Files/remsync/"
+[[ -n "$REMSYNC_PUBLIC" ]] && FROM_DIR="${HOME}/Files/remsync_public/"
 readonly FROM_DIR
 
 mkdir -p "${FROM_DIR}"

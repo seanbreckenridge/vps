@@ -22,7 +22,7 @@ update_remote() {
 }
 
 sync_public() {
-	rsync -Pavh -e ssh vultr:~/p/mnu_exports ~/Documents/remsync_public/
+	rsync -Pavh -e ssh vultr:~/p/mnu_exports ~/Files/remsync_public/
 }
 
 case "${1:-}" in
