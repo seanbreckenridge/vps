@@ -20,8 +20,6 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 - [`vps_install`](./bin/vps_install) clones and sets up environments for each application. Checks that you have corresponding commands/packages installed and that required credential/files are in the right location, installs virtual environments/packages for each application.
 - [`super`](./super) lets me interact with the underlying `supervisord`/`supervisorctl` processes with my environment variables/configuration.
 - [`logs`](./logs) streams the logs from all applications
-- [`vps_glogs`](./bin/vps_glogs) lets me interact with the nginx logs
-- [`update_logs`](./update_logs) uses [`goaccess`](https://goaccess.io/) to visualize nginx logs
 - [`vps_backup`](./bin/vps_backup) copies cache/token files to a tar.gz so they can be backed up. [runs with bgproc](https://github.com/seanbreckenridge/bgproc). [`backup_server`](./backup_server) is run from my computer, which ssh's into the server to run that. Runs once per day, in [`housekeeping`](https://sean.fish/d/housekeeping)
 - [`vps_deploy`](./bin/vps_deploy) and [`deploy`](./deploy) are a basic ssh/git pull/restart/view logs script for projects which I deploy frequently
 - [`generate_static_sites`](./bin/generate_static_sites) builds my static websites and places them in `~/static_files`.
@@ -31,7 +29,6 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 - [`shorten`](./bin/shorten) creates a shortened url using [`no-db-shorturl`](https://github.com/seanbreckenridge/no-db-shorturl)
 - [`approve_comments`](./bin/approve_comments) approves comments for my guest book at [https://sean.fish](https://github.com/seanbreckenridge/glue)
 - [`mnu`](./bin/mnu) runs the periodic job to update the [google sheet](https://github.com/seanbreckenridge/mnu_gsheets)
-- [`nginx-goaccess`](./bin/nginx-goaccess) syncs the nginx/access.log from my server and uses [goaccess](https://goaccess.io/) to visualize it, caching the result using a Makefile
 
 - [`directories`](./directories) is a helper script sourced at the top of other scripts that defines common application location environment variables
 

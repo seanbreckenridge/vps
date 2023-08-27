@@ -133,7 +133,7 @@ set +u
 
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-ubuntu-14-04
 # password protect goaccess html log files
-if [ ! -e /etc/nginx/.htpasswd ]; then
+if [[ ! -e /etc/nginx/.htpasswd ]]; then
 	sudo htpasswd -c /etc/nginx/.htpasswd sean
 	mkdir -p ~/.goaccess_html
 fi

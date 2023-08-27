@@ -33,11 +33,6 @@ remsync-text-from-stdin() {
 	text2html | html-head-all | remsync-html-from-stdin "$*"
 }
 
-__nginx_goaccess() {
-	_arguments '1: :((parsehtml parsehtmlcached view json sync cli))'
-}
-compdef __nginx_goaccess nginx-goaccess
-
 __deploy() {
 	local targets
 	# call 'deploy compdef' to generate completion
