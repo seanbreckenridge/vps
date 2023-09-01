@@ -87,8 +87,7 @@ fi
 # sync directory
 rsync_args=()
 [[ -z "$REMSYNC_PUBLIC" || -n "$REMSYNC_DELETE" ]] && rsync_args+=("--delete-before")
-echo rsync -Pahv "${rsync_args[@]}" -e 'ssh' "$FROM_DIR" ${SSH_TO}:${TO_DIR}
-rsync -Pahv "${rsync_args[@]}" -e 'ssh' "$FROM_DIR" ${SSH_TO}:${TO_DIR}
+rsync --chmod=D0755,F644 --archive --verbose --human-readable --partial --progress "${rsync_args[@]}" -e 'ssh' "$FROM_DIR" ${SSH_TO}:${TO_DIR}
 
 split
 
