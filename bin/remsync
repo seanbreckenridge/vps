@@ -113,8 +113,8 @@ if (($# > 0)); then
 			FILEURL="$(printf "%s/%s/%s\n" "$BASE_URL" "$dir_part" "$basename_path")"
 			echo "$FILEURL"
 			[[ "$#" == 1 && -f "$1" ]] && {
-				printf "%s" "$FILEURL" | xclip -selection clipboard
-				notify-send "Copied ${FILEURL} to your clipboard"
+				printf "%s" "$FILEURL" | clipcopy
+				notify "Copied ${FILEURL} to your clipboard"
 			}
 		fi
 	done
