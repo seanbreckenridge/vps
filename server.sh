@@ -34,6 +34,13 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/.local/share/go
 export GOBIN=$GOPATH/bin
+python() {
+	python3 "$@"
+}
+pip() {
+	python3 -m pip "$@"
+}
+
 
 # update path
 export PATH="$HOME/.pyenv/bin:$HOME/.cargo/bin:$HOME/vps/bin:$HOME/vps:$HOME/.local/bin:$NPM_CONFIG_PREFIX/bin:$GOBIN:$PATH"

@@ -37,7 +37,6 @@ require git
 require elm
 require make
 require python3
-require python3.7
 require python3.11
 require realpath
 require pipenv

@@ -51,7 +51,6 @@ expect_file() {
 export PATH="${HOME}/.asdf/shims/:$PATH"
 
 require pyenv
-require python3.7
 require python3.10 # just a symlink to pyenv
 require python3.11 # just a symlink to pyenv
 require crontab
