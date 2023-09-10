@@ -1,0 +1,42 @@
+#!/bin/bash
+# server-specific config/aliases
+# sourced in ~/.bash_ext (which is sourced in ~/.bashrc)
+# (structure setup by https://github.com/seanbreckenridge/bootstrap)
+
+if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+	eval $(ssh-agent)
+	ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+ssh-add -l >/dev/null || {
+	ssh-add ~/.ssh/github
+	ssh-add ~/.ssh/id_rsa
+}
+
+# super shell completion
+complete -F _longopt super
+shopt -s autocd
+
+# super aliases
+alias sctl='super --ctl'
+alias sc=sctl
+
+# glue-server stuff
+alias glue_shell="cd ~/code/glue && renv ./production_server --shell"
+alias glue_iex="cd ~/code/glue && renv ./production_server --iex"
+
+# language-specific configuration
+# node
+export NPM_CONFIG_PREFIX="${HOME}/.local/share/npm-packages"
+# elixir
+export ERL_AFLAGS="-kernel shell_history enabled"
+# golang
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/.local/share/go
+export GOBIN=$GOPATH/bin
+
+# update path
+export PATH="$HOME/.pyenv/bin:$HOME/.cargo/bin:$HOME/vps/bin:$HOME/vps:$HOME/.local/bin:$NPM_CONFIG_PREFIX/bin:$GOBIN:$PATH"
+
+# use asdf for version management
+. $HOME/.asdf/asdf.sh
