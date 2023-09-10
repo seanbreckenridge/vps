@@ -7,7 +7,7 @@ alias vlogs='vultr "~/vps/logs"'
 alias vultr_logs='vultr "~/vps/logs"'
 alias remsync-public='REMSYNC_PUBLIC=1 remsync' # to push to /p/ (public index)
 # to use ranger to quickly remove/add files
-alias remsync-ranger='ranger "${HOME}/Files/remsync" && remsync'
+alias remsync-ranger='ranger "${XDG_DOCUMENTS_DIR}/remsync" && remsync'
 alias remsync-public-ranger='ranger "${HOME}/Files/remsync_public" && remsync-public'
 alias print-new-comments='approve_comments --print-new-comments'
 alias page-hits="curl -s 'https://sean.fish/api/page_hit' | jq '.count'"
