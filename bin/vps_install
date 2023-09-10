@@ -66,6 +66,10 @@ require htpasswd
 require uglifycss
 require yarn
 require go
+require cargo
+
+cargo install evry readenv
+
 require renv # cargo install readenv
 
 # other things that are useful on here
