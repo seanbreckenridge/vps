@@ -149,9 +149,7 @@ make
 
 cd_or_exit "$MY_FEED"
 cd_or_exit ./backend
-python3 -m pip install -U virtualenv wheel pip
-python3 -m pipenv --python "$(command -v python3.10)"
-python3 -m pipenv install
+./build
 cd_or_exit "$MY_FEED"
 cd_or_exit ./frontend
 yarn
