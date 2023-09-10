@@ -41,7 +41,6 @@ pip() {
 	python3 -m pip "$@"
 }
 
-
 # update path
 export PATH="$HOME/.pyenv/bin:$HOME/.cargo/bin:$HOME/vps/bin:$HOME/vps:$HOME/.local/bin:$NPM_CONFIG_PREFIX/bin:$GOBIN:$PATH"
 
