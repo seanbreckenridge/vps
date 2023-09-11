@@ -68,13 +68,13 @@ require yarn
 require go
 require cargo
 
-cargo install evry readenv
+cargo install evry readenv wait-for-internet
 
 require renv # cargo install readenv
 
 # other things that are useful on here
 GO111MODULE=on go install 'mvdan.cc/sh/v3/cmd/shfmt@latest'
-pip install -U rifleman
+python3 -m pip install -U rifleman
 
 declare THIS_DIR
 THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
