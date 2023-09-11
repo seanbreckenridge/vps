@@ -50,11 +50,21 @@ expect_file() {
 # add asdf global versions to $PATH
 export PATH="${HOME}/.asdf/shims/:$PATH"
 
+[[ ! -e "${HOME}/.pyenv" ]] && git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+
 require pyenv
-require python3.10 # just a symlink to pyenv
-require python3.11 # just a symlink to pyenv
+
+# install and setup pyenv versions if they dont exist
+pyenv install 3.10.2 --skip-existing
+pyenv install 3.11.3 --skip-existing
+
+# symbolic links to pyenv versions if they dont exist in /usr/bin
+[[ ! -e /usr/bin/python3.10 ]] && sudo ln -s "${HOME}/.pyenv/versions/3.10.2/bin/python3.10" /usr/bin/python3.10
+[[ ! -e /usr/bin/python3.11 ]] && sudo ln -s "${HOME}/.pyenv/versions/3.11.3/bin/python3.11" /usr/bin/python3.11
+
+require python3.10
+require python3.11
 require crontab
-require pipenv
 require realpath
 require supervisord
 require jq
@@ -74,7 +84,7 @@ require renv # cargo install readenv
 
 # other things that are useful on here
 GO111MODULE=on go install 'mvdan.cc/sh/v3/cmd/shfmt@latest'
-python3 -m pip install -U rifleman
+python3.11 -m pip install -U rifleman
 
 declare THIS_DIR
 THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
@@ -135,7 +145,7 @@ mkdir_if_not_exists "$FILMSWAP_LOGS"
 set +u
 
 # some stuff I use in scripts often
-python3 -m pip install -U click pyyaml toml requests vimbuffer
+python3.11 -m pip install -U click pyyaml toml requests vimbuffer pipenv virtualenv
 
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-ubuntu-14-04
 # password protect goaccess html log files
@@ -164,8 +174,8 @@ yarn prod-build
 pip3 install --user -r ./requirements.txt
 
 cd_or_exit "$MNU_GSHEETS"
-python3 -m pipenv --python "$(command -v python3.10)"
-python3 -m pipenv install
+python3.11 -m pipenv --python "$(command -v python3.10)"
+python3.11 -m pipenv install
 
 # elixir
 mix local.hex --force
@@ -190,16 +200,16 @@ git config user.name "[bot]sean"
 
 # setup notify bot
 cd_or_exit "$NOTIFY_BOT"
-python3 -m pipenv --python "$(command -v python3.10)"
-python3 -m pipenv install
+python3.11 -m pipenv --python "$(command -v python3.10)"
+python3.11 -m pipenv install
 
 # setup countdown bot
 cd_or_exit "$COUNTDOWN_BOT"
-python3 -m pipenv --python "$(command -v python3.10)"
-python3 -m pipenv install
+python3.11 -m pipenv --python "$(command -v python3.10)"
+python3.11 -m pipenv install
 
 # install superhooks-discord
-python3 -m pip install --user git+https://github.com/seanbreckenridge/superhooks
+python3.11 -m pip install --user git+https://github.com/seanbreckenridge/superhooks
 
 # nginx logs
 groups | grep -q "adm" || sudo usermod -a -G adm "$(whoami)"

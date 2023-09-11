@@ -34,15 +34,10 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/.local/share/go
 export GOBIN=$GOPATH/bin
-python() {
-	python3 "$@"
-}
-pip() {
-	python3 -m pip "$@"
-}
 
 # update path
-export PATH="$HOME/.pyenv/bin:$HOME/.cargo/bin:$HOME/vps/bin:$HOME/vps:$HOME/.local/bin:$NPM_CONFIG_PREFIX/bin:$GOBIN:$PATH"
+# include pyenv 3.11 bin at the front of the path so calling python/pip/python3 uses that
+export PATH="$HOME/.pyenv/versions/3.11.3/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin:$HOME/vps/bin:$HOME/vps:$HOME/.local/bin:$NPM_CONFIG_PREFIX/bin:$GOBIN:$PATH"
 
 # use asdf for version management
 . $HOME/.asdf/asdf.sh

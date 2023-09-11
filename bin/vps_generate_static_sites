@@ -36,7 +36,6 @@ move_to_document_root() {
 require git
 require elm
 require make
-require python3
 require python3.11
 require realpath
 require pipenv
@@ -94,8 +93,8 @@ move_to_document_root "$DVD_DIR"
 ## XKCD ###################
 
 cd "$XKCD_DIR" || exit $?
-python3 -m pip install --user -U -r requirements.txt
-python3 generate.py
+python3.11 -m pip install --user -U -r requirements.txt
+python3.11 generate.py
 ./ssg
 mv ./static.html ./index.html
 
@@ -107,12 +106,12 @@ move_to_document_root "$XKCD_DIR"
 ## ANIMESHORTS ############
 
 cd "$ANIMESHORTS_DIR" || exit $?
-python3 -m pip install -U pipenv virtualenv
-python3 -m pipenv --rm
-python3 -m pipenv --python ~/.pyenv/versions/3.10.2/bin/python
-python3 -m pipenv install
+python3.11 -m pip install -U pipenv virtualenv
+python3.11 -m pipenv --rm
+python3.11 -m pipenv --python "$(command -v python3.10)"
+python3.11 -m pipenv install
 "$ANIMESHORTS_DIR"/generate
-python3 -m pipenv --rm
+python3.11 -m pipenv --rm
 
 # minify HTML
 html-minifier --collapse-whitespace --minify-css --minify-js --remove-attribute-quotes --remove-comments --remove-empty-attributes --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-style-link-type-attributes --remove-tag-whitespace --input-dir "${ANIMESHORTS_DIR}/output" --output-dir "${ANIMESHORTS_DIR}/animeshorts" --file-ext html
