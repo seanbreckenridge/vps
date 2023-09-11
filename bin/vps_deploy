@@ -9,7 +9,7 @@ set -e
 
 # shellcheck disable=SC1091
 source "${HOME}/.bashrc"
-source "${HOME}/.bash_ext"
+source "${HOME}/vps/server.sh
 
 set -x
 
