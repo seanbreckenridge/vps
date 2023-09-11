@@ -70,21 +70,16 @@ require supervisord
 require jq
 require elixir
 require rsync
-require zcat
-require goaccess
 require htpasswd
 require uglifycss
 require yarn
 require go
 require cargo
 
-cargo install evry readenv wait-for-internet
-
-require renv # cargo install readenv
+cargo install evry readenv wait-for-internet cargo-update du-dust procs
 
 # other things that are useful on here
 GO111MODULE=on go install 'mvdan.cc/sh/v3/cmd/shfmt@latest'
-python3.11 -m pip install -U rifleman
 
 declare THIS_DIR
 THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
@@ -145,13 +140,11 @@ mkdir_if_not_exists "$FILMSWAP_LOGS"
 set +u
 
 # some stuff I use in scripts often
-python3.11 -m pip install -U click pyyaml toml requests vimbuffer pipenv virtualenv
+python3.11 -m pip install -U click pyyaml toml requests vimbuffer pipenv virtualenv rifleman
 
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-ubuntu-14-04
-# password protect goaccess html log files
 if [[ ! -e /etc/nginx/.htpasswd ]]; then
 	sudo htpasswd -c /etc/nginx/.htpasswd sean
-	mkdir -p ~/.goaccess_html
 fi
 
 cd_or_exit "$FILMSWAP"
