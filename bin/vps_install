@@ -109,7 +109,7 @@ clone_if_not_exists "git@github.com:seanbreckenridge/mnu_gsheets.git" "$MNU_GSHE
 clone_if_not_exists "git@github.com:Hiyori-API/checker_mal.git" "$CHECKER_MAL"
 clone_if_not_exists "git@github.com:seanbreckenridge/projects.git" "$PROJECTS"
 clone_if_not_exists "git@github.com:seanbreckenridge/my_feed.git" "$MY_FEED"
-clone_if_not_exists "git@github.com:seanbreckenridge/dbsentinel.git" "$MY_FEED"
+clone_if_not_exists "git@github.com:seanbreckenridge/dbsentinel.git" "$DBSENTINEL"
 clone_if_not_exists "git@github.com:seanbreckenridge/currently_listening.git" "$CURRENTLY_LISTENING"
 clone_if_not_exists "git@github.com:seanbreckenridge/filmswap.git" "$FILMSWAP"
 
@@ -146,6 +146,10 @@ python3.11 -m pip install -U click pyyaml toml requests vimbuffer pipenv virtual
 if [[ ! -e /etc/nginx/.htpasswd ]]; then
 	sudo htpasswd -c /etc/nginx/.htpasswd sean
 fi
+
+cd_or_exit "$DBSENTINEL"
+python3.11 -m virtualenv -p python3.10 .venv
+./scripts/in_venv pip install -r requirements.txt
 
 cd_or_exit "$FILMSWAP"
 pipenv --python "$(which python3.11)"
