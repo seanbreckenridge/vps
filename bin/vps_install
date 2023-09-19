@@ -140,7 +140,7 @@ mkdir_if_not_exists "$FILMSWAP_LOGS"
 set +u
 
 # some stuff I use in scripts often
-python3.11 -m pip install -U click pyyaml toml requests vimbuffer pipenv virtualenv rifleman
+python3.11 -m pip install -U click pyyaml toml requests pipenv virtualenv rifleman
 
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-ubuntu-14-04
 if [[ ! -e /etc/nginx/.htpasswd ]]; then
