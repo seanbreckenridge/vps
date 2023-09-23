@@ -31,12 +31,12 @@ CHOSEN_SONGS="$(find "$PLAYLIST_DIR" -type f -printf '%f\n' | fzf -m -i --prompt
 }
 
 # dont have to check if PLAINTEXT_PLAYLIST_MUSIC_DIR is set because the plainplay call
-# above would have exited if it wasnt set
+# above would have exited if it wasn't set
 # shuffle songs, make the files absolute paths
 shuf <<<"$CHOSEN_SONGS" | sed -e "s|^|${PLAINTEXT_PLAYLIST_MUSIC_DIR}/|" >"$PLAYLIST_RAW"
 
 # copy all those files to simple filenames, as to not break ffmpeg quoting
-# convert any files that arent mp3 to mp3
+# convert any files that aren't mp3 to mp3
 declare i=0
 while IFS= read -r song; do
 	((i++))

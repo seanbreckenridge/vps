@@ -18,14 +18,14 @@ require() {
 	fi
 }
 
-# clone $1 (URL) if $2 (directory) doesnt exist
+# clone $1 (URL) if $2 (directory) doesn't exist
 clone_if_not_exists() {
 	if [[ ! -d "$2" ]]; then
 		git clone "$1" "$2"
 	fi
 }
 
-# mkdir if first arg doesnt exist
+# mkdir if first arg doesn't exist
 mkdir_if_not_exists() {
 	if [[ ! -d "$1" ]]; then
 		mkdir -p "$1"

@@ -68,7 +68,7 @@ echo "$FROM_DIR"
 
 ########## RUN
 
-# make local dir if it doesnt exist
+# make local dir if it doesn't exist
 [[ ! -d "$FROM_DIR" ]] && mkdir -p "$FROM_DIR"
 
 # if files were passed, copy files to local sync dir

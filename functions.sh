@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-# shell functins to source into my laptop environment to interact with my server
+# shell functions to source into my laptop environment to interact with my server
 
 alias v='vultr'
 alias vultr='ssh vultr'
