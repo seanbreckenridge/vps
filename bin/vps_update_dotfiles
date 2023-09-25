@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -e
 
 cd ~/.dotfiles || exit $?
-exec git pull --rebase
+git fetch --all
+git reset --hard origin/master
