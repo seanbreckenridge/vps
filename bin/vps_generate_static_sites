@@ -95,7 +95,7 @@ move_to_document_root "$DVD_DIR"
 cd "$XKCD_DIR" || exit $?
 python3.11 -m pip install -r ./requirements.txt
 python3.11 generate.py
-./ssg
+make static
 mv ./static.html ./index.html
 
 REMOVE_FILES=("favorites.yaml" "generate.py" "LICENSE" "README.md" "requirements.txt" ".nojekyll" ".gitignore" "ssg" "index.js" "data.json" ".prettierignore")
