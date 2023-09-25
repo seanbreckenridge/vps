@@ -98,7 +98,7 @@ python3.11 generate.py
 ./ssg
 mv ./static.html ./index.html
 
-REMOVE_FILES=("favorites.yaml" "generate.py" "LICENSE" "README.md" "requirements.txt" ".nojekyll" ".gitignore" "ssg" "index.js" "data.json")
+REMOVE_FILES=("favorites.yaml" "generate.py" "LICENSE" "README.md" "requirements.txt" ".nojekyll" ".gitignore" "ssg" "index.js" "data.json" ".prettierignore")
 remove_files
 
 move_to_document_root "$XKCD_DIR"
