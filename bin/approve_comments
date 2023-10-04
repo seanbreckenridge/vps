@@ -4,10 +4,13 @@
 # defaults to --approve-comments
 # see https://github.com/seanbreckenridge/glue/blob/master/production_server
 
+set -e
+set -o pipefail
+
 declare FLAG COMMAND
 FLAG="${1:---approve-comments}"
 [[ "$FLAG" == "--approve-comments" ]] && rm -f "$(evry location -guestbook_comments)"
-# shellcheck disable=SC2016
-COMMAND="$(printf 'cd ~/code/glue/ && PATH="${HOME}/.asdf/shims/:$PATH" renv ./production_server "%s"' "${FLAG}")"
+COMMAND="source ./vps/server.sh; cd ./code/glue/ && renv ./production_server $FLAG"
 printf "Running: '%s'\n" "${COMMAND}" 1>&2
-exec ssh vultr "${COMMAND}"
+# shellcheck disable=SC2029
+exec ssh vultr "$COMMAND"

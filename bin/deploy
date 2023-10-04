@@ -29,7 +29,7 @@ deploy() {
 		_deploy_ssh ./code/mal-notify-bot restart-mal-notify-bot
 		;;
 	projects)
-		_deploy_ssh ./code/projects projects
+		_deploy_ssh ./code/projects projects 'PROJECTS_BG_UPDATE=1 ./update'
 		;;
 	currently_listening)
 		_deploy_ssh ./code/currently_listening currently_listening,listenbrainz_client_poll make
