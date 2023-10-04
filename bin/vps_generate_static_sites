@@ -54,15 +54,24 @@ XKCD_DIR="${BUILD_DIR}/xkcd"
 ANIMESHORTS_DIR="${BUILD_DIR}/animeshorts"
 BACK_ARROW_DIR="${BUILD_DIR}/back-arrow"
 SUNS="${BUILD_DIR}/sun-in-the-corner-of-the-page"
+GEOCITIES="${BUILD_DIR}/geocities"
 
 # clone dirs
 reclone_dir "https://github.com/seanbreckenridge/xqc-dvd" "$DVD_DIR"
 reclone_dir "https://github.com/seanbreckenridge/xkcd-favorites" "$XKCD_DIR"
 reclone_dir "https://github.com/seanbreckenridge/animeshorts" "$ANIMESHORTS_DIR"
+reclone_dir "https://github.com/seanbreckenridge/glue_geocities" "$GEOCITIES"
 reclone_dir "git@github.com:seanbreckenridge/back-arrow-script.git" "$BACK_ARROW_DIR"
 reclone_dir "https://github.com/seanbreckenridge/sun-in-the-corner-of-the-page" "$SUNS"
 
 ## Build each Site
+
+## GEOCITIES
+
+cd "$GEOCITIES" || exit $?
+make
+mv ./dist ./geocities
+move_to_document_root "$GEOCITIES/geocities"
 
 ## BACK-ARROW #############
 
