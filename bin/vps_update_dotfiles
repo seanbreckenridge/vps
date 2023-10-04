@@ -4,3 +4,7 @@ set -e
 cd ~/.dotfiles || exit $?
 git fetch --all
 git reset --hard origin/master
+
+cd ~/.utils || exit $?
+git fetch --all
+git reset --hard origin/master

@@ -186,7 +186,10 @@ go install -v "github.com/seanbreckenridge/no-db-shorturl@latest"
 
 # server that serves my dotfiles
 readonly LOCAL_DOTFILES="$HOME/.dotfiles"
+readonly LOCAL_UTILS="$HOME/.utils"
 clone_if_not_exists "https://github.com/seanbreckenridge/dotfiles.git" "$LOCAL_DOTFILES"
+clone_if_not_exists "https://github.com/seanbreckenridge/seanb-utils.git" "$LOCAL_UTILS"
+
 go install -v "github.com/seanbreckenridge/subpath-serve@latest"
 go install -v "github.com/seanbreckenridge/server_clipboard/cmd/server_clipboard@latest"
 
