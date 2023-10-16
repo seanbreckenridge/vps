@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+wait-for-internet -q --timeout "${WFI_TIMEOUT:-10}" || exit 0
+
+evry 30 minutes -recent_page_hits && {
+	printlog 'recent_page_hits:getting recent page hit count from sean.fish'
+	curl -sL 'https://sean.fish/api/page_hit/1' >"$XDG_CACHE_HOME/recent_page_hits.json"
+}
