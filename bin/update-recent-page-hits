@@ -3,10 +3,11 @@
 set -o pipefail
 
 main() {
-    data="$(curl -sL 'https://sean.fish/api/page_hit/1' | jq -r .count)"
+    data="$(curl -sL 'https://sean.fish/api/page_hit/7' | jq)" || return $?
+    count="$(echo "$data" | jq -r '.count')"
     # https://github.com/seanbreckenridge/is-integer
-    if is-integer "$data" >/dev/null; then
-        echo "$data" >"$XDG_CACHE_HOME/recent_page_hits.txt"
+    if is-integer "$count" >/dev/null; then
+        echo "$data" > "$HOME/.cache/recent_page_hits.json"
     fi
 }
 
