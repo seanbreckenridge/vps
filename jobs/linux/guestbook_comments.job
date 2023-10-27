@@ -8,7 +8,7 @@ evry 15 minutes -guestbook_comments && {
 
 	get_count() {
 		local SSH_OUTPUT COUNT_LINE
-		SSH_OUTPUT="$("${REPOS}/vps/bin/approve_comments" --print-count 2>/dev/null)" || return $?
+		SSH_OUTPUT="$("${REPOS}/vps/bin/approve-comments" --print-count 2>/dev/null)" || return $?
 		COUNT_LINE="$(grep -m1 -P '^COUNT:\d+' <<<"$SSH_OUTPUT")" || {
 			echo "Couldn't find 'COUNT' in ssh output" 1>&2
 			return 1
