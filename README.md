@@ -27,7 +27,7 @@ See [here](https://exobrain.sean.fish/post/server_setup/) for a blog post descri
 - [`playlist`](./bin/playlist) interfaces with my [playlist manager](https://github.com/seanbreckenridge/plaintext-playlist). It allows me to select multiple playlists, combines all the files from those playlists into a single mp3 and syncs that up to my server with `remsync`. Often run this on my machine before I leave my house; I then listen to the file on my phone by going to corresponding URL.
 - [`mediaproxy`](./bin/mediaproxy) to ssh into the server, `youtube-dl`/`ffmpeg` something and host it on a readable link. Has video/audio wrapper that use more of my [personal scripts](https://github.com/seanbreckenridge/dotfiles/) to prompt me to to select format codes, (similar to [`mpvf`](https://github.com/seanbreckenridge/mpvf/)). That way, I can press a keybind, which grabs the URL from my clipboard and re-hosts it on my server.
 - [`shorten`](./bin/shorten) creates a shortened url using [`no-db-shorturl`](https://github.com/seanbreckenridge/no-db-shorturl)
-- [`approve_comments`](./bin/approve_comments) approves comments for my guest book at [https://sean.fish](https://github.com/seanbreckenridge/glue)
+- [`approve-comments`](./bin/approve-comments) approves comments for my guest book at [https://sean.fish](https://github.com/seanbreckenridge/glue)
 - [`mnu`](./bin/mnu) runs the periodic job to update the [google sheet](https://github.com/seanbreckenridge/mnu_gsheets)
 
 - [`directories`](./directories) is a helper script sourced at the top of other scripts that defines common application location environment variables
