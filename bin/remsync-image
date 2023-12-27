@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+declare image name extension url
+image="${1?pass image to upload}"
+if [[ ! -r "$image" ]]; then
+	echo "cannot read $image" >&2
+	exit 1
+fi
+# create image directory
+mkdir -p "${XDG_DOCUMENTS_DIR}/remsync/i/" || exit 1
+name="$(basename "$image")" || {
+	echo "failed to get filename for $image" >&2
+	exit 1
+}
+extension="$(get-extension "$name")" || {
+	echo "failed to get extension for $name" >&2
+	exit 1
+}
+# generate a random filename, make sure it doesnt already exist
+name="$(genpasswd -rsym -rnum).${extension}"
+while [[ -e "${XDG_DOCUMENTS_DIR}/remsync/i/${name}" ]]; do
+	echo 'file already exists, generating new name' >&2
+	name="$(genpasswd -rsym -rnum).${extension}"
+done
+# copy to local directory
+cp -p "$image" "${XDG_DOCUMENTS_DIR}/remsync/i/${name}" || {
+	echo "failed to copy $image to ${XDG_DOCUMENTS_DIR}/remsync/i/${name}" >&2
+	exit 1
+}
+remsync || exit 1
+# create URL
+url="https://sean.fish/f/i/${name}"
+printf '%s' "$url" | clp
