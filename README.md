@@ -35,6 +35,7 @@ See [here](https://sean.fish/x/blog/server-setup/) for a blog post describing ho
 ### Applications:
 
 - https://github.com/seanbreckenridge/glue
+- https://github.com/seanbreckenridge/exobrain
 - https://github.com/seanbreckenridge/mal-id-cache
 - https://github.com/seanbreckenridge/mal-notify-bot
 - https://github.com/seanbreckenridge/discord-countdown-bot
