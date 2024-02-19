@@ -11,7 +11,7 @@ deploy() {
 		_deploy_ssh ./code/glue glue-server
 		;;
 	exobrain)
-		_deploy_ssh ./code/exobrain - 'make move_to_www'
+		SKIP_LOGS=1 _deploy_ssh ./code/exobrain - vps_update_exobrain
 		;;
 	dbsentinel)
 		_deploy_ssh ./code/dbsentinel dbsentinel-frontend,dbsentinel-backend

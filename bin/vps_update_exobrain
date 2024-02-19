@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -eux
+
+cd ~/code/exobrain || exit $?
+exec make move_to_www
