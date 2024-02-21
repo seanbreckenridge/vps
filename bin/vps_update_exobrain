@@ -3,4 +3,4 @@
 set -eux
 
 cd ~/code/exobrain || exit $?
-exec make move_to_www
+exec make deploy
