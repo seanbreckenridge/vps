@@ -5,4 +5,4 @@
 
 cd "${HOME}/logs" || exit 1
 # shellcheck disable=SC2038
-find /var/log/nginx /var/log/fail2ban.log . -type f -name "*.log" | xargs -r tail -n 50 -f
+find /var/log/nginx . -type f -name "*.log" | xargs -r tail -n 50 -f
