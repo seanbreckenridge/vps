@@ -17,6 +17,7 @@ declare -rx MY_FEED="${CODE}/my_feed"
 declare -rx DBSENTINEL="${CODE}/dbsentinel"
 declare -rx CURRENTLY_LISTENING="${CODE}/currently_listening"
 declare -rx FILMSWAP="${CODE}/filmswap"
+declare -rx TRACK="${CODE}/track"
 
 declare -rx SHORTURL_DATA="${HOME}/shorturls"
 
@@ -33,5 +34,6 @@ declare -rx CLIPBOARD_LOGS="${LOGS_BASE}/clipboard"
 declare -rx DBSENTINEL_LOGS="${LOGS_BASE}/dbsentinel"
 declare -rx CURRENTLY_LOGS="${LOGS_BASE}/currently_listening"
 declare -rx FILMSWAP_LOGS="${LOGS_BASE}/filmswap"
+declare -rx TRACK_LOGS="${LOGS_BASE}/track"
 
 declare -rx SUPERVISOR_LOGS="${LOGS_BASE}/supervisor"
