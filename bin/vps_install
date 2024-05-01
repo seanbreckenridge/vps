@@ -154,8 +154,8 @@ python3.11 -m virtualenv -p python3.10 .venv
 ./scripts/in_venv pip install -r requirements.txt
 
 cd_or_exit "$FILMSWAP"
-pipenv --python "$(which python3.11)"
-pipenv install
+python3 -m virtualenv .venv -p "$(which python3.11)"
+./.venv/bin/pip install -r requirements.txt
 
 cd_or_exit "$CURRENTLY_LISTENING"
 make
