@@ -28,7 +28,7 @@ remsync-html-from-stdin() {
 	# https://sean.fish/d/pipehtml?redirect
 	tmpf="$(pipehtml "$*")"
 	remsync "$tmpf"
-	rm -f "$tmpf"
+	command rm -f "$tmpf"
 }
 remsync-text-from-stdin() {
 	text2html | html-head-all | remsync-html-from-stdin "$*"
