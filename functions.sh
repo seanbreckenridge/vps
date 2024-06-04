@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 # shell functions to source into my laptop environment to interact with my server
 
-alias v='vultr'
 alias vultr='ssh vultr'
 alias vlogs='vultr "~/vps/logs"'
 alias vultr_logs='vultr "~/vps/logs"'
@@ -28,7 +27,7 @@ remsync-html-from-stdin() {
 	# https://sean.fish/d/pipehtml?redirect
 	tmpf="$(pipehtml "$*")"
 	remsync "$tmpf"
-	command rm -f "$tmpf"
+	rm -f "$tmpf"
 }
 remsync-text-from-stdin() {
 	text2html | html-head-all | remsync-html-from-stdin "$*"
