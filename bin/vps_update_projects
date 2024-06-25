@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 set -eu
-cd "$PROJECTS" || exit 1
+cd "${PROJECTS:-$HOME/code/projects}" || exit 1
 
 git stash && git stash drop
 git pull || true
 yarn prod-update
-yarn prod-build && yarn prod-server
+yarn prod-build && exec yarn prod-server
