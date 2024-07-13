@@ -85,9 +85,11 @@ if (($# > 0)); then
 fi
 
 # sync directory
-rsync_args=()
+rsync_args=(--chmod='D0755,F644' --archive --verbose --human-readable --partial --progress)
 [[ -z "$REMSYNC_PUBLIC" || -n "$REMSYNC_DELETE" ]] && rsync_args+=("--delete-before")
-rsync --chmod=D0755,F644 --archive --verbose --human-readable --partial --progress "${rsync_args[@]}" -e 'ssh' "$FROM_DIR" ${SSH_TO}:${TO_DIR}
+rsync_args+=(-e 'ssh' "$FROM_DIR" "${SSH_TO}:${TO_DIR}")
+echo 'Running: rsync' "${rsync_args[@]}"
+rsync "${rsync_args[@]}"
 
 split
 
